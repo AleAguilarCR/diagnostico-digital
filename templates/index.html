@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center">
+                <h3><i class="fas fa-user-circle me-2"></i>Acceso al Diagnóstico</h3>
+            </div>
+            <div class="card-body">
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Electrónico *</label>
+                        <input type="email" class="form-control" id="email" required>
+                        <div class="form-text">
+                            <i class="fas fa-shield-alt text-success me-1"></i>
+                            Su correo no será utilizado para envío de correos promocionales u otros fines.
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="nombre_empresa" class="form-label">Nombre de la Empresa *</label>
+                        <input type="text" class="form-control" id="nombre_empresa" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="tipo_empresa" class="form-label">Tipo de Empresa *</label>
+                        <textarea class="form-control" id="tipo_empresa" rows="3" 
+                                placeholder="Ej: Comercio minorista, Servicios profesionales, Manufactura, etc." required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="tamano_empresa" class="form-label">Tamaño de la Empresa *</label>
+                        <select class="form-select" id="tamano_empresa" required>
+                            <option value="">Seleccione el tamaño de su empresa</option>
+                            <option value="Microempresa: Hasta 5 empleados">Microempresa: Hasta 5 empleados</option>
+                            <option value="Pequeña empresa: De 6 a 30 empleados">Pequeña empresa: De 6 a 30 empleados</option>
+                            <option value="Mediana empresa: De 31 a 100 empleados">Mediana empresa: De 31 a 100 empleados</option>
+                            <option value="Empresa grande: Más de 100 empleados">Empresa grande: Más de 100 empleados</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-arrow-right me-2"></i>Continuar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="alert alert-info mt-4">
+            <h5><i class="fas fa-info-circle me-2"></i>Información Importante</h5>
+            <p class="mb-0">Si ya ha utilizado esta herramienta anteriormente con el mismo correo, 
+            se cargarán automáticamente sus datos y el progreso de evaluaciones previas.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        email: document.getElementById('email').value,
+        nombre_empresa: document.getElementById('nombre_empresa').value,
+        tipo_empresa: document.getElementById('tipo_empresa').value,
+        tamano_empresa: document.getElementById('tamano_empresa').value
+    };
+    
+    try {
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            if (result.usuario_existente) {
+                document.getElementById('nombre_empresa').value = result.nombre_empresa;
+                document.getElementById('tipo_empresa').value = result.tipo_empresa;
+                document.getElementById('tamano_empresa').value = result.tamano_empresa;
+                
+                setTimeout(() => {
+                    window.location.href = '/dashboard';
+                }, 1000);
+                
+                alert('¡Bienvenido de vuelta! Cargando sus datos anteriores...');
+            } else {
+                window.location.href = '/dashboard';
+            }
+        } else {
+            alert('Error al procesar los datos. Intente nuevamente.');
+        }
+    } catch (error) {
+        alert('Error de conexión. Intente nuevamente.');
+    }
+});
+</script>
+{% endblock %}

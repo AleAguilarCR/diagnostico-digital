@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white text-center">
+                <h3><i class="fas fa-bullseye me-2"></i>Principales Objetivos de Negocio</h3>
+                <p class="mb-0">Defina hasta 3 objetivos estratégicos para su empresa</p>
+            </div>
+            <div class="card-body">
+                <!-- Información y ejemplos -->
+                <div class="alert alert-info mb-4">
+                    <h5><i class="fas fa-lightbulb me-2"></i>¿Cómo redactar objetivos claros?</h5>
+                    <p class="mb-2">Los objetivos de negocio deben ser específicos, medibles y orientados a resultados. Aquí algunos ejemplos:</p>
+                    <ul class="mb-0">
+                        <li><strong>Crecimiento:</strong> "Aumentar las ventas en un 25% durante los próximos 12 meses"</li>
+                        <li><strong>Eficiencia:</strong> "Reducir los tiempos de procesamiento de pedidos en un 40%"</li>
+                        <li><strong>Expansión:</strong> "Abrir 2 nuevos puntos de venta en diferentes ciudades este año"</li>
+                        <li><strong>Digital:</strong> "Implementar un sistema de ventas online que genere el 30% de los ingresos"</li>
+                        <li><strong>Calidad:</strong> "Alcanzar un 95% de satisfacción del cliente según encuestas mensuales"</li>
+                    </ul>
+                </div>
+
+                <form id="objetivosForm">
+                    <!-- Objetivo 1 (Obligatorio) -->
+                    <div class="mb-4">
+                        <label for="objetivo1" class="form-label">
+                            <strong>Objetivo Principal <span class="text-danger">*</span></strong>
+                        </label>
+                        <textarea class="form-control" id="objetivo1" name="objetivo1" rows="3" 
+                                  placeholder="Ejemplo: Aumentar las ventas en un 25% durante los próximos 12 meses mediante la implementación de estrategias digitales"
+                                  maxlength="300" required>{{ objetivos_anteriores.objetivo1 }}</textarea>
+                        <div class="form-text">Máximo 300 caracteres. <span id="count1">0</span>/300</div>
+                    </div>
+
+                    <!-- Objetivo 2 (Opcional) -->
+                    <div class="mb-4">
+                        <label for="objetivo2" class="form-label">
+                            <strong>Objetivo Secundario</strong> <small class="text-muted">(Opcional)</small>
+                        </label>
+                        <textarea class="form-control" id="objetivo2" name="objetivo2" rows="3" 
+                                  placeholder="Ejemplo: Mejorar la eficiencia operativa reduciendo los tiempos de procesamiento en un 40%"
+                                  maxlength="300">{{ objetivos_anteriores.objetivo2 }}</textarea>
+                        <div class="form-text">Máximo 300 caracteres. <span id="count2">0</span>/300</div>
+                    </div>
+
+                    <!-- Objetivo 3 (Opcional) -->
+                    <div class="mb-4">
+                        <label for="objetivo3" class="form-label">
+                            <strong>Objetivo Adicional</strong> <small class="text-muted">(Opcional)</small>
+                        </label>
+                        <textarea class="form-control" id="objetivo3" name="objetivo3" rows="3" 
+                                  placeholder="Ejemplo: Expandir la presencia de mercado abriendo 2 nuevos puntos de venta"
+                                  maxlength="300">{{ objetivos_anteriores.objetivo3 }}</textarea>
+                        <div class="form-text">Máximo 300 caracteres. <span id="count3">0</span>/300</div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/dashboard" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-arrow-left me-2"></i>Volver al Dashboard
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-2"></i>Guardar Objetivos
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Contador de caracteres
+function updateCharCount(textareaId, countId) {
+    const textarea = document.getElementById(textareaId);
+    const counter = document.getElementById(countId);
+    
+    function updateCount() {
+        const count = textarea.value.length;
+        counter.textContent = count;
+        
+        if (count > 250) {
+            counter.style.color = '#dc3545';
+        } else if (count > 200) {
+            counter.style.color = '#fd7e14';
+        } else {
+            counter.style.color = '#6c757d';
+        }
+    }
+    
+    textarea.addEventListener('input', updateCount);
+    updateCount(); // Inicializar contador
+}
+
+// Inicializar contadores
+updateCharCount('objetivo1', 'count1');
+updateCharCount('objetivo2', 'count2');
+updateCharCount('objetivo3', 'count3');
+
+// Manejar envío del formulario
+document.getElementById('objetivosForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const objetivo1 = document.getElementById('objetivo1').value.trim();
+    const objetivo2 = document.getElementById('objetivo2').value.trim();
+    const objetivo3 = document.getElementById('objetivo3').value.trim();
+    
+    // Validar que al menos el primer objetivo esté completo
+    if (!objetivo1) {
+        alert('Debe completar al menos el objetivo principal.');
+        document.getElementById('objetivo1').focus();
+        return;
+    }
+    
+    // Mostrar loading
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Guardando...';
+    submitBtn.disabled = true;
+    
+    try {
+        const response = await fetch('/guardar_objetivos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                objetivo1: objetivo1,
+                objetivo2: objetivo2,
+                objetivo3: objetivo3
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Mostrar mensaje de éxito
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-success alert-dismissible fade show';
+            alertDiv.innerHTML = `
+                <i class="fas fa-check-circle me-2"></i>
+                <strong>¡Objetivos guardados exitosamente!</strong> Regresando al dashboard...
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            this.insertBefore(alertDiv, this.firstChild);
+            
+            // Redirigir después de 2 segundos
+            setTimeout(() => {
+                window.location.href = '/dashboard';
+            }, 2000);
+        } else {
+            alert('Error: ' + result.error);
+        }
+    } catch (error) {
+        alert('Error de conexión. Intente nuevamente.');
+    } finally {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+});
+</script>
+{% endblock %}

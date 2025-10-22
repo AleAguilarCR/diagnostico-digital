@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h3><i class="fas fa-chart-line me-2"></i>Reportes del Consultor</h3>
+                    <p class="mb-0">Panel de administración para consultor autorizado</p>
+                </div>
+                <div class="card-body">
+                    {% if usuarios %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Correo</th>
+                                    <th>Nombre de Empresa</th>
+                                    <th>Tipo</th>
+                                    <th>Tamaño</th>
+                                    <th>Evaluaciones</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for usuario in usuarios %}
+                                <tr id="usuario-{{ usuario[0] }}">
+                                    <td>{{ usuario[1] }}</td>
+                                    <td><strong>{{ usuario[2] }}</strong></td>
+                                    <td>{{ usuario[3] }}</td>
+                                    <td><small>{{ usuario[4] or 'No especificado' }}</small></td>
+                                    <td>
+                                        <span class="badge bg-info">{{ usuario[5] }} ejes</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <!-- Botón 1: Informe Cliente -->
+                                            <button type="button" class="btn btn-primary btn-sm" 
+                                                    onclick="generarInformeCliente({{ usuario[0] }})"
+                                                    title="Generar Informe de Cliente">
+                                                <i class="fas fa-file-alt"></i>
+                                            </button>
+                                            
+                                            <!-- Botón 2: Plan Consultoría -->
+                                            <button type="button" class="btn btn-success btn-sm" 
+                                                    onclick="generarPlanConsultoria({{ usuario[0] }})"
+                                                    title="Generar Plan de Consultoría">
+                                                <i class="fas fa-clipboard-list"></i>
+                                            </button>
+                                            
+                                            <!-- Botón 3: Eliminar -->
+                                            <button type="button" class="btn btn-danger btn-sm" 
+                                                    onclick="eliminarUsuario({{ usuario[0] }}, '{{ usuario[2] }}')"
+                                                    title="Eliminar Usuario">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No hay usuarios registrados</h5>
+                        <p class="text-muted">Los usuarios aparecerán aquí cuando completen evaluaciones</p>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mt-4 text-center">
+                        <a href="/dashboard" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Volver al Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="confirmModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Confirmar Eliminación</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea eliminar toda la información del usuario?</p>
+                <p><strong>Empresa:</strong> <span id="empresaEliminar"></span></p>
+                <p class="text-danger"><strong>Esta acción no se puede deshacer.</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmarEliminar">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let usuarioAEliminar = null;
+
+function generarInformeCliente(usuarioId) {
+    const btn = event.target.closest('button');
+    const originalContent = btn.innerHTML;
+    
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    btn.disabled = true;
+    
+    // Abrir en nueva ventana
+    window.open(`/generar_informe_cliente/${usuarioId}`, '_blank');
+    
+    // Restaurar botón después de 3 segundos
+    setTimeout(() => {
+        btn.innerHTML = originalContent;
+        btn.disabled = false;
+    }, 3000);
+}
+
+function generarPlanConsultoria(usuarioId) {
+    const btn = event.target.closest('button');
+    const originalContent = btn.innerHTML;
+    
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    btn.disabled = true;
+    
+    // Abrir en nueva ventana
+    window.open(`/generar_plan_consultoria/${usuarioId}`, '_blank');
+    
+    // Restaurar botón después de 3 segundos
+    setTimeout(() => {
+        btn.innerHTML = originalContent;
+        btn.disabled = false;
+    }, 3000);
+}
+
+function eliminarUsuario(usuarioId, nombreEmpresa) {
+    usuarioAEliminar = usuarioId;
+    document.getElementById('empresaEliminar').textContent = nombreEmpresa;
+    
+    const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+    modal.show();
+}
+
+document.getElementById('confirmarEliminar').addEventListener('click', async function() {
+    if (!usuarioAEliminar) return;
+    
+    const btn = this;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Eliminando...';
+    btn.disabled = true;
+    
+    try {
+        const response = await fetch(`/eliminar_usuario/${usuarioAEliminar}`, {
+            method: 'DELETE'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Eliminar fila de la tabla
+            const fila = document.getElementById(`usuario-${usuarioAEliminar}`);
+            if (fila) {
+                fila.remove();
+            }
+            
+            // Cerrar modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('confirmModal'));
+            modal.hide();
+            
+            // Mostrar mensaje de éxito
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-success alert-dismissible fade show';
+            alert.innerHTML = `
+                <i class="fas fa-check-circle me-2"></i>
+                Usuario eliminado exitosamente
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.querySelector('.card-body').insertBefore(alert, document.querySelector('.table-responsive') || document.querySelector('.text-center'));
+            
+            // Auto-eliminar alerta después de 5 segundos
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.remove();
+                }
+            }, 5000);
+        } else {
+            alert('Error: ' + result.error);
+        }
+    } catch (error) {
+        alert('Error de conexión. Intente nuevamente.');
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        usuarioAEliminar = null;
+    }
+});
+
+// Cerrar modal al cancelar
+document.querySelector('[data-bs-dismiss="modal"]').addEventListener('click', function() {
+    usuarioAEliminar = null;
+});
+</script>
+{% endblock %}

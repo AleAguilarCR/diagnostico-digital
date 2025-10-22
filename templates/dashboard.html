@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h1 class="display-4 text-primary">Diagnóstico de Madurez Digital</h1>
+    <h3 class="text-muted">{{ nombre_empresa }}</h3>
+</div>
+
+<!-- Información sobre la herramienta -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card border-primary">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-question-circle me-2"></i>¿En qué consiste esta herramienta?</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>
+                                Esta herramienta gratuita de autodiagnóstico de madurez digital ayudará a las pequeñas y medianas empresas (pymes) a evaluar, a través de una serie de preguntas, su nivel de adaptación a las tecnologías digitales de forma indicativa.
+                            </li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>
+                                Si bien esta herramienta no proporciona una solución definitiva a los potenciales desafíos tecnológicos que pueda enfrentar la empresa, ni reemplaza el análisis de un profesional especializado, puede brindar recomendaciones útiles para facilitar la implementación efectiva de una estrategia digital.
+                            </li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>
+                                El cuestionario, estructurado en 10 ejes o bloques de preguntas, se centra en la madurez digital y se puede completar en el orden que se prefiera. Se estima que responder a todos los ejes llevará entre 15 y 20 minutos.
+                            </li>
+                            <li><i class="fas fa-check text-success me-2"></i>
+                                Al final obtendrás un diagnóstico de dónde se encuentra tu empresa en su camino digital y qué pasos puede tomar para acelerar su progreso.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="bg-light p-3 rounded">
+                            <img src="{{ url_for('static', filename='images/logo.png') }}" 
+                                 alt="Logo" class="img-fluid mb-3" 
+                                 style="max-height: 100px; max-width: 200px;">
+                            <h5>Transformacion Digital AA+</h5>
+                            <p class="small text-muted">Diagnóstico de Madurez Digital</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Descripción de Madurez Digital -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <h5><i class="fas fa-lightbulb me-2"></i>Sobre la Madurez Digital</h5>
+            <p class="mb-2">La Madurez Digital es el pasaporte al futuro de las pequeñas y medianas empresas (PYMES). Refleja cómo se utiliza la tecnología para impulsar las operaciones, aumentar la eficiencia y mejorar el servicio al cliente.</p>
+            <p class="mb-0">En un mundo digital en constante evolución, la capacidad de adoptar, dominar y adaptarse a las tecnologías digitales es la clave para superar cualquier desafío y alcanzar nuevas metas.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de Objetivos de Negocio -->
+<div class="row mb-5">
+    <div class="col-12 text-center">
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0"><i class="fas fa-bullseye me-2"></i>Principales Objetivos de Negocio</h4>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3">Defina los objetivos estratégicos de su empresa para personalizar las recomendaciones del diagnóstico</p>
+                {% if tiene_objetivos %}
+                    <p class="text-success mb-3"><i class="fas fa-check-circle me-2"></i>Objetivos configurados</p>
+                    <a href="/objetivos_negocio" class="btn btn-outline-success">
+                        <i class="fas fa-edit me-2"></i>Revisar Objetivos
+                    </a>
+                {% else %}
+                    <p class="text-warning mb-3"><i class="fas fa-exclamation-triangle me-2"></i>Aún no has definido tus objetivos</p>
+                    <a href="/objetivos_negocio" class="btn btn-success">
+                        <i class="fas fa-plus me-2"></i>Definir Objetivos
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ejes de Evaluación -->
+<div class="row mb-4">
+    <div class="col-12">
+        <h3 class="text-center mb-4">Selecciona un Eje para Evaluar</h3>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    {% for eje_id, eje in ejes.items() %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 eje-card {% if eje_id in evaluaciones %}evaluated{% endif %}" 
+             data-eje="{{ eje_id }}" id="eje-{{ eje_id }}">
+            <div class="card-body text-center position-relative">
+                {% if eje_id in evaluaciones %}
+                <div class="position-absolute top-0 end-0 p-2">
+                    {% set puntaje = evaluaciones[eje_id] %}
+                    {% if puntaje == 1 %}
+                        <i class="fas fa-circle text-danger fa-lg" title="Nivel Básico"></i>
+                    {% elif puntaje == 2 %}
+                        <i class="fas fa-circle text-warning" style="color: #ff8c00 !important;" title="Nivel Inicial"></i>
+                    {% elif puntaje == 3 %}
+                        <i class="fas fa-circle text-warning fa-lg" title="Nivel Intermedio"></i>
+                    {% elif puntaje == 4 %}
+                        <i class="fas fa-circle text-success" style="color: #228b22 !important;" title="Nivel Avanzado"></i>
+                    {% else %}
+                        <i class="fas fa-circle text-success fa-lg" title="Nivel Experto"></i>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                <div class="eje-icon mb-3">{{ eje.icono }}</div>
+                <h5 class="card-title">{{ eje.nombre }}</h5>
+                <p class="card-text small text-muted">{{ eje.descripcion }}</p>
+                
+                <div class="mt-auto">
+                    <a href="/eje/{{ eje_id }}" class="btn btn-primary btn-sm">
+                        {% if eje_id in evaluaciones %}
+                            <i class="fas fa-edit me-1"></i>Revisar
+                        {% else %}
+                            <i class="fas fa-play me-1"></i>Evaluar
+                        {% endif %}
+                    </a>
+                    
+                    {% if eje_id in evaluaciones %}
+                    <div class="mt-2">
+                        <a href="/generar_pdf/{{ eje_id }}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-file-pdf me-1"></i>PDF
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Botón del Consultor -->
+{% if es_consultor %}
+<div class="row mb-4">
+    <div class="col-12 text-center">
+        <div class="alert alert-warning">
+            <h5><i class="fas fa-user-tie me-2"></i>Panel de Consultor</h5>
+            <p>Acceso especial para consultor autorizado</p>
+            <a href="/reportes_consultor" class="btn btn-warning btn-lg">
+                <i class="fas fa-chart-line me-2"></i>Reportes del Consultor
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Botón de Informe Ejecutivo -->
+{% if evaluaciones|length >= 3 %}
+<div class="row">
+    <div class="col-12 text-center">
+        <div class="alert alert-success">
+            <h5><i class="fas fa-trophy me-2"></i>¡Felicitaciones!</h5>
+            <p>Has completado {{ evaluaciones|length }} ejes de evaluación. Ya puedes generar tu informe ejecutivo.</p>
+            <button class="btn btn-success btn-lg" id="generarInformeEjecutivo">
+                <i class="fas fa-file-alt me-2"></i>Generar Informe Ejecutivo
+            </button>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script>
+// Agregar efectos hover a las tarjetas
+document.querySelectorAll('.eje-card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px)';
+        this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+    });
+});
+
+// Manejar informe ejecutivo
+document.getElementById('generarInformeEjecutivo')?.addEventListener('click', function() {
+    const btn = this;
+    const originalText = btn.innerHTML;
+    
+    // Mostrar loading
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Generando informe...';
+    btn.disabled = true;
+    
+    // Generar informe
+    window.open('/generar_informe_ejecutivo', '_blank');
+    
+    // Restaurar botón después de 3 segundos
+    setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }, 3000);
+});
+
+// Scroll automático al eje completado
+window.addEventListener('load', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const ejeCompletado = urlParams.get('eje_completado');
+    
+    if (ejeCompletado) {
+        setTimeout(() => {
+            const ejeElement = document.getElementById(`eje-${ejeCompletado}`);
+            if (ejeElement) {
+                ejeElement.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+                
+                // Efecto de resaltado
+                ejeElement.style.transform = 'scale(1.05)';
+                ejeElement.style.boxShadow = '0 8px 25px rgba(13, 110, 253, 0.3)';
+                
+                setTimeout(() => {
+                    ejeElement.style.transform = 'scale(1)';
+                    ejeElement.style.boxShadow = '';
+                }, 2000);
+            }
+        }, 500);
+    }
+});
+</script>
+{% endblock %}
