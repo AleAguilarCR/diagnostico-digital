@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg mt-5">
+                <div class="card-header bg-warning text-dark text-center py-4">
+                    <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+                    <h3 class="mb-0">{{ mensaje or 'Error' }}</h3>
+                </div>
+                <div class="card-body text-center py-5">
+                    <p class="lead mb-4">{{ descripcion or 'Ha ocurrido un error inesperado.' }}</p>
+                    
+                    <div class="alert alert-info" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Sugerencia:</strong> Verifica que el usuario haya completado al menos una evaluación antes de generar reportes.
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                        <button onclick="window.close()" class="btn btn-secondary">
+                            <i class="fas fa-times me-2"></i>Cerrar Ventana
+                        </button>
+                        <a href="/reportes_consultor" class="btn btn-primary">
+                            <i class="fas fa-arrow-left me-2"></i>Volver a Reportes
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .card-header {
+        border-bottom: 3px solid #f0ad4e;
+    }
+    
+    .fa-exclamation-triangle {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.6;
+        }
+    }
+</style>
+{% endblock %}

@@ -604,7 +604,9 @@ def generar_informe_cliente(usuario_id):
     
     if not usuario:
         conn.close()
-        return jsonify({'success': False, 'error': 'Usuario no encontrado'})
+        return render_template('error.html', 
+                             mensaje='Usuario no encontrado',
+                             descripcion='El usuario solicitado no existe en el sistema.'), 404
     
     # Obtener evaluaciones
     c.execute('SELECT eje_id, respuestas, puntaje FROM evaluaciones WHERE usuario_id = ?', (usuario_id,))
@@ -612,7 +614,9 @@ def generar_informe_cliente(usuario_id):
     conn.close()
     
     if not evaluaciones:
-        return jsonify({'success': False, 'error': 'No hay evaluaciones para este usuario'})
+        return render_template('error.html', 
+                             mensaje='Usuario no ha llenado la información',
+                             descripcion=f'El usuario {usuario[1]} ({usuario[0]}) aún no ha completado ninguna evaluación de los ejes de madurez digital.'), 404
     
     # Generar informe similar al ejecutivo pero para el cliente
     return generar_pdf_cliente(usuario, evaluaciones)
@@ -631,7 +635,9 @@ def generar_plan_consultoria(usuario_id):
     
     if not usuario:
         conn.close()
-        return jsonify({'success': False, 'error': 'Usuario no encontrado'})
+        return render_template('error.html', 
+                             mensaje='Usuario no encontrado',
+                             descripcion='El usuario solicitado no existe en el sistema.'), 404
     
     # Obtener evaluaciones
     c.execute('SELECT eje_id, respuestas, puntaje FROM evaluaciones WHERE usuario_id = ?', (usuario_id,))
@@ -644,7 +650,9 @@ def generar_plan_consultoria(usuario_id):
     conn.close()
     
     if not evaluaciones:
-        return jsonify({'success': False, 'error': 'No hay evaluaciones para este usuario'})
+        return render_template('error.html', 
+                             mensaje='Usuario no ha llenado la información',
+                             descripcion=f'El usuario {usuario[1]} ({usuario[0]}) aún no ha completado ninguna evaluación de los ejes de madurez digital.'), 404
     
     return generar_pdf_consultoria(usuario, evaluaciones, objetivos)
 
