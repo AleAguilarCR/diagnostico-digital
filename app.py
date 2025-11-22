@@ -378,7 +378,10 @@ def generar_recomendaciones(eje_id, respuestas, tipo_empresa, puntaje=None, tama
             logger.info(f"Respuesta recibida de Gemini: {len(response.text) if response.text else 0} caracteres")
             
             if response.text and len(response.text.strip()) > 200:
-                logger.info(f"Recomendaciones generadas exitosamente con Gemini")
+                logger.info("="*50)
+                logger.info("✅ USANDO GEMINI AI PARA RECOMENDACIONES")
+                logger.info(f"Eje: {eje_id}, Empresa: {tipo_empresa}, Nivel: {nivel}")
+                logger.info("="*50)
                 return response.text
             else:
                 logger.warning(f"Respuesta de Gemini muy corta ({len(response.text) if response.text else 0} chars), usando recomendaciones por defecto")
@@ -390,7 +393,10 @@ def generar_recomendaciones(eje_id, respuestas, tipo_empresa, puntaje=None, tama
         logger.warning("Modelo Gemini no está disponible")
     
     # Usar recomendaciones específicas por eje y puntaje
-    logger.info(f"Usando recomendaciones específicas - Eje: {eje_id}, Nivel: {nivel}")
+    logger.info("="*50)
+    logger.info("📋 USANDO RECOMENDACIONES PREDEFINIDAS")
+    logger.info(f"Eje: {eje_id}, Nivel: {nivel_dict}, Empresa: {tipo_empresa}")
+    logger.info("="*50)
     
     if eje_id in recomendaciones_por_eje:
         return recomendaciones_por_eje[eje_id][nivel_dict]
@@ -1727,13 +1733,19 @@ def generar_ia_readiness_canvas(tipo_empresa, tamano_empresa, evaluaciones):
         try:
             response = model.generate_content(prompt)
             if response.text and len(response.text.strip()) > 200:
-                logger.info("IA-Readiness Canvas generado exitosamente con Gemini")
+                logger.info("="*50)
+                logger.info("✅ USANDO GEMINI AI PARA IA-READINESS CANVAS")
+                logger.info(f"Empresa: {tipo_empresa}, Etapa: {tamano_empresa}")
+                logger.info("="*50)
                 return response.text
         except Exception as e:
             logger.error(f"Error generando IA-Readiness Canvas con Gemini: {str(e)}")
     
     # Canvas por defecto si Gemini falla
-    logger.info("Usando IA-Readiness Canvas por defecto")
+    logger.info("="*50)
+    logger.info("📋 USANDO IA-READINESS CANVAS PREDEFINIDO")
+    logger.info(f"Empresa: {tipo_empresa}, Etapa: {tamano_empresa}")
+    logger.info("="*50)
     return f"""=== 1. PROBLEMAS QUE PUEDEN RESOLVERSE CON IA ===
 Para su {tipo_empresa}, la IA puede resolver:
 - Automatización de atención al cliente con chatbots inteligentes
@@ -1858,12 +1870,19 @@ def generar_resumen_ejecutivo(evaluaciones, tipo_empresa, tamano_empresa=None):
         try:
             response = model.generate_content(prompt)
             if response.text and len(response.text.strip()) > 100:
-                logger.info("Plan de implementación generado exitosamente con Gemini")
+                logger.info("="*50)
+                logger.info("✅ USANDO GEMINI AI PARA PLAN DE IMPLEMENTACIÓN")
+                logger.info(f"Empresa: {tipo_empresa}, Promedio: {promedio_general:.1f}/4")
+                logger.info("="*50)
                 return response.text
         except Exception as e:
             logger.error(f"Error generando plan de implementación con Gemini: {str(e)}")
     
     # Plan por defecto
+    logger.info("="*50)
+    logger.info("📋 USANDO PLAN DE IMPLEMENTACIÓN PREDEFINIDO")
+    logger.info(f"Empresa: {tipo_empresa}, Promedio: {promedio_general:.1f}/4")
+    logger.info("="*50)
     nivel_preparacion = "inicial" if promedio_general <= 1.5 else "intermedio" if promedio_general <= 2.5 else "avanzado"
     
     return f"""ESTADO ACTUAL DE PREPARACIÓN:
