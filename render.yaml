@@ -17,3 +17,8 @@ services:
       - key: FLASK_ENV
         value: production
     autoDeploy: true
+    # Persistir base de datos con Render Disk
+    disk:
+      name: diagnostico-db-disk
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1

@@ -18,9 +18,26 @@ import logging
 app = Flask(__name__)
 app.secret_key = 'tu-clave-secreta-super-segura-aqui'
 
+# Configuración de la ruta de la base de datos
+# En producción (Render), usa el disco persistente
+# En desarrollo, usa la ruta local
+DB_PATH = os.path.join(
+    os.environ.get('DB_MOUNT_PATH', '/opt/render/project/src/data') 
+    if os.environ.get('RENDER') 
+    else os.path.dirname(os.path.abspath(__file__)),
+    'diagnostico.db'
+)
+
+def get_db_connection():
+    """Obtener conexión a la base de datos con la ruta correcta"""
+    # Crear directorio si no existe (para Render Disk)
+    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+    return sqlite3.connect(DB_PATH)
+
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+logger.info(f"Ruta de base de datos: {DB_PATH}")
 
 # Configurar Gemini
 try:
@@ -157,7 +174,7 @@ PREGUNTAS_EJES = {
 }
 
 def init_db():
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     
     c.execute('''CREATE TABLE IF NOT EXISTS usuarios
@@ -389,7 +406,7 @@ def login():
     # Verificar si es consultor
     es_consultor = (email == 'alejandroaguilar1000@gmail.com' and nombre_empresa == 'consultor1')
     
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     
     if es_consultor:
@@ -483,7 +500,7 @@ def dashboard():
     if 'usuario_id' not in session:
         return redirect('/')
     
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute('SELECT eje_id, puntaje FROM evaluaciones WHERE usuario_id = ?', (session['usuario_id'],))
     evaluaciones = {row[0]: row[1] for row in c.fetchall()}
@@ -513,7 +530,7 @@ def objetivos_negocio():
         return redirect('/')
     
     # Obtener objetivos existentes
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute('SELECT objetivo1, objetivo2, objetivo3 FROM objetivos_negocio WHERE usuario_id = ?', (session['usuario_id'],))
     resultado = c.fetchone()
@@ -541,7 +558,7 @@ def guardar_objetivos():
     if not objetivo1:
         return jsonify({'success': False, 'error': 'Debe completar al menos el primer objetivo'})
     
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     
     # Verificar si ya existen objetivos
@@ -576,7 +593,7 @@ def reportes_consultor():
         return redirect('/dashboard')
     
     # Obtener todos los usuarios con sus datos
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute('''SELECT u.id, u.email, u.nombre_empresa, u.tipo_empresa, u.tamano_empresa,
                         COUNT(e.id) as num_evaluaciones
@@ -597,7 +614,7 @@ def generar_informe_cliente(usuario_id):
         return jsonify({'success': False, 'error': 'No autorizado'})
     
     # Obtener datos del usuario
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute('SELECT email, nombre_empresa, tipo_empresa, tamano_empresa FROM usuarios WHERE id = ?', (usuario_id,))
     usuario = c.fetchone()
@@ -628,7 +645,7 @@ def generar_plan_consultoria(usuario_id):
         return jsonify({'success': False, 'error': 'No autorizado'})
     
     # Obtener datos completos del usuario
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute('SELECT email, nombre_empresa, tipo_empresa, tamano_empresa FROM usuarios WHERE id = ?', (usuario_id,))
     usuario = c.fetchone()
@@ -662,7 +679,7 @@ def eliminar_usuario(usuario_id):
             session.get('nombre_empresa') == 'consultor1'):
         return jsonify({'success': False, 'error': 'No autorizado'})
     
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     
     # Eliminar en orden (por foreign keys)
@@ -1258,7 +1275,7 @@ def mostrar_eje(eje_id):
         return redirect('/')
     
     # Obtener respuestas anteriores si existen
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute('SELECT respuestas FROM evaluaciones WHERE usuario_id = ? AND eje_id = ?', 
               (session['usuario_id'], eje_id))
@@ -1292,7 +1309,7 @@ def evaluar_eje():
     recomendaciones = generar_recomendaciones(eje_id, respuestas, session['tipo_empresa'], puntaje, session.get('tamano_empresa', 'No especificado'))
     
     # Guardar en base de datos
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     
     # Eliminar evaluación anterior si existe
@@ -1320,7 +1337,7 @@ def generar_informe_ejecutivo():
         return jsonify({'success': False, 'error': 'No autorizado'})
     
     # Obtener todas las evaluaciones del usuario
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute('''SELECT eje_id, respuestas, puntaje FROM evaluaciones 
                  WHERE usuario_id = ? ORDER BY eje_id''', 
@@ -1540,7 +1557,7 @@ def generar_pdf_eje(eje_id):
         return jsonify({'success': False, 'error': 'No autorizado'})
     
     # Obtener datos de la evaluación
-    conn = sqlite3.connect('diagnostico.db')
+    conn = get_db_connection()
     c = conn.cursor()
     c.execute('''SELECT respuestas, puntaje FROM evaluaciones 
                  WHERE usuario_id = ? AND eje_id = ?''', 
