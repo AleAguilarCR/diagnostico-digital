@@ -30,5 +30,8 @@ EXPOSE 8080
 ENV FLASK_APP=app.py
 ENV PYTHONUNBUFFERED=1
 
+# Inicializar la base de datos
+RUN python -c "from app import init_db; init_db()"
+
 # Comando para ejecutar la aplicación
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--timeout", "120", "app:app"]
