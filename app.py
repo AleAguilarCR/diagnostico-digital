@@ -644,6 +644,12 @@ def generar_informe_cliente(usuario_id):
                              mensaje='Usuario no ha llenado la información',
                              descripcion=f'El usuario {usuario[1]} ({usuario[0]}) aún no ha completado ninguna evaluación de los ejes de madurez digital.'), 404
     
+    # Verificar que tenga al menos 3 vectores completados
+    if len(evaluaciones) < 3:
+        return render_template('error.html', 
+                             mensaje='Reporte ejecutivo aún no disponible',
+                             descripcion=f'El usuario {usuario[1]} ({usuario[0]}) ha completado {len(evaluaciones)} vector(es). Se requieren mínimo 3 vectores para generar el reporte ejecutivo.'), 400
+    
     # Generar informe similar al ejecutivo pero para el cliente
     return generar_pdf_cliente(usuario, evaluaciones)
 
@@ -680,6 +686,12 @@ def generar_plan_consultoria(usuario_id):
                              mensaje='Usuario no ha llenado la información',
                              descripcion=f'El usuario {usuario[1]} ({usuario[0]}) aún no ha completado ninguna evaluación de los ejes de madurez digital.'), 404
     
+    # Verificar que tenga al menos 3 vectores completados
+    if len(evaluaciones) < 3:
+        return render_template('error.html', 
+                             mensaje='Reporte ejecutivo aún no disponible',
+                             descripcion=f'El usuario {usuario[1]} ({usuario[0]}) ha completado {len(evaluaciones)} vector(es). Se requieren mínimo 3 vectores para generar el plan de consultoría.'), 400
+    
     return generar_pdf_consultoria(usuario, evaluaciones, objetivos)
 
 @app.route('/eliminar_usuario/<int:usuario_id>', methods=['DELETE'])
@@ -715,7 +727,7 @@ def backup_database():
         
         # Crear nombre de archivo con timestamp
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f'diagnostico_backup_{timestamp}.db'
+        filename = f'rutadigital_backup_{timestamp}.db'
         
         # Enviar el archivo directamente
         return send_file(DB_PATH, 
