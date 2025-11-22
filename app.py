@@ -692,6 +692,108 @@ def eliminar_usuario(usuario_id):
     
     return jsonify({'success': True})
 
+@app.route('/backup_database')
+def backup_database():
+    """Descargar backup de la base de datos"""
+    if not (session.get('email') == 'alejandroaguilar1000@gmail.com' and 
+            session.get('nombre_empresa') == 'consultor1'):
+        return jsonify({'success': False, 'error': 'No autorizado'}), 403
+    
+    try:
+        # Verificar que existe la base de datos
+        if not os.path.exists(DB_PATH):
+            return jsonify({'error': 'Base de datos no encontrada'}), 404
+        
+        # Crear nombre de archivo con timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f'diagnostico_backup_{timestamp}.db'
+        
+        # Enviar el archivo directamente
+        return send_file(DB_PATH, 
+                        as_attachment=True,
+                        download_name=filename,
+                        mimetype='application/x-sqlite3')
+    except Exception as e:
+        logger.error(f"Error al crear backup: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/restore_database', methods=['POST'])
+def restore_database():
+    """Restaurar base de datos desde un archivo de backup"""
+    if not (session.get('email') == 'alejandroaguilar1000@gmail.com' and 
+            session.get('nombre_empresa') == 'consultor1'):
+        return jsonify({'success': False, 'error': 'No autorizado'}), 403
+    
+    try:
+        # Verificar que se envió un archivo
+        if 'backup_file' not in request.files:
+            return jsonify({'success': False, 'error': 'No se envió ningún archivo'}), 400
+        
+        file = request.files['backup_file']
+        
+        if file.filename == '':
+            return jsonify({'success': False, 'error': 'Nombre de archivo vacío'}), 400
+        
+        # Verificar extensión
+        if not file.filename.endswith(('.db', '.sqlite', '.sqlite3')):
+            return jsonify({'success': False, 'error': 'Formato de archivo no válido'}), 400
+        
+        # Crear backup del archivo actual antes de restaurar
+        if os.path.exists(DB_PATH):
+            backup_path = DB_PATH + '.pre_restore_backup'
+            import shutil
+            shutil.copy2(DB_PATH, backup_path)
+            logger.info(f"Backup de seguridad creado en: {backup_path}")
+        
+        # Guardar el archivo subido temporalmente
+        temp_path = DB_PATH + '.temp_restore'
+        file.save(temp_path)
+        
+        # Verificar que es una base de datos SQLite válida
+        try:
+            test_conn = sqlite3.connect(temp_path)
+            test_cursor = test_conn.cursor()
+            
+            # Verificar que tiene las tablas necesarias
+            test_cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+            tables = [row[0] for row in test_cursor.fetchall()]
+            
+            required_tables = ['usuarios', 'evaluaciones']
+            if not all(table in tables for table in required_tables):
+                test_conn.close()
+                os.remove(temp_path)
+                return jsonify({'success': False, 'error': 'El archivo no contiene las tablas necesarias'}), 400
+            
+            # Contar registros
+            test_cursor.execute('SELECT COUNT(*) FROM usuarios')
+            usuarios_count = test_cursor.fetchone()[0]
+            
+            test_cursor.execute('SELECT COUNT(*) FROM evaluaciones')
+            evaluaciones_count = test_cursor.fetchone()[0]
+            
+            test_conn.close()
+            
+        except sqlite3.DatabaseError as e:
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+            return jsonify({'success': False, 'error': f'Archivo de base de datos corrupto: {str(e)}'}), 400
+        
+        # Reemplazar la base de datos actual
+        import shutil
+        shutil.move(temp_path, DB_PATH)
+        
+        logger.info(f"Base de datos restaurada exitosamente. Usuarios: {usuarios_count}, Evaluaciones: {evaluaciones_count}")
+        
+        return jsonify({
+            'success': True,
+            'usuarios': usuarios_count,
+            'evaluaciones': evaluaciones_count
+        })
+        
+    except Exception as e:
+        logger.error(f"Error al restaurar base de datos: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 @app.route('/emergency_backup_db_download')
 def emergency_backup_db_download():
     """Endpoint de emergencia para descargar backup de la base de datos"""

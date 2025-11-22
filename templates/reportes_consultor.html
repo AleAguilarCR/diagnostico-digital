@@ -70,6 +70,41 @@
                     </div>
                     {% endif %}
                     
+                    <!-- Sección de Backup y Restauración -->
+                    <div class="mt-4">
+                        <div class="card border-info">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0"><i class="fas fa-database me-2"></i>Gestión de Base de Datos</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3 mb-md-0">
+                                        <h6><i class="fas fa-download me-2"></i>Descargar Backup</h6>
+                                        <p class="text-muted small">Descarga una copia de seguridad de toda la base de datos</p>
+                                        <button class="btn btn-success" onclick="descargarBackup()">
+                                            <i class="fas fa-save me-2"></i>Descargar Backup
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6><i class="fas fa-upload me-2"></i>Restaurar Base de Datos</h6>
+                                        <p class="text-muted small">Restaura la base de datos desde un archivo de backup</p>
+                                        <input type="file" id="restoreFileInput" accept=".db,.sqlite,.sqlite3" class="form-control mb-2" style="display: none;">
+                                        <button class="btn btn-warning" onclick="document.getElementById('restoreFileInput').click()">
+                                            <i class="fas fa-upload me-2"></i>Seleccionar Archivo
+                                        </button>
+                                        <button class="btn btn-danger ms-2" onclick="restaurarBaseDatos()" id="btnRestaurar" disabled>
+                                            <i class="fas fa-sync-alt me-2"></i>Restaurar Ahora
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="alert alert-warning mt-3 mb-0">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <strong>Importante:</strong> La restauración reemplazará TODOS los datos actuales. Asegúrate de tener un backup reciente antes de restaurar.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="mt-4 text-center">
                         <a href="/dashboard" class="btn btn-secondary">
                             <i class="fas fa-arrow-left me-2"></i>Volver al Dashboard
@@ -173,6 +208,95 @@ document.getElementById('confirmarEliminar').addEventListener('click', async fun
             const modal = bootstrap.Modal.getInstance(document.getElementById('confirmModal'));
             modal.hide();
             
+            alert('Usuario eliminado correctamente');
+            location.reload();
+        } else {
+            alert('Error al eliminar usuario: ' + result.error);
+        }
+    } catch (error) {
+        alert('Error al eliminar usuario: ' + error.message);
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+});
+
+// Función para descargar backup
+function descargarBackup() {
+    const fecha = new Date().toISOString().split('T')[0];
+    const hora = new Date().toTimeString().split(' ')[0].replace(/:/g, '');
+    const filename = `diagnostico_backup_${fecha}_${hora}.db`;
+    
+    // Abrir URL de descarga directa
+    window.location.href = '/backup_database';
+}
+
+// Manejador para cuando se selecciona un archivo
+document.getElementById('restoreFileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const btnRestaurar = document.getElementById('btnRestaurar');
+    
+    if (file) {
+        btnRestaurar.disabled = false;
+        btnRestaurar.innerHTML = `<i class="fas fa-sync-alt me-2"></i>Restaurar "${file.name}"`;
+    } else {
+        btnRestaurar.disabled = true;
+        btnRestaurar.innerHTML = '<i class="fas fa-sync-alt me-2"></i>Restaurar Ahora';
+    }
+});
+
+// Función para restaurar base de datos
+async function restaurarBaseDatos() {
+    const fileInput = document.getElementById('restoreFileInput');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert('Por favor selecciona un archivo de backup primero');
+        return;
+    }
+    
+    // Confirmación adicional
+    const confirmacion = confirm(
+        '⚠️ ADVERTENCIA: Esta acción reemplazará TODA la información actual.\n\n' +
+        `Archivo: ${file.name}\n` +
+        `Tamaño: ${(file.size / 1024).toFixed(2)} KB\n\n` +
+        '¿Estás seguro de continuar?'
+    );
+    
+    if (!confirmacion) return;
+    
+    const btnRestaurar = document.getElementById('btnRestaurar');
+    const originalText = btnRestaurar.innerHTML;
+    btnRestaurar.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Restaurando...';
+    btnRestaurar.disabled = true;
+    
+    try {
+        const formData = new FormData();
+        formData.append('backup_file', file);
+        
+        const response = await fetch('/restore_database', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('✅ Base de datos restaurada exitosamente!\n\n' + 
+                  `Usuarios restaurados: ${result.usuarios}\n` +
+                  `Evaluaciones restauradas: ${result.evaluaciones}`);
+            location.reload();
+        } else {
+            alert('❌ Error al restaurar: ' + result.error);
+        }
+    } catch (error) {
+        alert('❌ Error al restaurar base de datos: ' + error.message);
+    } finally {
+        btnRestaurar.innerHTML = originalText;
+        btnRestaurar.disabled = false;
+        fileInput.value = '';
+    }
+}
             // Mostrar mensaje de éxito
             const alert = document.createElement('div');
             alert.className = 'alert alert-success alert-dismissible fade show';
