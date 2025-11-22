@@ -55,121 +55,121 @@ except Exception as e:
     model = None
     logger.error(f"Error configurando Gemini AI: {e}")
 
-# Definición de los 10 ejes de evaluación
+# Definición de los 10 vectores de Estrategia Digital
 EJES_EVALUACION = {
     1: {
-        'nombre': 'Cultura Digital Empresarial',
-        'descripcion': 'Evalúa el nivel de adopción y mentalidad digital en la organización',
-        'icono': '🏢'
-    },
-    2: {
-        'nombre': 'Presencia en Internet y Redes Sociales',
-        'descripcion': 'Mide la presencia y actividad digital de la empresa',
-        'icono': '🌐'
-    },
-    3: {
-        'nombre': 'Adopción de Tecnologías Emergentes',
-        'descripcion': 'Evalúa el uso de tecnologías innovadoras',
-        'icono': '🚀'
-    },
-    4: {
-        'nombre': 'Digitalización de Procesos Empresariales',
-        'descripcion': 'Mide la automatización y digitalización de procesos',
+        'nombre': 'Estrategia Digital',
+        'descripcion': 'Evalúa la claridad del modelo de negocio digital, propuesta de valor y enfoque en escalabilidad',
         'icono': '⚙️'
     },
-    5: {
-        'nombre': 'Competencia Digital de Colaboradores',
-        'descripcion': 'Evalúa las habilidades digitales del equipo',
-        'icono': '👥'
+    2: {
+        'nombre': 'Cultura Digital',
+        'descripcion': 'Mide la mentalidad digital-first, apertura a experimentación y orientación a métricas',
+        'icono': '💡'
     },
-    6: {
-        'nombre': 'Gestión de Información y Toma de Decisiones',
-        'descripcion': 'Mide el uso de datos para decisiones estratégicas',
+    3: {
+        'nombre': 'Procesos Digital-First',
+        'descripcion': 'Evalúa el diseño de procesos automatizados desde el inicio',
+        'icono': '🔄'
+    },
+    4: {
+        'nombre': 'Tecnología (Arquitectura Inicial)',
+        'descripcion': 'Mide la selección de tecnologías, viabilidad del MVP y escalabilidad',
+        'icono': '🖥️'
+    },
+    5: {
+        'nombre': 'Datos',
+        'descripcion': 'Evalúa el diseño del modelo de datos, fuentes futuras y KPIs iniciales',
         'icono': '📊'
     },
+    6: {
+        'nombre': 'Cliente',
+        'descripcion': 'Mide el customer journey digital, validación de mercado y experiencia digital',
+        'icono': '👥'
+    },
     7: {
-        'nombre': 'Canales de Venta Online y Experiencia del Usuario',
-        'descripcion': 'Evalúa la presencia en comercio electrónico',
-        'icono': '🛒'
+        'nombre': 'Talento',
+        'descripcion': 'Evalúa las competencias digitales del equipo fundador y necesidades de contratación',
+        'icono': '🎓'
     },
     8: {
-        'nombre': 'Gestión de Calidad y Ciberseguridad',
-        'descripcion': 'Mide las prácticas de seguridad digital',
-        'icono': '🔒'
+        'nombre': 'Innovación',
+        'descripcion': 'Mide la capacidad para iterar, prototipar y aplicar aprendizaje validado',
+        'icono': '💡'
     },
     9: {
-        'nombre': 'Inversión en Tecnología',
-        'descripcion': 'Evalúa el presupuesto destinado a tecnología',
-        'icono': '💰'
+        'nombre': 'Ciberseguridad Inicial',
+        'descripcion': 'Evalúa las medidas mínimas de seguridad para lanzar un MVP',
+        'icono': '🔒'
     },
     10: {
-        'nombre': 'Protección de Datos y Propiedad Intelectual',
-        'descripcion': 'Mide las prácticas de protección de información',
-        'icono': '🛡️'
+        'nombre': 'Gobierno Digital',
+        'descripcion': 'Mide los roles digitales, responsabilidades y criterios para decisiones digitales',
+        'icono': '⚖️'
     }
 }
 
-# Preguntas para cada eje
+# Preguntas para cada vector de Estrategia Digital
 PREGUNTAS_EJES = {
-    1: [
-        {'tipo': 'likert', 'pregunta': '¿En qué medida la dirección de su empresa promueve activamente la transformación digital?'},
-        {'tipo': 'likert', 'pregunta': '¿Qué tan preparados están sus empleados para adoptar nuevas tecnologías?'},
-        {'tipo': 'sino', 'pregunta': '¿Su empresa tiene un plan estratégico de transformación digital?'},
-        {'tipo': 'likert', 'pregunta': '¿Con qué frecuencia se capacita al personal en herramientas digitales?'}
+    1: [  # Estrategia Digital
+        {'tipo': 'sino', 'pregunta': '¿El modelo de negocio incorpora elementos digitales desde el inicio?'},
+        {'tipo': 'likert', 'pregunta': '¿Qué tan definida está la propuesta de valor digital de su emprendimiento?'},
+        {'tipo': 'sino', 'pregunta': '¿Existe un roadmap digital a 12-24 meses?'},
+        {'tipo': 'likert', 'pregunta': '¿En qué medida su estrategia considera escalabilidad y automatización?'}
     ],
-    2: [
-        {'tipo': 'sino', 'pregunta': '¿Su empresa tiene presencia en redes sociales activa?'},
-        {'tipo': 'likert', 'pregunta': '¿Qué tan actualizada está la información de su empresa en internet?'},
-        {'tipo': 'likert', 'pregunta': '¿Con qué frecuencia interactúa con clientes a través de canales digitales?'},
-        {'tipo': 'sino', 'pregunta': '¿Tiene un sitio web optimizado para dispositivos móviles?'}
+    2: [  # Cultura Digital
+        {'tipo': 'likert', 'pregunta': '¿Qué tan abierto está el equipo a experimentar con nuevas tecnologías?'},
+        {'tipo': 'sino', 'pregunta': '¿El equipo valora los experimentos rápidos y el aprendizaje continuo?'},
+        {'tipo': 'likert', 'pregunta': '¿En qué medida las decisiones se basan en métricas y datos?'},
+        {'tipo': 'likert', 'pregunta': '¿Qué tan fuerte es la mentalidad digital-first en el equipo fundador?'}
     ],
-    3: [
-        {'tipo': 'likert', 'pregunta': '¿En qué medida su empresa utiliza inteligencia artificial o automatización?'},
-        {'tipo': 'sino', 'pregunta': '¿Utiliza herramientas de análisis de datos avanzadas?'},
-        {'tipo': 'likert', 'pregunta': '¿Qué tan dispuesta está su empresa a adoptar nuevas tecnologías?'},
-        {'tipo': 'sino', 'pregunta': '¿Ha implementado soluciones en la nube en los últimos 2 años?'}
+    3: [  # Procesos Digital-First
+        {'tipo': 'sino', 'pregunta': '¿Se han identificado procesos que deben ser automatizados desde el inicio?'},
+        {'tipo': 'likert', 'pregunta': '¿Qué tan documentados están los procesos clave aunque sea a nivel básico?'},
+        {'tipo': 'likert', 'pregunta': '¿En qué medida se han diseñado los procesos pensando en automatización?'},
+        {'tipo': 'sino', 'pregunta': '¿Se han minimizado los procesos manuales en el diseño inicial?'}
     ],
-    4: [
-        {'tipo': 'likert', 'pregunta': '¿Qué porcentaje de sus procesos administrativos están digitalizados?'},
-        {'tipo': 'sino', 'pregunta': '¿Utiliza software especializado para la gestión empresarial (ERP, CRM)?'},
-        {'tipo': 'likert', 'pregunta': '¿Con qué facilidad pueden sus clientes realizar trámites de forma digital?'},
-        {'tipo': 'likert', 'pregunta': '¿Qué tan automatizados están sus procesos de facturación y contabilidad?'}
+    4: [  # Tecnología (Arquitectura Inicial)
+        {'tipo': 'sino', 'pregunta': '¿El emprendimiento ha seleccionado las herramientas tecnológicas clave?'},
+        {'tipo': 'likert', 'pregunta': '¿Qué tan clara es la viabilidad técnica del MVP?'},
+        {'tipo': 'likert', 'pregunta': '¿En qué medida se entienden las tecnologías que serán críticas en 1-2 años?'},
+        {'tipo': 'likert', 'pregunta': '¿Qué tan considerados están los aspectos de costo, escalabilidad y mantenibilidad?'}
     ],
-    5: [
-        {'tipo': 'likert', 'pregunta': '¿Qué nivel de competencias digitales tienen sus colaboradores?'},
-        {'tipo': 'sino', 'pregunta': '¿Ofrece capacitación regular en herramientas digitales?'},
-        {'tipo': 'likert', 'pregunta': '¿Con qué frecuencia evalúa las habilidades digitales de su equipo?'},
-        {'tipo': 'likert', 'pregunta': '¿Qué tan cómodos se sienten sus empleados usando nuevas tecnologías?'}
+    5: [  # Datos
+        {'tipo': 'likert', 'pregunta': '¿Qué tan claro está qué datos serán vitales para aprender del cliente?'},
+        {'tipo': 'sino', 'pregunta': '¿Existe un diseño del modelo de datos inicial?'},
+        {'tipo': 'likert', 'pregunta': '¿En qué medida se ha planificado cómo recolectar datos desde el MVP?'},
+        {'tipo': 'sino', 'pregunta': '¿Se han definido las métricas y KPIs iniciales?'}
     ],
-    6: [
-        {'tipo': 'likert', 'pregunta': '¿En qué medida utiliza datos para tomar decisiones empresariales?'},
-        {'tipo': 'sino', 'pregunta': '¿Cuenta con herramientas de análisis y reportes automatizados?'},
-        {'tipo': 'likert', 'pregunta': '¿Qué tan accesible es la información clave para la toma de decisiones?'},
-        {'tipo': 'likert', 'pregunta': '¿Con qué frecuencia analiza métricas de rendimiento digital?'}
+    6: [  # Cliente
+        {'tipo': 'sino', 'pregunta': '¿Existe un mapa del customer journey digital?'},
+        {'tipo': 'likert', 'pregunta': '¿Qué tan avanzada está la validación digital del problema y la solución?'},
+        {'tipo': 'likert', 'pregunta': '¿En qué medida se ha diseñado la experiencia digital del cliente?'},
+        {'tipo': 'sino', 'pregunta': '¿Se ha realizado validación de mercado con herramientas digitales?'}
     ],
-    7: [
-        {'tipo': 'sino', 'pregunta': '¿Su empresa vende productos o servicios a través de canales digitales?'},
-        {'tipo': 'likert', 'pregunta': '¿Qué tan satisfactoria es la experiencia digital de sus clientes?'},
-        {'tipo': 'likert', 'pregunta': '¿Con qué facilidad pueden los clientes encontrar y comprar sus productos online?'},
-        {'tipo': 'sino', 'pregunta': '¿Utiliza herramientas de marketing digital para promocionar sus productos?'}
+    7: [  # Talento
+        {'tipo': 'likert', 'pregunta': '¿Qué tan adecuadas son las competencias digitales del equipo fundador?'},
+        {'tipo': 'sino', 'pregunta': '¿El equipo tiene las habilidades mínimas para construir un MVP?'},
+        {'tipo': 'likert', 'pregunta': '¿Qué tan claras están las brechas de habilidades digitales críticas?'},
+        {'tipo': 'sino', 'pregunta': '¿Se han identificado las necesidades de contratación o outsourcing para los próximos 12 meses?'}
     ],
-    8: [
-        {'tipo': 'likert', 'pregunta': '¿Qué tan robustas son las medidas de ciberseguridad de su empresa?'},
-        {'tipo': 'sino', 'pregunta': '¿Tiene políticas claras de seguridad digital implementadas?'},
-        {'tipo': 'likert', 'pregunta': '¿Con qué frecuencia actualiza sus sistemas de seguridad?'},
-        {'tipo': 'sino', 'pregunta': '¿Ha sufrido incidentes de seguridad en los últimos 2 años?'}
+    8: [  # Innovación
+        {'tipo': 'sino', 'pregunta': '¿Existe un proceso definido para experimentar y aprender?'},
+        {'tipo': 'likert', 'pregunta': '¿Qué tan desarrollada está la capacidad de prototipado rápido?'},
+        {'tipo': 'likert', 'pregunta': '¿En qué medida se aplican técnicas tipo Lean Startup?'},
+        {'tipo': 'likert', 'pregunta': '¿Qué tan ágil es el emprendimiento para iterar basándose en aprendizaje validado?'}
     ],
-    9: [
-        {'tipo': 'likert', 'pregunta': '¿Qué porcentaje de su presupuesto destina a tecnología?'},
-        {'tipo': 'likert', 'pregunta': '¿Con qué frecuencia invierte en nuevas herramientas tecnológicas?'},
-        {'tipo': 'sino', 'pregunta': '¿Considera que su inversión en tecnología es suficiente?'},
-        {'tipo': 'likert', 'pregunta': '¿Qué tan claro es el retorno de inversión de sus proyectos tecnológicos?'}
+    9: [  # Ciberseguridad Inicial
+        {'tipo': 'likert', 'pregunta': '¿Qué tan robustas son las medidas mínimas de seguridad planeadas para el MVP?'},
+        {'tipo': 'sino', 'pregunta': '¿Se ha considerado la protección de datos del usuario en el diseño?'},
+        {'tipo': 'likert', 'pregunta': '¿En qué medida se han identificado los riesgos digitales tempranos?'},
+        {'tipo': 'sino', 'pregunta': '¿Existen políticas básicas de seguridad aunque no estén completamente implementadas?'}
     ],
-    10: [
-        {'tipo': 'likert', 'pregunta': '¿Qué tan bien protege su empresa los datos de clientes y empleados?'},
-        {'tipo': 'sino', 'pregunta': '¿Cumple con las regulaciones de protección de datos vigentes?'},
-        {'tipo': 'likert', 'pregunta': '¿Con qué frecuencia revisa y actualiza sus políticas de privacidad?'},
-        {'tipo': 'sino', 'pregunta': '¿Tiene registrada su propiedad intelectual digitalmente?'}
+    10: [  # Gobierno Digital
+        {'tipo': 'sino', 'pregunta': '¿Está claro quién decide qué se construye digitalmente?'},
+        {'tipo': 'likert', 'pregunta': '¿Qué tan definidos están los roles digitales en el equipo?'},
+        {'tipo': 'likert', 'pregunta': '¿En qué medida existen criterios claros para priorizar funcionalidades?'},
+        {'tipo': 'sino', 'pregunta': '¿Se han asignado responsables de tecnología, datos y procesos?'}
     ]
 }
 
@@ -238,123 +238,132 @@ def generar_recomendaciones(eje_id, respuestas, tipo_empresa, puntaje=None, tama
     if puntaje is None:
         puntaje = calcular_puntaje(respuestas)
     
-    # Determinar el enfoque según el puntaje
+    # Determinar el enfoque según el puntaje - ENFOQUE PARA EMPRENDIMIENTOS
     if puntaje <= 2:
-        enfoque = "MEJORA URGENTE"
-        contexto_puntaje = f"Con un puntaje de {puntaje}/5, su empresa necesita mejoras fundamentales en este eje. Las recomendaciones se enfocan en establecer bases sólidas."
+        enfoque = "ESTABLECIMIENTO INICIAL"
+        contexto_puntaje = f"Con un puntaje de {puntaje}/4, tu emprendimiento necesita establecer este vector desde cero. Las recomendaciones se enfocan en crear las bases fundamentales."
     elif puntaje == 3:
-        enfoque = "DESARROLLO"
-        contexto_puntaje = f"Con un puntaje de {puntaje}/5, su empresa tiene una base intermedia. Las recomendaciones se enfocan en fortalecer y expandir capacidades existentes."
+        enfoque = "CONSOLIDACIÓN"
+        contexto_puntaje = f"Con un puntaje de {puntaje}/4, tu emprendimiento tiene fundamentos básicos. Las recomendaciones se enfocan en consolidar y estructurar este vector."
     else:  # puntaje >= 4
-        enfoque = "OPTIMIZACIÓN"
-        contexto_puntaje = f"Con un puntaje de {puntaje}/5, su empresa tiene fortalezas sólidas. Las recomendaciones se enfocan en maximizar y aprovechar estas fortalezas como ventaja competitiva."
+        enfoque = "AVANZADO"
+        contexto_puntaje = f"Con un puntaje de {puntaje}/4, tu emprendimiento tiene bases sólidas. Las recomendaciones se enfocan en optimizar y escalar este vector."
     
     # Determinar nivel de recomendaciones según puntaje
     if puntaje <= 2:
-        nivel = 'bajo'
+        nivel = 'inicial'
+        nivel_dict = 'bajo'  # Mapeo al diccionario existente
     elif puntaje == 3:
-        nivel = 'medio'
+        nivel = 'consolidacion'
+        nivel_dict = 'medio'  # Mapeo al diccionario existente
     else:
-        nivel = 'alto'
+        nivel = 'avanzado'
+        nivel_dict = 'alto'  # Mapeo al diccionario existente
     
     # Recomendaciones específicas por eje y nivel de puntaje
     recomendaciones_por_eje = {
         1: {  # Cultura Digital Empresarial
-            'bajo': f"1. Su {tipo_empresa} necesita establecer una mentalidad digital desde la dirección. Designe un líder de transformación digital y establezca reuniones semanales para evaluar el progreso. Implemente herramientas básicas como Google Workspace o Microsoft 365 para toda la organización y capacite a los directivos en su uso durante las próximas 4 semanas.\n\n2. Cree una cultura de apertura al cambio tecnológico en su {tipo_empresa}. Organice sesiones de sensibilización sobre beneficios de la digitalización, establezca incentivos para empleados que adopten nuevas tecnologías y documente casos de éxito internos. Dedique 2 horas semanales a compartir experiencias digitales exitosas.\n\n3. Desarrolle un plan básico de transformación digital para su {tipo_empresa} con objetivos claros a 6 meses. Identifique 3 procesos críticos para digitalizar, asigne responsables y establezca un presupuesto mínimo del 5% de ingresos para tecnología. Revise el progreso mensualmente.\n\n4. Implemente políticas básicas de uso de tecnología en su {tipo_empresa}. Cree manuales simples de herramientas digitales, establezca protocolos de comunicación digital interna y defina roles tecnológicos básicos. Capacite al personal en estas políticas durante 1 hora semanal.",
-            'medio': f"1. Fortalezca el liderazgo digital en su {tipo_empresa} implementando un comité de transformación digital con representantes de todas las áreas. Establezca KPIs digitales, realice evaluaciones trimestrales de madurez digital y cree un programa de mentores digitales internos. Invierta en capacitación gerencial especializada en liderazgo digital.\n\n2. Desarrolle una estrategia integral de cambio cultural en su {tipo_empresa}. Implemente programas de gamificación para adopción tecnológica, cree comunidades de práctica digital y establezca reconocimientos para innovadores digitales. Dedique 10% del tiempo laboral a experimentación con nuevas herramientas.\n\n3. Expanda su plan de transformación digital en {tipo_empresa} incluyendo objetivos a mediano plazo (1-2 años). Integre sistemas existentes, automatice procesos intermedios y establezca métricas de productividad digital. Aumente el presupuesto tecnológico al 8-10% de ingresos.\n\n4. Cree un ecosistema de aprendizaje continuo en su {tipo_empresa}. Establezca alianzas con universidades locales, implemente plataformas de e-learning y certifique al personal en competencias digitales. Asigne 4 horas mensuales por empleado para capacitación digital.",
-            'alto': f"1. Posicione su {tipo_empresa} como líder en cultura digital del sector. Documente y comparta sus mejores prácticas, participe en eventos de transformación digital y ofrezca mentoría a otras PYMEs. Implemente tecnologías emergentes como IA y automatización avanzada para mantener la ventaja competitiva.\n\n2. Optimice la cultura de innovación en su {tipo_empresa} creando laboratorios de innovación internos. Establezca fondos para proyectos experimentales, implemente metodologías ágiles y cree equipos multidisciplinarios de innovación. Destine 15% del tiempo laboral a proyectos de innovación digital.\n\n3. Escale su modelo de transformación digital en {tipo_empresa} hacia la excelencia operativa. Implemente sistemas de inteligencia empresarial, automatice la toma de decisiones rutinarias y desarrolle capacidades de análisis predictivo. Aumente la inversión en I+D digital al 12-15% de ingresos.\n\n4. Conviértase en un hub de conocimiento digital para su {tipo_empresa} y el ecosistema empresarial. Cree contenido educativo, desarrolle cursos especializados y establezca alianzas estratégicas con empresas tecnológicas. Genere ingresos adicionales a través de servicios de consultoría digital."
+            'bajo': "1. Establezca una mentalidad digital desde la dirección. Designe un líder de transformación digital y establezca reuniones semanales para evaluar el progreso. Implemente herramientas básicas como Google Workspace o Microsoft 365 para toda la organización y capacite a los directivos en su uso durante las próximas 4 semanas.\n\n2. Cree una cultura de apertura al cambio tecnológico. Organice sesiones de sensibilización sobre beneficios de la digitalización, establezca incentivos para empleados que adopten nuevas tecnologías y documente casos de éxito internos. Dedique 2 horas semanales a compartir experiencias digitales exitosas.\n\n3. Desarrolle un plan básico de transformación digital con objetivos claros a 6 meses. Identifique 3 procesos críticos para digitalizar, asigne responsables y establezca un presupuesto mínimo del 5% de ingresos para tecnología. Revise el progreso mensualmente.\n\n4. Implemente políticas básicas de uso de tecnología. Cree manuales simples de herramientas digitales, establezca protocolos de comunicación digital interna y defina roles tecnológicos básicos. Capacite al personal en estas políticas durante 1 hora semanal.",
+            'medio': "1. Fortalezca el liderazgo digital implementando un comité de transformación digital con representantes de todas las áreas. Establezca KPIs digitales, realice evaluaciones trimestrales de madurez digital y cree un programa de mentores digitales internos. Invierta en capacitación gerencial especializada en liderazgo digital.\n\n2. Desarrolle una estrategia integral de cambio cultural. Implemente programas de gamificación para adopción tecnológica, cree comunidades de práctica digital y establezca reconocimientos para innovadores digitales. Dedique 10% del tiempo laboral a experimentación con nuevas herramientas.\n\n3. Expanda el plan de transformación digital incluyendo objetivos a mediano plazo (1-2 años). Integre sistemas existentes, automatice procesos intermedios y establezca métricas de productividad digital. Aumente el presupuesto tecnológico al 8-10% de ingresos.\n\n4. Cree un ecosistema de aprendizaje continuo. Establezca alianzas con universidades locales, implemente plataformas de e-learning y certifique al personal en competencias digitales. Asigne 4 horas mensuales por empleado para capacitación digital.",
+            'alto': "1. Posicione el emprendimiento como líder en cultura digital del sector. Documente y comparta las mejores prácticas, participe en eventos de transformación digital y ofrezca mentoría a otros emprendimientos. Implemente tecnologías emergentes como IA y automatización avanzada para mantener la ventaja competitiva.\n\n2. Optimice la cultura de innovación creando laboratorios de innovación internos. Establezca fondos para proyectos experimentales, implemente metodologías ágiles y cree equipos multidisciplinarios de innovación. Destine 15% del tiempo laboral a proyectos de innovación digital.\n\n3. Escale el modelo de transformación digital hacia la excelencia operativa. Implemente sistemas de inteligencia empresarial, automatice la toma de decisiones rutinarias y desarrolle capacidades de análisis predictivo. Aumente la inversión en I+D digital al 12-15% de ingresos.\n\n4. Conviértase en un hub de conocimiento digital para el ecosistema empresarial. Cree contenido educativo, desarrolle cursos especializados y establezca alianzas estratégicas con empresas tecnológicas. Genere ingresos adicionales a través de servicios de consultoría digital."
         },
         2: {  # Presencia en Internet y Redes Sociales
-            'bajo': f"1. Establezca inmediatamente una presencia digital básica para su {tipo_empresa}. Cree perfiles profesionales en Facebook, Instagram y LinkedIn con información completa, fotos de calidad y descripción clara de servicios. Publique contenido 3 veces por semana y responda mensajes en menos de 4 horas durante horario laboral.\n\n2. Desarrolle un sitio web básico para su {tipo_empresa} usando plataformas como WordPress, Wix o Squarespace. Incluya información de contacto, servicios, galería de trabajos y testimonios de clientes. Asegúrese de que sea responsive para móviles y actualice el contenido semanalmente.\n\n3. Implemente herramientas básicas de comunicación digital en su {tipo_empresa}. Configure WhatsApp Business con catálogo de productos, mensajes automáticos y horarios de atención. Cree un correo electrónico empresarial profesional y establezca firmas digitales corporativas.\n\n4. Inicie actividades básicas de marketing digital para su {tipo_empresa}. Cree contenido visual simple con herramientas como Canva, publique ofertas y promociones regularmente, y use hashtags relevantes para su sector. Dedique 1 hora diaria a interacción en redes sociales.",
-            'medio': f"1. Fortalezca su estrategia de redes sociales en {tipo_empresa} desarrollando un calendario editorial estructurado. Cree contenido diversificado (educativo, promocional, entretenimiento), use herramientas de programación como Hootsuite o Buffer, y analice métricas de engagement mensualmente. Aumente la frecuencia de publicación a 5-7 veces por semana.\n\n2. Optimice su sitio web de {tipo_empresa} para mejorar la experiencia del usuario y SEO. Implemente Google Analytics, optimice velocidad de carga, cree contenido de blog relevante y establezca formularios de contacto efectivos. Actualice el contenido 2-3 veces por semana y monitoree el tráfico web.\n\n3. Expanda sus canales de comunicación digital en {tipo_empresa} integrando múltiples plataformas. Implemente chatbots básicos, cree newsletters mensuales, use Google My Business activamente y establezca un sistema de CRM simple. Responda a todas las consultas en menos de 2 horas.\n\n4. Desarrolle campañas de marketing digital dirigidas para su {tipo_empresa}. Use Facebook Ads e Instagram Ads con presupuestos pequeños, cree contenido de video simple, implemente email marketing y colabore con influencers locales. Mida el ROI de cada campaña y ajuste estrategias mensualmente.",
-            'alto': f"1. Maximice su presencia digital como {tipo_empresa} líder en el sector. Implemente estrategias omnicanal avanzadas, use marketing automation, desarrolle contenido premium y establezca partnerships digitales estratégicos. Conviértase en referente de contenido de su industria con publicaciones diarias de alta calidad.\n\n2. Optimice su ecosistema web de {tipo_empresa} con tecnologías avanzadas. Implemente e-commerce completo, use inteligencia artificial para personalización, desarrolle aplicaciones móviles y cree experiencias interactivas. Mantenga métricas de conversión superiores al promedio de la industria.\n\n3. Lidera la innovación en comunicación digital como {tipo_empresa} pionera. Implemente realidad aumentada, use chatbots con IA, desarrolle podcasts o webinars especializados y cree comunidades online exclusivas. Genere ingresos adicionales a través de contenido premium y servicios digitales.\n\n4. Escale su impacto digital de {tipo_empresa} hacia mercados internacionales. Desarrolle contenido multidioma, use plataformas globales, implemente estratégias de growth hacking y cree alianzas internacionales. Genere al menos 30% de leads a través de canales digitales y mantenga presencia en 5+ plataformas digitales."
+            'bajo': "1. Establezca inmediatamente una presencia digital básica. Cree perfiles profesionales en Facebook, Instagram y LinkedIn con información completa, fotos de calidad y descripción clara de servicios. Publique contenido 3 veces por semana y responda mensajes en menos de 4 horas durante horario laboral.\n\n2. Desarrolle un sitio web básico usando plataformas como WordPress, Wix o Squarespace. Incluya información de contacto, servicios, galería de trabajos y testimonios de clientes. Asegúrese de que sea responsive para móviles y actualice el contenido semanalmente.\n\n3. Implemente herramientas básicas de comunicación digital. Configure WhatsApp Business con catálogo de productos, mensajes automáticos y horarios de atención. Cree un correo electrónico empresarial profesional y establezca firmas digitales corporativas.\n\n4. Inicie actividades básicas de marketing digital. Cree contenido visual simple con herramientas como Canva, publique ofertas y promociones regularmente, y use hashtags relevantes para su sector. Dedique 1 hora diaria a interacción en redes sociales.",
+            'medio': "1. Fortalezca su estrategia de redes sociales desarrollando un calendario editorial estructurado. Cree contenido diversificado (educativo, promocional, entretenimiento), use herramientas de programación como Hootsuite o Buffer, y analice métricas de engagement mensualmente. Aumente la frecuencia de publicación a 5-7 veces por semana.\n\n2. Optimice su sitio web para mejorar la experiencia del usuario y SEO. Implemente Google Analytics, optimice velocidad de carga, cree contenido de blog relevante y establezca formularios de contacto efectivos. Actualice el contenido 2-3 veces por semana y monitoree el tráfico web.\n\n3. Expanda sus canales de comunicación digital integrando múltiples plataformas. Implemente chatbots básicos, cree newsletters mensuales, use Google My Business activamente y establezca un sistema de CRM simple. Responda a todas las consultas en menos de 2 horas.\n\n4. Desarrolle campañas de marketing digital dirigidas. Use Facebook Ads e Instagram Ads con presupuestos pequeños, cree contenido de video simple, implemente email marketing y colabore con influencers locales. Mida el ROI de cada campaña y ajuste estrategias mensualmente.",
+            'alto': "1. Maximice su presencia digital como líder en el sector. Implemente estrategias omnicanal avanzadas, use marketing automation, desarrolle contenido premium y establezca partnerships digitales estratégicos. Conviértase en referente de contenido de su industria con publicaciones diarias de alta calidad.\n\n2. Optimice su ecosistema web con tecnologías avanzadas. Implemente e-commerce completo, use inteligencia artificial para personalización, desarrolle aplicaciones móviles y cree experiencias interactivas. Mantenga métricas de conversión superiores al promedio de la industria.\n\n3. Lidera la innovación en comunicación digital. Implemente realidad aumentada, use chatbots con IA, desarrolle podcasts o webinars especializados y cree comunidades online exclusivas. Genere ingresos adicionales a través de contenido premium y servicios digitales.\n\n4. Escale su impacto digital hacia mercados internacionales. Desarrolle contenido multidioma, use plataformas globales, implemente estratégias de growth hacking y cree alianzas internacionales. Genere al menos 30% de leads a través de canales digitales y mantenga presencia en 5+ plataformas digitales."
         },
         3: {  # Adopción de Tecnologías Emergentes
-            'bajo': f"1. Su {tipo_empresa} debe comenzar explorando tecnologías básicas como computación en la nube. Migre el almacenamiento de archivos a Google Drive o OneDrive, implemente herramientas de videoconferencia como Zoom o Teams, y use aplicaciones móviles básicas para gestión empresarial. Dedique 2 horas semanales a investigar nuevas herramientas tecnológicas relevantes para su sector.\n\n2. Establezca un proceso básico de evaluación tecnológica en su {tipo_empresa}. Cree una lista de necesidades tecnológicas prioritarias, investigue 3 herramientas por mes, realice pruebas gratuitas antes de comprar y documente los resultados. Asigne un responsable para evaluar nuevas tecnologías mensualmente.\n\n3. Inicie la automatización básica en su {tipo_empresa} con herramientas simples. Use Zapier o Microsoft Power Automate para conectar aplicaciones, automatice respuestas de correo electrónico, implemente formularios digitales y use plantillas automatizadas. Comience con 1-2 procesos simples de automatización.\n\n4. Prepare a su equipo de {tipo_empresa} para adoptar nuevas tecnologías. Organice sesiones de demostración de herramientas, cree un fondo básico para experimentación tecnológica (2-3% de ingresos), establezca políticas de prueba de nuevas herramientas y documente lecciones aprendidas.",
-            'medio': f"1. Expanda el uso de tecnologías emergentes en su {tipo_empresa} implementando inteligencia artificial básica. Use chatbots simples como Tidio o Intercom, implemente herramientas de análisis predictivo básico, automatice la clasificación de correos y use asistentes virtuales para programación. Invierta 5-8% de ingresos en tecnologías emergentes.\n\n2. Desarrolle capacidades de Internet de las Cosas (IoT) en su {tipo_empresa}. Implemente sensores básicos para monitoreo, use dispositivos inteligentes para control de acceso, automatice el control de iluminación y temperatura, y establezca dashboards de monitoreo en tiempo real. Comience con 2-3 dispositivos IoT básicos.\n\n3. Fortalezca sus capacidades de análisis de datos en {tipo_empresa} con herramientas avanzadas. Use Google Analytics 4, implemente Power BI o Tableau, cree reportes automatizados y establezca alertas basadas en datos. Capacite a 2-3 empleados en análisis de datos y dedique 4 horas semanales a análisis.\n\n4. Implemente tecnologías de colaboración avanzada en su {tipo_empresa}. Use plataformas como Slack o Microsoft Teams, implemente gestión de proyectos con Asana o Monday, use herramientas de co-creación en tiempo real y establezca espacios de trabajo virtuales. Integre todas las herramientas en un ecosistema cohesivo.",
-            'alto': f"1. Lidere la adopción de tecnologías emergentes en su sector como {tipo_empresa} innovadora. Implemente inteligencia artificial avanzada, use machine learning para optimización, desarrolle soluciones de realidad aumentada o virtual, y experimente con blockchain para procesos específicos. Destine 12-15% de ingresos a I+D tecnológico.\n\n2. Desarrolle soluciones tecnológicas propias para su {tipo_empresa}. Cree APIs personalizadas, desarrolle aplicaciones móviles específicas, implemente sistemas de automatización avanzada y use tecnologías de edge computing. Establezca un equipo interno de desarrollo tecnológico.\n\n3. Conviértase en un hub de innovación tecnológica como {tipo_empresa} referente. Organice hackathons, colabore con universidades en proyectos de investigación, participe en incubadoras tecnológicas y comparta conocimiento en conferencias. Genere ingresos adicionales licenciando sus innovaciones.\n\n4. Escale sus capacidades tecnológicas hacia mercados globales con su {tipo_empresa}. Implemente tecnologías de computación cuántica experimental, use gemelos digitales para optimización, desarrolle soluciones de IA generativa y explore tecnologías emergentes como Web3. Establezca alianzas estratégicas con empresas tecnológicas globales."
+            'bajo': "1. Comience explorando tecnologías básicas como computación en la nube. Migre el almacenamiento de archivos a Google Drive o OneDrive, implemente herramientas de videoconferencia como Zoom o Teams, y use aplicaciones móviles básicas para gestión empresarial. Dedique 2 horas semanales a investigar nuevas herramientas tecnológicas relevantes para su sector.\n\n2. Establezca un proceso básico de evaluación tecnológica. Cree una lista de necesidades tecnológicas prioritarias, investigue 3 herramientas por mes, realice pruebas gratuitas antes de comprar y documente los resultados. Asigne un responsable para evaluar nuevas tecnologías mensualmente.\n\n3. Inicie la automatización básica con herramientas simples. Use Zapier o Microsoft Power Automate para conectar aplicaciones, automatice respuestas de correo electrónico, implemente formularios digitales y use plantillas automatizadas. Comience con 1-2 procesos simples de automatización.\n\n4. Prepare a su equipo para adoptar nuevas tecnologías. Organice sesiones de demostración de herramientas, cree un fondo básico para experimentación tecnológica (2-3% de ingresos), establezca políticas de prueba de nuevas herramientas y documente lecciones aprendidas.",
+            'medio': "1. Expanda el uso de tecnologías emergentes implementando inteligencia artificial básica. Use chatbots simples como Tidio o Intercom, implemente herramientas de análisis predictivo básico, automatice la clasificación de correos y use asistentes virtuales para programación. Invierta 5-8% de ingresos en tecnologías emergentes.\n\n2. Desarrolle capacidades de Internet de las Cosas (IoT). Implemente sensores básicos para monitoreo, use dispositivos inteligentes para control de acceso, automatice el control de iluminación y temperatura, y establezca dashboards de monitoreo en tiempo real. Comience con 2-3 dispositivos IoT básicos.\n\n3. Fortalezca sus capacidades de análisis de datos con herramientas avanzadas. Use Google Analytics 4, implemente Power BI o Tableau, cree reportes automatizados y establezca alertas basadas en datos. Capacite a 2-3 empleados en análisis de datos y dedique 4 horas semanales a análisis.\n\n4. Implemente tecnologías de colaboración avanzada. Use plataformas como Slack o Microsoft Teams, implemente gestión de proyectos con Asana o Monday, use herramientas de co-creación en tiempo real y establezca espacios de trabajo virtuales. Integre todas las herramientas en un ecosistema cohesivo.",
+            'alto': "1. Lidere la adopción de tecnologías emergentes en su sector. Implemente inteligencia artificial avanzada, use machine learning para optimización, desarrolle soluciones de realidad aumentada o virtual, y experimente con blockchain para procesos específicos. Destine 12-15% de ingresos a I+D tecnológico.\n\n2. Desarrolle soluciones tecnológicas propias. Cree APIs personalizadas, desarrolle aplicaciones móviles específicas, implemente sistemas de automatización avanzada y use tecnologías de edge computing. Establezca un equipo interno de desarrollo tecnológico.\n\n3. Conviértase en un hub de innovación tecnológica. Organice hackathons, colabore con universidades en proyectos de investigación, participe en incubadoras tecnológicas y comparta conocimiento en conferencias. Genere ingresos adicionales licenciando sus innovaciones.\n\n4. Escale sus capacidades tecnológicas hacia mercados globales. Implemente tecnologías de computación cuántica experimental, use gemelos digitales para optimización, desarrolle soluciones de IA generativa y explore tecnologías emergentes como Web3. Establezca alianzas estratégicas con empresas tecnológicas globales."
         },
         4: {  # Digitalización de Procesos Empresariales
-            'bajo': f"1. Inicie la digitalización básica de procesos en su {tipo_empresa} eliminando el papel. Digitalice formularios usando Google Forms o Microsoft Forms, implemente firmas electrónicas con DocuSign o Adobe Sign, use aplicaciones móviles para captura de datos y cree archivos digitales organizados. Comience digitalizando 3 procesos críticos.\n\n2. Implemente un sistema básico de gestión empresarial en su {tipo_empresa}. Use herramientas como Zoho One, Odoo Community o Monday.com para gestionar clientes, inventario y finanzas básicas. Capacite a todo el equipo en el uso del sistema durante 2 semanas y migre gradualmente todos los procesos.\n\n3. Automatice los procesos más repetitivos de su {tipo_empresa}. Configure respuestas automáticas de correo, use plantillas para documentos recurrentes, automatice la facturación básica y implemente recordatorios automáticos. Use herramientas como Zapier para conectar diferentes aplicaciones.\n\n4. Establezca flujos de trabajo digitales básicos en su {tipo_empresa}. Defina procesos paso a paso, asigne responsables digitalmente, cree notificaciones automáticas de tareas pendientes y establezca tiempos límite. Use herramientas como Trello o Asana para gestión básica de flujos de trabajo.",
-            'medio': f"1. Expanda la digitalización de procesos en su {tipo_empresa} integrando sistemas avanzados. Implemente un ERP completo como Odoo Enterprise o SAP Business One, integre todos los departamentos en una sola plataforma, automatice reportes financieros y establezca dashboards de control. Invierta en capacitación especializada para el equipo.\n\n2. Desarrolle procesos de automatización inteligente en su {tipo_empresa}. Use RPA (Robotic Process Automation) con herramientas como UiPath o Automation Anywhere, automatice la entrada de datos, implemente validaciones automáticas y cree flujos de aprobación digitales. Automatice al menos 60% de procesos repetitivos.\n\n3. Implemente gestión avanzada de documentos en su {tipo_empresa}. Use sistemas como SharePoint o Google Workspace, establezca control de versiones, implemente búsqueda avanzada de documentos y cree bibliotecas digitales organizadas. Elimine completamente el archivo físico y establezca políticas de retención digital.\n\n4. Optimice la experiencia del cliente con procesos digitales en su {tipo_empresa}. Cree portales de autoservicio, implemente seguimiento en tiempo real de servicios, automatice comunicaciones con clientes y establezca sistemas de feedback digital. Mida la satisfacción del cliente y optimice continuamente los procesos.",
-            'alto': f"1. Lidere la excelencia en digitalización de procesos como {tipo_empresa} modelo del sector. Implemente procesos completamente autónomos, use inteligencia artificial para optimización continua, desarrolle APIs para integración con partners y cree ecosistemas digitales complejos. Alcance 95% de automatización en procesos rutinarios.\n\n2. Desarrolle capacidades de proceso mining y optimización continua en su {tipo_empresa}. Use herramientas como Celonis o ProcessGold para analizar procesos, implemente mejora continua basada en datos, use simulación de procesos y establezca optimización predictiva. Reduzca tiempos de proceso en 40-60%.\n\n3. Implemente arquitecturas de microservicios y APIs en su {tipo_empresa}. Desarrolle servicios modulares, cree integraciones complejas, implemente arquitecturas cloud-native y use contenedores para escalabilidad. Establezca un ecosistema tecnológico que sirva como plataforma para otros negocios.\n\n4. Conviértase en proveedor de soluciones de digitalización para otras empresas con su {tipo_empresa}. Documente y empaquete sus procesos digitales, ofrezca consultoría especializada, desarrolle software como servicio (SaaS) y cree marketplace de soluciones digitales. Genere ingresos recurrentes vendiendo sus capacidades digitales."
+            'bajo': "1. Inicie la digitalización básica de procesos eliminando el papel. Digitalice formularios usando Google Forms o Microsoft Forms, implemente firmas electrónicas con DocuSign o Adobe Sign, use aplicaciones móviles para captura de datos y cree archivos digitales organizados. Comience digitalizando 3 procesos críticos.\n\n2. Implemente un sistema básico de gestión empresarial. Use herramientas como Zoho One, Odoo Community o Monday.com para gestionar clientes, inventario y finanzas básicas. Capacite a todo el equipo en el uso del sistema durante 2 semanas y migre gradualmente todos los procesos.\n\n3. Automatice los procesos más repetitivos. Configure respuestas automáticas de correo, use plantillas para documentos recurrentes, automatice la facturación básica y implemente recordatorios automáticos. Use herramientas como Zapier para conectar diferentes aplicaciones.\n\n4. Establezca flujos de trabajo digitales básicos. Defina procesos paso a paso, asigne responsables digitalmente, cree notificaciones automáticas de tareas pendientes y establezca tiempos límite. Use herramientas como Trello o Asana para gestión básica de flujos de trabajo.",
+            'medio': "1. Expanda la digitalización de procesos integrando sistemas avanzados. Implemente un ERP completo como Odoo Enterprise o SAP Business One, integre todos los departamentos en una sola plataforma, automatice reportes financieros y establezca dashboards de control. Invierta en capacitación especializada para el equipo.\n\n2. Desarrolle procesos de automatización inteligente. Use RPA (Robotic Process Automation) con herramientas como UiPath o Automation Anywhere, automatice la entrada de datos, implemente validaciones automáticas y cree flujos de aprobación digitales. Automatice al menos 60% de procesos repetitivos.\n\n3. Implemente gestión avanzada de documentos. Use sistemas como SharePoint o Google Workspace, establezca control de versiones, implemente búsqueda avanzada de documentos y cree bibliotecas digitales organizadas. Elimine completamente el archivo físico y establezca políticas de retención digital.\n\n4. Optimice la experiencia del cliente con procesos digitales. Cree portales de autoservicio, implemente seguimiento en tiempo real de servicios, automatice comunicaciones con clientes y establezca sistemas de feedback digital. Mida la satisfacción del cliente y optimice continuamente los procesos.",
+            'alto': "1. Lidere la excelencia en digitalización de procesos en el sector. Implemente procesos completamente autónomos, use inteligencia artificial para optimización continua, desarrolle APIs para integración con partners y cree ecosistemas digitales complejos. Alcance 95% de automatización en procesos rutinarios.\n\n2. Desarrolle capacidades de proceso mining y optimización continua. Use herramientas como Celonis o ProcessGold para analizar procesos, implemente mejora continua basada en datos, use simulación de procesos y establezca optimización predictiva. Reduzca tiempos de proceso en 40-60%.\n\n3. Implemente arquitecturas de microservicios y APIs. Desarrolle servicios modulares, cree integraciones complejas, implemente arquitecturas cloud-native y use contenedores para escalabilidad. Establezca un ecosistema tecnológico que sirva como plataforma para otros negocios.\n\n4. Conviértase en proveedor de soluciones de digitalización para otras empresas. Documente y empaquete sus procesos digitales, ofrezca consultoría especializada, desarrolle software como servicio (SaaS) y cree marketplace de soluciones digitales. Genere ingresos recurrentes vendiendo sus capacidades digitales."
         },
         5: {  # Competencia Digital de Colaboradores
-            'bajo': f"1. Evalúe urgentemente las competencias digitales básicas de su equipo en {tipo_empresa}. Realice un diagnóstico individual de habilidades, identifique brechas críticas en uso de computadoras, internet y aplicaciones básicas. Cree perfiles de competencia por puesto y establezca niveles mínimos requeridos. Documente las necesidades de capacitación de cada empleado.\n\n2. Implemente un programa intensivo de alfabetización digital en su {tipo_empresa}. Capacite en uso básico de computadoras, navegación en internet, correo electrónico y aplicaciones de oficina. Use tutoriales gratuitos de YouTube, cursos de Google Digital Garage y capacitación presencial básica. Dedique 3 horas semanales por empleado durante 8 semanas.\n\n3. Establezca un sistema de apoyo y mentoría digital en su {tipo_empresa}. Identifique empleados con mejores habilidades digitales como mentores, cree parejas de aprendizaje, establezca sesiones de práctica supervisada y proporcione soporte técnico básico. Cree un ambiente seguro para hacer preguntas y cometer errores.\n\n4. Cree incentivos y reconocimientos para el aprendizaje digital en su {tipo_empresa}. Establezca certificaciones básicas internas, reconozca públicamente los avances, ofrezca pequeños bonos por completar capacitaciones y cree competencias amigables de habilidades digitales. Celebre cada logro para mantener la motivación.",
-            'medio': f"1. Desarrolle un programa estructurado de competencias digitales intermedias en su {tipo_empresa}. Implemente capacitación en herramientas especializadas del sector, análisis básico de datos, uso avanzado de redes sociales empresariales y colaboración digital. Use plataformas como Coursera, Udemy o LinkedIn Learning. Establezca 4 horas mensuales de capacitación por empleado.\n\n2. Cree rutas de aprendizaje personalizadas para cada rol en su {tipo_empresa}. Defina competencias específicas por puesto, establezca niveles progresivos de habilidad, cree planes de desarrollo individual y use evaluaciones periódicas. Implemente un sistema de badges o certificaciones internas para reconocer el progreso.\n\n3. Establezca comunidades de práctica digital en su {tipo_empresa}. Cree grupos de interés por herramientas o temas, organice sesiones de intercambio de conocimiento, implemente wikis internos para documentar aprendizajes y fomente la experimentación colaborativa. Dedique 2 horas mensuales a sesiones de intercambio.\n\n4. Implemente evaluación continua y feedback de competencias digitales en su {tipo_empresa}. Use herramientas de assessment digital, realice evaluaciones trimestrales, proporcione feedback constructivo y ajuste planes de capacitación según resultados. Vincule el desarrollo digital con evaluaciones de desempeño y planes de carrera.",
-            'alto': f"1. Posicione a su {tipo_empresa} como centro de excelencia en competencias digitales. Desarrolle programas de certificación avanzada, cree contenido educativo propio, establezca alianzas con universidades y ofrezca capacitación a otras empresas. Convierta las competencias digitales en una ventaja competitiva y fuente de ingresos adicionales.\n\n2. Implemente programas de innovación y experimentación digital liderados por empleados en su {tipo_empresa}. Establezca fondos para proyectos de innovación, cree laboratorios de experimentación, implemente metodologías de design thinking y fomente el intraemprendimiento digital. Destine 10% del tiempo laboral a proyectos de innovación.\n\n3. Desarrolle capacidades de liderazgo digital en todos los niveles de su {tipo_empresa}. Capacite en transformación digital, gestión de equipos remotos, toma de decisiones basada en datos y liderazgo de cambio tecnológico. Cree un pipeline de líderes digitales y establezca programas de mentoría inversa donde empleados jóvenes enseñen a directivos.\n\n4. Cree un ecosistema de aprendizaje continuo y adaptativo en su {tipo_empresa}. Implemente inteligencia artificial para personalizar el aprendizaje, use realidad virtual para capacitación inmersiva, establezca partnerships con empresas tecnológicas globales y cree intercambios internacionales. Mantenga a su equipo en la vanguardia tecnológica mundial."
+            'bajo': "1. Evalúe urgentemente las competencias digitales básicas de su equipo. Realice un diagnóstico individual de habilidades, identifique brechas críticas en uso de computadoras, internet y aplicaciones básicas. Cree perfiles de competencia por puesto y establezca niveles mínimos requeridos. Documente las necesidades de capacitación de cada empleado.\n\n2. Implemente un programa intensivo de alfabetización digital. Capacite en uso básico de computadoras, navegación en internet, correo electrónico y aplicaciones de oficina. Use tutoriales gratuitos de YouTube, cursos de Google Digital Garage y capacitación presencial básica. Dedique 3 horas semanales por empleado durante 8 semanas.\n\n3. Establezca un sistema de apoyo y mentoría digital. Identifique empleados con mejores habilidades digitales como mentores, cree parejas de aprendizaje, establezca sesiones de práctica supervisada y proporcione soporte técnico básico. Cree un ambiente seguro para hacer preguntas y cometer errores.\n\n4. Cree incentivos y reconocimientos para el aprendizaje digital. Establezca certificaciones básicas internas, reconozca públicamente los avances, ofrezca pequeños bonos por completar capacitaciones y cree competencias amigables de habilidades digitales. Celebre cada logro para mantener la motivación.",
+            'medio': "1. Desarrolle un programa estructurado de competencias digitales intermedias. Implemente capacitación en herramientas especializadas del sector, análisis básico de datos, uso avanzado de redes sociales empresariales y colaboración digital. Use plataformas como Coursera, Udemy o LinkedIn Learning. Establezca 4 horas mensuales de capacitación por empleado.\n\n2. Cree rutas de aprendizaje personalizadas para cada rol. Defina competencias específicas por puesto, establezca niveles progresivos de habilidad, cree planes de desarrollo individual y use evaluaciones periódicas. Implemente un sistema de badges o certificaciones internas para reconocer el progreso.\n\n3. Establezca comunidades de práctica digital. Cree grupos de interés por herramientas o temas, organice sesiones de intercambio de conocimiento, implemente wikis internos para documentar aprendizajes y fomente la experimentación colaborativa. Dedique 2 horas mensuales a sesiones de intercambio.\n\n4. Implemente evaluación continua y feedback de competencias digitales. Use herramientas de assessment digital, realice evaluaciones trimestrales, proporcione feedback constructivo y ajuste planes de capacitación según resultados. Vincule el desarrollo digital con evaluaciones de desempeño y planes de carrera.",
+            'alto': "1. Posiciónese como centro de excelencia en competencias digitales. Desarrolle programas de certificación avanzada, cree contenido educativo propio, establezca alianzas con universidades y ofrezca capacitación a otras empresas. Convierta las competencias digitales en una ventaja competitiva y fuente de ingresos adicionales.\n\n2. Implemente programas de innovación y experimentación digital liderados por empleados. Establezca fondos para proyectos de innovación, cree laboratorios de experimentación, implemente metodologías de design thinking y fomente el intraemprendimiento digital. Destine 10% del tiempo laboral a proyectos de innovación.\n\n3. Desarrolle capacidades de liderazgo digital en todos los niveles. Capacite en transformación digital, gestión de equipos remotos, toma de decisiones basada en datos y liderazgo de cambio tecnológico. Cree un pipeline de líderes digitales y establezca programas de mentoría inversa donde empleados jóvenes enseñen a directivos.\n\n4. Cree un ecosistema de aprendizaje continuo y adaptativo. Implemente inteligencia artificial para personalizar el aprendizaje, use realidad virtual para capacitación inmersiva, establezca partnerships con empresas tecnológicas globales y cree intercambios internacionales. Mantenga a su equipo en la vanguardia tecnológica mundial."
         },
         6: {  # Gestión de Información y Toma de Decisiones
-            'bajo': f"1. Establezca un sistema básico de recolección y organización de datos en su {tipo_empresa}. Implemente herramientas simples como Google Sheets o Excel para registrar información clave de ventas, clientes y operaciones. Cree formularios digitales para capturar datos consistentemente y establezca rutinas diarias de actualización. Capacite a 2-3 empleados en el manejo básico de estas herramientas durante 2 semanas.\n\n2. Desarrolle dashboards simples para visualizar información crítica de su {tipo_empresa}. Use herramientas gratuitas como Google Data Studio o Power BI para crear reportes visuales de ventas mensuales, satisfacción del cliente y indicadores operativos básicos. Actualice estos reportes semanalmente y revíselos en reuniones gerenciales para tomar decisiones informadas.\n\n3. Implemente procesos básicos de análisis de datos en su {tipo_empresa}. Identifique 3-5 métricas clave para su negocio, establezca metas numéricas simples y revise el progreso mensualmente. Use análisis básicos como comparaciones mes a mes, identificación de tendencias simples y análisis de causas de variaciones importantes.\n\n4. Cree una cultura de toma de decisiones basada en datos en su {tipo_empresa}. Establezca la regla de respaldar decisiones importantes con datos, documente las decisiones tomadas y sus resultados, y revise trimestralmente la efectividad de las decisiones. Capacite al equipo directivo en interpretación básica de datos y análisis de tendencias.",
-            'medio': f"1. Implemente un sistema integrado de business intelligence en su {tipo_empresa}. Use herramientas como Power BI, Tableau o Zoho Analytics para conectar múltiples fuentes de datos, crear dashboards interactivos y generar reportes automatizados. Establezca KPIs específicos por área y revise el desempeño semanalmente con reportes automatizados.\n\n2. Desarrolle capacidades de análisis predictivo básico en su {tipo_empresa}. Use herramientas de forecasting para predecir ventas, demanda de productos y necesidades de inventario. Implemente análisis de cohortes para entender el comportamiento del cliente y use análisis de tendencias para identificar oportunidades de crecimiento. Dedique 4 horas semanales a análisis avanzado.\n\n3. Cree un sistema de gestión de datos centralizado en su {tipo_empresa}. Implemente un data warehouse básico, establezca procesos de limpieza y validación de datos, y cree políticas de calidad de datos. Use herramientas como Google Cloud, AWS o Azure para almacenamiento seguro y accesible de información crítica.\n\n4. Establezca procesos avanzados de toma de decisiones en su {tipo_empresa}. Implemente metodologías de análisis de decisiones, use técnicas de A/B testing para validar estrategias, y cree comités de datos para decisiones importantes. Capacite al equipo gerencial en análisis estadístico básico y interpretación de datos complejos.",
-            'alto': f"1. Lidera la excelencia en gestión de datos como {tipo_empresa} modelo del sector. Implemente arquitecturas de datos avanzadas, use machine learning para insights predictivos, desarrolle modelos de análisis propietarios y cree ventajas competitivas basadas en datos. Establezca un equipo dedicado de científicos de datos y analistas especializados.\n\n2. Desarrolle capacidades de inteligencia artificial para toma de decisiones en su {tipo_empresa}. Implemente algoritmos de machine learning para optimización automática, use procesamiento de lenguaje natural para análisis de sentimientos, y desarrolle sistemas de recomendación personalizados. Invierta 15-20% de ingresos en tecnologías de IA y análisis avanzado.\n\n3. Cree ecosistemas de datos que generen valor para su {tipo_empresa} y partners. Desarrolle APIs de datos, implemente data monetization strategies, cree marketplace de insights y establezca alianzas estratégicas basadas en intercambio de datos. Genere ingresos adicionales vendiendo insights y análisis especializados.\n\n4. Conviértase en referente de innovación en analytics como {tipo_empresa} líder. Publique estudios de mercado basados en sus datos, participe en conferencias de big data, colabore con universidades en investigación y desarrolle soluciones de analytics como servicio. Establezca centros de excelencia en análisis de datos."
+            'bajo': "1. Establezca un sistema básico de recolección y organización de datos. Implemente herramientas simples como Google Sheets o Excel para registrar información clave de ventas, clientes y operaciones. Cree formularios digitales para capturar datos consistentemente y establezca rutinas diarias de actualización. Capacite a 2-3 empleados en el manejo básico de estas herramientas durante 2 semanas.\n\n2. Desarrolle dashboards simples para visualizar información crítica. Use herramientas gratuitas como Google Data Studio o Power BI para crear reportes visuales de ventas mensuales, satisfacción del cliente y indicadores operativos básicos. Actualice estos reportes semanalmente y revíselos en reuniones gerenciales para tomar decisiones informadas.\n\n3. Implemente procesos básicos de análisis de datos. Identifique 3-5 métricas clave para su negocio, establezca metas numéricas simples y revise el progreso mensualmente. Use análisis básicos como comparaciones mes a mes, identificación de tendencias simples y análisis de causas de variaciones importantes.\n\n4. Cree una cultura de toma de decisiones basada en datos. Establezca la regla de respaldar decisiones importantes con datos, documente las decisiones tomadas y sus resultados, y revise trimestralmente la efectividad de las decisiones. Capacite al equipo directivo en interpretación básica de datos y análisis de tendencias.",
+            'medio': "1. Implemente un sistema integrado de business intelligence. Use herramientas como Power BI, Tableau o Zoho Analytics para conectar múltiples fuentes de datos, crear dashboards interactivos y generar reportes automatizados. Establezca KPIs específicos por área y revise el desempeño semanalmente con reportes automatizados.\n\n2. Desarrolle capacidades de análisis predictivo básico. Use herramientas de forecasting para predecir ventas, demanda de productos y necesidades de inventario. Implemente análisis de cohortes para entender el comportamiento del cliente y use análisis de tendencias para identificar oportunidades de crecimiento. Dedique 4 horas semanales a análisis avanzado.\n\n3. Cree un sistema de gestión de datos centralizado. Implemente un data warehouse básico, establezca procesos de limpieza y validación de datos, y cree políticas de calidad de datos. Use herramientas como Google Cloud, AWS o Azure para almacenamiento seguro y accesible de información crítica.\n\n4. Establezca procesos avanzados de toma de decisiones. Implemente metodologías de análisis de decisiones, use técnicas de A/B testing para validar estrategias, y cree comités de datos para decisiones importantes. Capacite al equipo gerencial en análisis estadístico básico y interpretación de datos complejos.",
+            'alto': "1. Lidera la excelencia en gestión de datos en el sector. Implemente arquitecturas de datos avanzadas, use machine learning para insights predictivos, desarrolle modelos de análisis propietarios y cree ventajas competitivas basadas en datos. Establezca un equipo dedicado de científicos de datos y analistas especializados.\n\n2. Desarrolle capacidades de inteligencia artificial para toma de decisiones. Implemente algoritmos de machine learning para optimización automática, use procesamiento de lenguaje natural para análisis de sentimientos, y desarrolle sistemas de recomendación personalizados. Invierta 15-20% de ingresos en tecnologías de IA y análisis avanzado.\n\n3. Cree ecosistemas de datos que generen valor para partners. Desarrolle APIs de datos, implemente data monetization strategies, cree marketplace de insights y establezca alianzas estratégicas basadas en intercambio de datos. Genere ingresos adicionales vendiendo insights y análisis especializados.\n\n4. Conviértase en referente de innovación en analytics. Publique estudios de mercado basados en sus datos, participe en conferencias de big data, colabore con universidades en investigación y desarrolle soluciones de analytics como servicio. Establezca centros de excelencia en análisis de datos."
         },
         7: {  # Canales de Venta Online y Experiencia del Usuario
-            'bajo': f"1. Establezca inmediatamente una presencia básica de ventas online para su {tipo_empresa}. Cree perfiles de venta en Facebook Marketplace, Instagram Shopping y WhatsApp Business con catálogos de productos completos. Configure métodos de pago simples como transferencias bancarias y use herramientas gratuitas como Linktree para centralizar todos sus canales de venta.\n\n2. Desarrolle un sitio web básico con capacidades de e-commerce para su {tipo_empresa}. Use plataformas como Shopify, WooCommerce o Tienda Nube para crear una tienda online simple. Incluya fotos de calidad de productos, descripciones claras, precios visibles y formularios de contacto. Asegúrese de que funcione correctamente en dispositivos móviles.\n\n3. Implemente sistemas básicos de atención al cliente digital en su {tipo_empresa}. Configure respuestas automáticas en WhatsApp Business, cree FAQ en su sitio web, establezca horarios claros de atención y use herramientas como Calendly para programar citas. Responda a consultas en menos de 2 horas durante horario laboral.\n\n4. Inicie actividades básicas de marketing digital para impulsar ventas en su {tipo_empresa}. Publique contenido de productos regularmente en redes sociales, use hashtags relevantes, colabore con influencers locales pequeños y cree promociones especiales para seguidores. Dedique $50-100 mensuales a publicidad digital básica en Facebook e Instagram.",
-            'medio': f"1. Optimice su plataforma de e-commerce en {tipo_empresa} para mejorar la experiencia del usuario. Implemente búsqueda avanzada de productos, filtros por categorías, sistema de reseñas de clientes y checkout simplificado. Use herramientas como Google Analytics para analizar el comportamiento del usuario y optimizar la conversión. Mantenga una tasa de conversión superior al 2%.\n\n2. Desarrolle estrategias omnicanal integradas para su {tipo_empresa}. Conecte ventas online y offline, implemente click & collect, cree programas de fidelización digital y use CRM para gestionar clientes across channels. Establezca inventario sincronizado entre todos los canales y ofrezca experiencias consistentes.\n\n3. Implemente herramientas avanzadas de marketing digital en su {tipo_empresa}. Use email marketing automation, retargeting ads, Google Ads, SEO avanzado y marketing de contenidos. Cree funnels de ventas estructurados, segmente audiencias y personalice comunicaciones. Invierta 8-12% de ingresos en marketing digital y mida ROI de cada canal.\n\n4. Optimice continuamente la experiencia del cliente en su {tipo_empresa}. Implemente chatbots inteligentes, use herramientas de feedback como surveys post-compra, analice customer journey mapping y optimice puntos de fricción. Mantenga Net Promoter Score superior a 50 y tiempo de respuesta menor a 1 hora.",
-            'alto': f"1. Lidera la innovación en e-commerce como {tipo_empresa} referente del sector. Implemente tecnologías emergentes como realidad aumentada para prueba de productos, inteligencia artificial para recomendaciones personalizadas, y voice commerce. Desarrolle aplicaciones móviles nativas y use progressive web apps para experiencias superiores.\n\n2. Cree experiencias de cliente hiperpersonalizadas en su {tipo_empresa}. Use machine learning para personalización en tiempo real, implemente dynamic pricing, desarrolle productos customizados bajo demanda y cree experiencias inmersivas con VR/AR. Mantenga tasas de conversión superiores al 5% y customer lifetime value 3x superior al promedio.\n\n3. Expanda su {tipo_empresa} a mercados internacionales con e-commerce global. Implemente multi-currency, multi-language, logística internacional y compliance con regulaciones globales. Use marketplaces internacionales como Amazon Global, eBay y Alibaba. Genere al menos 25% de ingresos de mercados internacionales.\n\n4. Conviértase en plataforma de e-commerce para otras empresas con su {tipo_empresa}. Desarrolle marketplace propio, ofrezca servicios de fulfillment, cree APIs para integraciones y establezca programa de afiliados. Genere ingresos recurrentes a través de comisiones, subscripciones y servicios de e-commerce como servicio."
+            'bajo': "1. Establezca inmediatamente una presencia básica de ventas online. Cree perfiles de venta en Facebook Marketplace, Instagram Shopping y WhatsApp Business con catálogos de productos completos. Configure métodos de pago simples como transferencias bancarias y use herramientas gratuitas como Linktree para centralizar todos sus canales de venta.\n\n2. Desarrolle un sitio web básico con capacidades de e-commerce. Use plataformas como Shopify, WooCommerce o Tienda Nube para crear una tienda online simple. Incluya fotos de calidad de productos, descripciones claras, precios visibles y formularios de contacto. Asegúrese de que funcione correctamente en dispositivos móviles.\n\n3. Implemente sistemas básicos de atención al cliente digital. Configure respuestas automáticas en WhatsApp Business, cree FAQ en su sitio web, establezca horarios claros de atención y use herramientas como Calendly para programar citas. Responda a consultas en menos de 2 horas durante horario laboral.\n\n4. Inicie actividades básicas de marketing digital para impulsar ventas. Publique contenido de productos regularmente en redes sociales, use hashtags relevantes, colabore con influencers locales pequeños y cree promociones especiales para seguidores. Dedique $50-100 mensuales a publicidad digital básica en Facebook e Instagram.",
+            'medio': "1. Optimice su plataforma de e-commerce para mejorar la experiencia del usuario. Implemente búsqueda avanzada de productos, filtros por categorías, sistema de reseñas de clientes y checkout simplificado. Use herramientas como Google Analytics para analizar el comportamiento del usuario y optimizar la conversión. Mantenga una tasa de conversión superior al 2%.\n\n2. Desarrolle estrategias omnicanal integradas. Conecte ventas online y offline, implemente click & collect, cree programas de fidelización digital y use CRM para gestionar clientes across channels. Establezca inventario sincronizado entre todos los canales y ofrezca experiencias consistentes.\n\n3. Implemente herramientas avanzadas de marketing digital. Use email marketing automation, retargeting ads, Google Ads, SEO avanzado y marketing de contenidos. Cree funnels de ventas estructurados, segmente audiencias y personalice comunicaciones. Invierta 8-12% de ingresos en marketing digital y mida ROI de cada canal.\n\n4. Optimice continuamente la experiencia del cliente. Implemente chatbots inteligentes, use herramientas de feedback como surveys post-compra, analice customer journey mapping y optimice puntos de fricción. Mantenga Net Promoter Score superior a 50 y tiempo de respuesta menor a 1 hora.",
+            'alto': "1. Lidera la innovación en e-commerce en el sector. Implemente tecnologías emergentes como realidad aumentada para prueba de productos, inteligencia artificial para recomendaciones personalizadas, y voice commerce. Desarrolle aplicaciones móviles nativas y use progressive web apps para experiencias superiores.\n\n2. Cree experiencias de cliente hiperpersonalizadas. Use machine learning para personalización en tiempo real, implemente dynamic pricing, desarrolle productos customizados bajo demanda y cree experiencias inmersivas con VR/AR. Mantenga tasas de conversión superiores al 5% y customer lifetime value 3x superior al promedio.\n\n3. Expanda a mercados internacionales con e-commerce global. Implemente multi-currency, multi-language, logística internacional y compliance con regulaciones globales. Use marketplaces internacionales como Amazon Global, eBay y Alibaba. Genere al menos 25% de ingresos de mercados internacionales.\n\n4. Conviértase en plataforma de e-commerce para otras empresas. Desarrolle marketplace propio, ofrezca servicios de fulfillment, cree APIs para integraciones y establezca programa de afiliados. Genere ingresos recurrentes a través de comisiones, subscripciones y servicios de e-commerce como servicio."
         },
         8: {  # Gestión de Calidad y Ciberseguridad
-            'bajo': f"1. Implemente medidas básicas de ciberseguridad en su {tipo_empresa} inmediatamente. Configure contraseñas fuertes y únicas para todas las cuentas, active autenticación de dos factores en servicios críticos, instale antivirus actualizado en todas las computadoras y establezca respaldos automáticos diarios en la nube. Capacite a todo el personal en reconocimiento de phishing y fraudes digitales.\n\n2. Establezca políticas básicas de seguridad digital en su {tipo_empresa}. Cree un manual simple de buenas prácticas de seguridad, defina roles de acceso a sistemas críticos, establezca protocolos para el uso de dispositivos personales y cree procedimientos básicos para reportar incidentes de seguridad. Revise y actualice estas políticas trimestralmente.\n\n3. Implemente controles básicos de calidad en procesos digitales de su {tipo_empresa}. Establezca checklists para procesos críticos, cree formularios de verificación de calidad, implemente revisiones por pares en tareas importantes y documente errores comunes para prevención. Use herramientas simples como Google Forms para tracking de calidad.\n\n4. Cree un plan básico de respuesta a incidentes para su {tipo_empresa}. Identifique contactos de emergencia técnica, establezca procedimientos simples para diferentes tipos de incidentes, cree respaldos de información crítica y defina responsabilidades claras. Practique el plan de respuesta semestralmente con simulacros básicos.",
-            'medio': f"1. Fortalezca significativamente la ciberseguridad de su {tipo_empresa} con herramientas avanzadas. Implemente firewall empresarial, sistemas de detección de intrusiones, monitoreo de red 24/7 y gestión centralizada de parches de seguridad. Use herramientas como endpoint protection, email security y web filtering. Realice auditorías de seguridad trimestrales.\n\n2. Desarrolle un programa integral de gestión de riesgos en su {tipo_empresa}. Realice evaluaciones de riesgo regulares, implemente matriz de riesgos digitales, cree planes de continuidad de negocio y establezca seguros de ciberseguridad. Use frameworks como ISO 27001 básico para estructurar el programa de seguridad.\n\n3. Implemente sistemas avanzados de gestión de calidad digital en su {tipo_empresa}. Use herramientas de quality management como Monday.com o Asana para tracking, implemente métricas de calidad automatizadas, cree dashboards de indicadores de calidad y establezca procesos de mejora continua. Certifique procesos críticos con estándares de calidad.\n\n4. Establezca capacidades avanzadas de respuesta a incidentes en su {tipo_empresa}. Cree un equipo de respuesta a incidentes, implemente herramientas de forensics digital, establezca comunicación de crisis y desarrolle playbooks detallados para diferentes escenarios. Realice ejercicios de respuesta a incidentes mensualmente.",
-            'alto': f"1. Lidera la excelencia en ciberseguridad como {tipo_empresa} modelo del sector. Implemente security operations center (SOC), use threat intelligence avanzada, desarrolle capacidades de ethical hacking interno y cree programas de bug bounty. Obtenga certificaciones como ISO 27001, SOC 2 y ofrezca servicios de ciberseguridad a otras empresas.\n\n2. Desarrolle capacidades de ciberseguridad de nivel empresarial en su {tipo_empresa}. Implemente zero trust architecture, use inteligencia artificial para detección de amenazas, desarrolle capacidades de threat hunting y cree red team interno. Invierta 10-15% de presupuesto IT en ciberseguridad y mantenga cyber resilience superior.\n\n3. Conviértase en referente de calidad digital como {tipo_empresa} innovadora. Implemente quality 4.0 con IoT y AI, use digital twins para optimización de calidad, desarrolle predictive quality analytics y cree sistemas de calidad autónomos. Publique benchmarks de calidad de la industria y ofrezca consultoría en calidad digital.\n\n4. Cree ecosistemas de seguridad y calidad que generen valor para su {tipo_empresa}. Desarrolle threat intelligence sharing, cree comunidades de práctica en ciberseguridad, establezca partnerships con vendors de seguridad y genere ingresos adicionales con servicios de security as a service. Lidera iniciativas de ciberseguridad sectorial."
+            'bajo': "1. Implemente medidas básicas de ciberseguridad inmediatamente. Configure contraseñas fuertes y únicas para todas las cuentas, active autenticación de dos factores en servicios críticos, instale antivirus actualizado en todas las computadoras y establezca respaldos automáticos diarios en la nube. Capacite a todo el personal en reconocimiento de phishing y fraudes digitales.\n\n2. Establezca políticas básicas de seguridad digital. Cree un manual simple de buenas prácticas de seguridad, defina roles de acceso a sistemas críticos, establezca protocolos para el uso de dispositivos personales y cree procedimientos básicos para reportar incidentes de seguridad. Revise y actualice estas políticas trimestralmente.\n\n3. Implemente controles básicos de calidad en procesos digitales. Establezca checklists para procesos críticos, cree formularios de verificación de calidad, implemente revisiones por pares en tareas importantes y documente errores comunes para prevención. Use herramientas simples como Google Forms para tracking de calidad.\n\n4. Cree un plan básico de respuesta a incidentes. Identifique contactos de emergencia técnica, establezca procedimientos simples para diferentes tipos de incidentes, cree respaldos de información crítica y defina responsabilidades claras. Practique el plan de respuesta semestralmente con simulacros básicos.",
+            'medio': "1. Fortalezca significativamente la ciberseguridad con herramientas avanzadas. Implemente firewall empresarial, sistemas de detección de intrusiones, monitoreo de red 24/7 y gestión centralizada de parches de seguridad. Use herramientas como endpoint protection, email security y web filtering. Realice auditorías de seguridad trimestrales.\n\n2. Desarrolle un programa integral de gestión de riesgos. Realice evaluaciones de riesgo regulares, implemente matriz de riesgos digitales, cree planes de continuidad de negocio y establezca seguros de ciberseguridad. Use frameworks como ISO 27001 básico para estructurar el programa de seguridad.\n\n3. Implemente sistemas avanzados de gestión de calidad digital. Use herramientas de quality management como Monday.com o Asana para tracking, implemente métricas de calidad automatizadas, cree dashboards de indicadores de calidad y establezca procesos de mejora continua. Certifique procesos críticos con estándares de calidad.\n\n4. Establezca capacidades avanzadas de respuesta a incidentes. Cree un equipo de respuesta a incidentes, implemente herramientas de forensics digital, establezca comunicación de crisis y desarrolle playbooks detallados para diferentes escenarios. Realice ejercicios de respuesta a incidentes mensualmente.",
+            'alto': "1. Lidera la excelencia en ciberseguridad en el sector. Implemente security operations center (SOC), use threat intelligence avanzada, desarrolle capacidades de ethical hacking interno y cree programas de bug bounty. Obtenga certificaciones como ISO 27001, SOC 2 y ofrezca servicios de ciberseguridad a otras empresas.\n\n2. Desarrolle capacidades de ciberseguridad de nivel empresarial. Implemente zero trust architecture, use inteligencia artificial para detección de amenazas, desarrolle capacidades de threat hunting y cree red team interno. Invierta 10-15% de presupuesto IT en ciberseguridad y mantenga cyber resilience superior.\n\n3. Conviértase en referente de calidad digital. Implemente quality 4.0 con IoT y AI, use digital twins para optimización de calidad, desarrolle predictive quality analytics y cree sistemas de calidad autónomos. Publique benchmarks de calidad de la industria y ofrezca consultoría en calidad digital.\n\n4. Cree ecosistemas de seguridad y calidad que generen valor. Desarrolle threat intelligence sharing, cree comunidades de práctica en ciberseguridad, establezca partnerships con vendors de seguridad y genere ingresos adicionales con servicios de security as a service. Lidera iniciativas de ciberseguridad sectorial."
         },
         9: {  # Inversión en Tecnología
-            'bajo': f"1. Establezca un presupuesto básico dedicado para tecnología en su {tipo_empresa}. Destine al menos 3-5% de ingresos mensuales para inversiones tecnológicas, cree una cuenta separada para gastos de tecnología y priorice inversiones según necesidades críticas. Comience con herramientas básicas como software de contabilidad, antivirus y almacenamiento en la nube.\n\n2. Desarrolle un proceso simple de evaluación de inversiones tecnológicas en su {tipo_empresa}. Cree una lista de necesidades tecnológicas prioritarias, investigue 2-3 opciones para cada necesidad, compare costos vs beneficios básicos y documente decisiones de compra. Establezca criterios simples como facilidad de uso, costo mensual y soporte técnico disponible.\n\n3. Busque fuentes de financiamiento básico para tecnología en su {tipo_empresa}. Investigue programas gubernamentales de apoyo a PYMEs, explore opciones de financiamiento de proveedores tecnológicos, considere leasing de equipos costosos y evalúe créditos bancarios específicos para tecnología. Mantenga un registro de todas las opciones de financiamiento disponibles.\n\n4. Implemente un sistema básico de seguimiento de ROI tecnológico en su {tipo_empresa}. Documente el costo de cada herramienta tecnológica, mida beneficios simples como tiempo ahorrado o errores reducidos, y revise trimestralmente si cada inversión está generando valor. Cree un registro simple de inversiones tecnológicas y sus resultados.",
-            'medio': f"1. Desarrolle una estrategia integral de inversión tecnológica para su {tipo_empresa}. Cree un plan tecnológico a 2-3 años, establezca roadmap de inversiones por prioridad, aumente el presupuesto tecnológico al 8-12% de ingresos y diversifique inversiones entre software, hardware e infraestructura. Revise y ajuste la estrategia semestralmente.\n\n2. Implemente procesos avanzados de evaluación de ROI tecnológico en su {tipo_empresa}. Use métricas financieras como NPV y payback period, mida impactos cualitativos como satisfacción del cliente, implemente tracking de productividad por herramienta y cree dashboards de performance tecnológico. Establezca KPIs específicos para cada inversión tecnológica.\n\n3. Diversifique fuentes de financiamiento para tecnología en su {tipo_empresa}. Explore venture capital para startups tecnológicas, considere partnerships estratégicos con proveedores, evalúe opciones de equity financing y cree fondos internos de innovación. Mantenga un portfolio balanceado entre inversiones de bajo y alto riesgo.\n\n4. Cree un centro de excelencia tecnológica en su {tipo_empresa}. Establezca un equipo dedicado para evaluación tecnológica, implemente procesos de innovation management, cree laboratorios de prueba para nuevas tecnologías y desarrolle capacidades de technology scouting. Invierta en capacitación especializada del equipo tecnológico.",
-            'alto': f"1. Lidera la inversión estratégica en tecnología como {tipo_empresa} innovadora del sector. Desarrolle capacidades de venture capital interno, cree fondos de corporate venture capital, invierta en startups tecnológicas complementarias y establezca aceleradoras de innovación. Destine 15-20% de ingresos a inversiones tecnológicas estratégicas y genere retornos superiores al 25% anual.\n\n2. Conviértase en technology investor y advisor para otras empresas con su {tipo_empresa}. Ofrezca servicios de consultoría en inversión tecnológica, cree fondos de inversión especializados en tecnología, desarrolle expertise en due diligence tecnológico y establezca network de inversores tecnológicos. Genere ingresos adicionales a través de advisory fees y carried interest.\n\n3. Desarrolle ecosistemas de innovación tecnológica alrededor de su {tipo_empresa}. Cree innovation hubs, establezca partnerships con universidades para I+D, desarrolle programas de open innovation y cree marketplace de tecnologías. Lidera consorcios de innovación sectorial y participa en iniciativas de smart cities o industry 4.0.\n\n4. Cree valor a través de intellectual property y technology licensing en su {tipo_empresa}. Desarrolle patentes propias, cree portfolio de IP, establezca licensing agreements y genere ingresos recurrentes a través de royalties. Invierta en technology transfer offices y desarrolle capacidades de commercialization de tecnologías propias."
+            'bajo': "1. Establezca un presupuesto básico dedicado para tecnología. Destine al menos 3-5% de ingresos mensuales para inversiones tecnológicas, cree una cuenta separada para gastos de tecnología y priorice inversiones según necesidades críticas. Comience con herramientas básicas como software de contabilidad, antivirus y almacenamiento en la nube.\n\n2. Desarrolle un proceso simple de evaluación de inversiones tecnológicas. Cree una lista de necesidades tecnológicas prioritarias, investigue 2-3 opciones para cada necesidad, compare costos vs beneficios básicos y documente decisiones de compra. Establezca criterios simples como facilidad de uso, costo mensual y soporte técnico disponible.\n\n3. Busque fuentes de financiamiento básico para tecnología. Investigue programas gubernamentales de apoyo a PYMEs, explore opciones de financiamiento de proveedores tecnológicos, considere leasing de equipos costosos y evalúe créditos bancarios específicos para tecnología. Mantenga un registro de todas las opciones de financiamiento disponibles.\n\n4. Implemente un sistema básico de seguimiento de ROI tecnológico. Documente el costo de cada herramienta tecnológica, mida beneficios simples como tiempo ahorrado o errores reducidos, y revise trimestralmente si cada inversión está generando valor. Cree un registro simple de inversiones tecnológicas y sus resultados.",
+            'medio': "1. Desarrolle una estrategia integral de inversión tecnológica. Cree un plan tecnológico a 2-3 años, establezca roadmap de inversiones por prioridad, aumente el presupuesto tecnológico al 8-12% de ingresos y diversifique inversiones entre software, hardware e infraestructura. Revise y ajuste la estrategia semestralmente.\n\n2. Implemente procesos avanzados de evaluación de ROI tecnológico. Use métricas financieras como NPV y payback period, mida impactos cualitativos como satisfacción del cliente, implemente tracking de productividad por herramienta y cree dashboards de performance tecnológico. Establezca KPIs específicos para cada inversión tecnológica.\n\n3. Diversifique fuentes de financiamiento para tecnología. Explore venture capital para startups tecnológicas, considere partnerships estratégicos con proveedores, evalúe opciones de equity financing y cree fondos internos de innovación. Mantenga un portfolio balanceado entre inversiones de bajo y alto riesgo.\n\n4. Cree un centro de excelencia tecnológica. Establezca un equipo dedicado para evaluación tecnológica, implemente procesos de innovation management, cree laboratorios de prueba para nuevas tecnologías y desarrolle capacidades de technology scouting. Invierta en capacitación especializada del equipo tecnológico.",
+            'alto': "1. Lidera la inversión estratégica en tecnología en el sector. Desarrolle capacidades de venture capital interno, cree fondos de corporate venture capital, invierta en startups tecnológicas complementarias y establezca aceleradoras de innovación. Destine 15-20% de ingresos a inversiones tecnológicas estratégicas y genere retornos superiores al 25% anual.\n\n2. Conviértase en technology investor y advisor para otras empresas. Ofrezca servicios de consultoría en inversión tecnológica, cree fondos de inversión especializados en tecnología, desarrolle expertise en due diligence tecnológico y establezca network de inversores tecnológicos. Genere ingresos adicionales a través de advisory fees y carried interest.\n\n3. Desarrolle ecosistemas de innovación tecnológica. Cree innovation hubs, establezca partnerships con universidades para I+D, desarrolle programas de open innovation y cree marketplace de tecnologías. Lidera consorcios de innovación sectorial y participa en iniciativas de smart cities o industry 4.0.\n\n4. Cree valor a través de intellectual property y technology licensing. Desarrolle patentes propias, cree portfolio de IP, establezca licensing agreements y genere ingresos recurrentes a través de royalties. Invierta en technology transfer offices y desarrolle capacidades de commercialization de tecnologías propias."
         },
         10: {  # Protección de Datos y Propiedad Intelectual
-            'bajo': f"1. Implemente políticas básicas de protección de datos en su {tipo_empresa} inmediatamente. Cree procedimientos simples para manejo de información de clientes, establezca controles de acceso básicos a datos sensibles, implemente respaldos seguros de información crítica y capacite al personal en principios básicos de privacidad. Use herramientas como Google Drive con permisos restringidos para almacenamiento seguro.\n\n2. Establezca cumplimiento básico con regulaciones de protección de datos en su {tipo_empresa}. Investigue las leyes locales de protección de datos, cree avisos de privacidad simples para clientes, implemente procesos básicos de consentimiento y establezca procedimientos para solicitudes de información personal. Consulte con abogado especializado en protección de datos.\n\n3. Inicie la protección básica de propiedad intelectual de su {tipo_empresa}. Documente y registre marcas comerciales básicas, proteja logos y nombres comerciales, cree contratos simples de confidencialidad para empleados y establezca políticas básicas de uso de información propietaria. Registre dominios web relevantes para proteger la marca.\n\n4. Cree procedimientos básicos de manejo de información sensible en su {tipo_empresa}. Clasifique información según nivel de sensibilidad, establezca protocolos simples para compartir información, implemente destrucción segura de documentos físicos y digitales, y cree políticas básicas de uso de dispositivos personales. Capacite al personal en manejo seguro de información.\n\n",
-            'medio': f"1. Fortalezca significativamente el sistema de protección de datos de su {tipo_empresa}. Implemente data loss prevention (DLP), use encryption para datos sensibles, establezca access controls granulares y cree audit trails completos. Implemente herramientas como Microsoft Information Protection o Google Cloud DLP para protección automatizada de datos.\n\n2. Desarrolle compliance avanzado con regulaciones de privacidad en su {tipo_empresa}. Implemente frameworks como GDPR o CCPA según aplicabilidad, cree privacy impact assessments, establezca data protection officer role y desarrolle procesos de breach notification. Realice auditorías de privacidad semestrales y mantenga documentación completa de compliance.\n\n3. Cree una estrategia integral de protección de propiedad intelectual para su {tipo_empresa}. Desarrolle portfolio de patentes, implemente trade secret protection, cree licensing agreements y establezca IP monitoring systems. Use herramientas de IP management y trabaje con abogados especializados en propiedad intelectual para protección avanzada.\n\n4. Implemente data governance avanzado en su {tipo_empresa}. Cree data stewardship roles, establezca data quality management, implemente master data management y desarrolle data lineage tracking. Use herramientas como Collibra o Informatica para governance automatizado y establezca data governance council.\n\n",
-            'alto': f"1. Lidera la excelencia en protección de datos como {tipo_empresa} modelo del sector. Implemente privacy by design en todos los procesos, use privacy-enhancing technologies como differential privacy, desarrolle zero-knowledge architectures y cree privacy-preserving analytics. Obtenga certificaciones como ISO 27701 y ofrezca servicios de privacy consulting.\n\n2. Desarrolle capacidades de data governance de nivel empresarial en su {tipo_empresa}. Implemente data fabric architectures, use AI para data discovery y classification, desarrolle automated compliance monitoring y cree self-service data governance. Establezca data governance as a service para otras empresas y genere ingresos adicionales.\n\n3. Conviértase en innovador en protección de propiedad intelectual con su {tipo_empresa}. Desarrolle blockchain-based IP protection, use AI para patent analytics, cree IP monetization strategies y establezca IP-backed financing. Genere ingresos significativos a través de licensing, IP sales y IP-as-a-service offerings.\n\n4. Cree ecosistemas de datos que generen valor mientras protegen privacidad en su {tipo_empresa}. Desarrolle privacy-preserving data sharing, implemente federated learning, cree data trusts y establezca data cooperatives. Lidera iniciativas de responsible AI y ethical data use en su sector, generando ventaja competitiva a través de trust y transparency."
+            'bajo': "1. Implemente políticas básicas de protección de datos inmediatamente. Cree procedimientos simples para manejo de información de clientes, establezca controles de acceso básicos a datos sensibles, implemente respaldos seguros de información crítica y capacite al personal en principios básicos de privacidad. Use herramientas como Google Drive con permisos restringidos para almacenamiento seguro.\n\n2. Establezca cumplimiento básico con regulaciones de protección de datos. Investigue las leyes locales de protección de datos, cree avisos de privacidad simples para clientes, implemente procesos básicos de consentimiento y establezca procedimientos para solicitudes de información personal. Consulte con abogado especializado en protección de datos.\n\n3. Inicie la protección básica de propiedad intelectual. Documente y registre marcas comerciales básicas, proteja logos y nombres comerciales, cree contratos simples de confidencialidad para empleados y establezca políticas básicas de uso de información propietaria. Registre dominios web relevantes para proteger la marca.\n\n4. Cree procedimientos básicos de manejo de información sensible. Clasifique información según nivel de sensibilidad, establezca protocolos simples para compartir información, implemente destrucción segura de documentos físicos y digitales, y cree políticas básicas de uso de dispositivos personales. Capacite al personal en manejo seguro de información.\n\n",
+            'medio': "1. Fortalezca significativamente el sistema de protección de datos. Implemente data loss prevention (DLP), use encryption para datos sensibles, establezca access controls granulares y cree audit trails completos. Implemente herramientas como Microsoft Information Protection o Google Cloud DLP para protección automatizada de datos.\n\n2. Desarrolle compliance avanzado con regulaciones de privacidad. Implemente frameworks como GDPR o CCPA según aplicabilidad, cree privacy impact assessments, establezca data protection officer role y desarrolle procesos de breach notification. Realice auditorías de privacidad semestrales y mantenga documentación completa de compliance.\n\n3. Cree una estrategia integral de protección de propiedad intelectual. Desarrolle portfolio de patentes, implemente trade secret protection, cree licensing agreements y establezca IP monitoring systems. Use herramientas de IP management y trabaje con abogados especializados en propiedad intelectual para protección avanzada.\n\n4. Implemente data governance avanzado. Cree data stewardship roles, establezca data quality management, implemente master data management y desarrolle data lineage tracking. Use herramientas como Collibra o Informatica para governance automatizado y establezca data governance council.\n\n",
+            'alto': "1. Lidera la excelencia en protección de datos en el sector. Implemente privacy by design en todos los procesos, use privacy-enhancing technologies como differential privacy, desarrolle zero-knowledge architectures y cree privacy-preserving analytics. Obtenga certificaciones como ISO 27701 y ofrezca servicios de privacy consulting.\n\n2. Desarrolle capacidades de data governance de nivel empresarial. Implemente data fabric architectures, use AI para data discovery y classification, desarrolle automated compliance monitoring y cree self-service data governance. Establezca data governance as a service para otras empresas y genere ingresos adicionales.\n\n3. Conviértase en innovador en protección de propiedad intelectual. Desarrolle blockchain-based IP protection, use AI para patent analytics, cree IP monetization strategies y establezca IP-backed financing. Genere ingresos significativos a través de licensing, IP sales y IP-as-a-service offerings.\n\n4. Cree ecosistemas de datos que generen valor mientras protegen privacidad. Desarrolle privacy-preserving data sharing, implemente federated learning, cree data trusts y establezca data cooperatives. Lidera iniciativas de responsible AI y ethical data use en su sector, generando ventaja competitiva a través de trust y transparency."
         }
     }
     
     prompt = f"""
-    Eres un consultor senior especializado en transformación digital para PYMEs en Costa Rica y Centroamérica.
+    Eres un consultor senior especializado en estrategia digital para emprendimientos en etapa de gestación en Latinoamérica.
     
-    EMPRESA ANALIZADA:
-    Tipo: {tipo_empresa}
-    Tamaño: {tamano_empresa if tamano_empresa else 'No especificado'}
-    Eje evaluado: {eje_nombre}
-    Puntaje obtenido: {puntaje}/5
-    Nivel de madurez: {enfoque}
+    EMPRENDIMIENTO ANALIZADO:
+    Tipo/Industria: {tipo_empresa}
+    Etapa: {tamano_empresa if tamano_empresa else 'No especificado'}
+    Vector evaluado: {eje_nombre}
+    Puntaje obtenido: {puntaje}/4
+    Nivel de preparación: {enfoque}
     
     CONTEXTO DEL PUNTAJE:
     {contexto_puntaje}
     
-    CONTEXTO DEL TAMAÑO DE EMPRESA:
-    - Microempresa (1-10 empleados): Recursos muy limitados, enfoque en herramientas básicas y gratuitas
-    - Pequeña (11-50 empleados): Presupuesto moderado, soluciones SaaS accesibles
-    - Mediana (51-200 empleados): Mayor presupuesto, sistemas integrados
-    - Grande (200+ empleados): Recursos amplios, soluciones empresariales
+    CONTEXTO DE ETAPAS DE EMPRENDIMIENTO:
+    - Ideación (0-1 puntos): Solo idea, necesita establecer todo desde cero, recursos mínimos
+    - MVP en desarrollo (2 puntos): Construyendo prototipo, necesita estructurar vectores digitales
+    - MVP lanzado (3 puntos): Primeros usuarios/clientes, necesita consolidar y optimizar
+    - Tracción temprana (4 puntos): Validación inicial, listo para escalar capacidades digitales
     
-    RESPUESTAS DEL DIAGNÓSTICO:
+    RESPUESTAS DE LA EVALUACIÓN:
     {json.dumps(respuestas, indent=2)}
     
     INSTRUCCIONES:
-    Basado en el puntaje de {puntaje}/5 y el tamaño {tamano_empresa if tamano_empresa else 'No especificado'}, genera 4 recomendaciones estratégicas:
+    Basado en el puntaje de {puntaje}/4 y la etapa {tamano_empresa if tamano_empresa else 'No especificado'}, genera 4 recomendaciones de ACCIONES PARA ESTABLECER este vector:
     
-    - Si es MEJORA URGENTE (1-2 puntos): Fundamentos básicos adaptados al tamaño de empresa
-    - Si es DESARROLLO (3 puntos): Fortalecer capacidades considerando recursos disponibles
-    - Si es OPTIMIZACIÓN (4-5 puntos): Maximizar fortalezas según escala empresarial
+    - Si es ESTABLECIMIENTO INICIAL (0-2 puntos): Acciones fundamentales para crear el vector desde cero
+    - Si es CONSOLIDACIÓN (3 puntos): Acciones para estructurar y formalizar el vector
+    - Si es AVANZADO (4 puntos): Acciones para escalar y optimizar el vector establecido
+    
+    ENFOQUE: Las recomendaciones deben ser sobre ESTABLECER/CREAR (no mejorar lo existente), considerando que es un emprendimiento nuevo.
     
     CADA RECOMENDACIÓN DEBE:
-    - Ser específica para una {tipo_empresa} de tamaño {tamano_empresa if tamano_empresa else 'No especificado'}
-    - Considerar presupuesto y recursos típicos de este tamaño
-    - Incluir herramientas apropiadas para la escala empresarial
-    - Ser implementable en Centroamérica
-    - 80-100 palabras por recomendación
+    - Ser accionable para el emprendimiento (industria: {tipo_empresa}, etapa: {tamano_empresa if tamano_empresa else 'No especificado'})
+    - Considerar presupuesto limitado típico de startups
+    - Incluir herramientas accesibles o gratuitas cuando sea posible
+    - Ser implementable con equipo pequeño/fundadores
+    - Enfocarse en ESTABLECER el vector (no mejorar lo existente)
+    - 70-90 palabras por recomendación
+    - NO repetir el nombre o tipo de empresa en cada recomendación - usar redacción fluida y directa
     
-    FORMATO REQUERIDO:
-    1. [Recomendación específica para {tipo_empresa} tamaño {tamano_empresa if tamano_empresa else 'No especificado'}]
+    FORMATO REQUERIDO (sin repetir tipo de empresa en cada punto):
+    1. [Acción específica y directa para ESTABLECER este vector]
     
-    2. [Recomendación específica para {tipo_empresa} tamaño {tamano_empresa if tamano_empresa else 'No especificado'}]
+    2. [Acción específica y directa para ESTABLECER este vector]
     
-    3. [Recomendación específica para {tipo_empresa} tamaño {tamano_empresa if tamano_empresa else 'No especificado'}]
+    3. [Acción específica y directa para ESTABLECER este vector]
     
-    4. [Recomendación específica para {tipo_empresa} tamaño {tamano_empresa if tamano_empresa else 'No especificado'}]
+    4. [Acción específica y directa para ESTABLECER este vector]
+    
+    IMPORTANTE: Evite frases como "para su empresa", "en su negocio", "su emprendimiento" repetidamente. Use redacción directa en imperativo.
     """
     
     # Debug: verificar estado de Gemini
@@ -384,7 +393,7 @@ def generar_recomendaciones(eje_id, respuestas, tipo_empresa, puntaje=None, tama
     logger.info(f"Usando recomendaciones específicas - Eje: {eje_id}, Nivel: {nivel}")
     
     if eje_id in recomendaciones_por_eje:
-        return recomendaciones_por_eje[eje_id][nivel]
+        return recomendaciones_por_eje[eje_id][nivel_dict]
     else:
         return recomendaciones_genericas.get(eje_id, f"Recomendaciones para {eje_nombre} en {tipo_empresa} con enfoque de {enfoque}.")
 
@@ -1430,7 +1439,8 @@ def evaluar_eje():
         'success': True,
         'puntaje': puntaje,
         'recomendaciones': recomendaciones,
-        'eje_nombre': EJES_EVALUACION[eje_id]['nombre']
+        'eje_nombre': EJES_EVALUACION[eje_id]['nombre'],
+        'nombre_empresa': session.get('nombre_empresa', 'su empresa')
     })
 
 @app.route('/generar_informe_ejecutivo')
@@ -1453,6 +1463,9 @@ def generar_informe_ejecutivo():
     # Generar resumen ejecutivo con IA
     resumen_ejecutivo = generar_resumen_ejecutivo(evaluaciones, session['tipo_empresa'], session.get('tamano_empresa'))
     
+    # Generar IA-Readiness Canvas
+    ia_canvas = generar_ia_readiness_canvas(session['tipo_empresa'], session.get('tamano_empresa'), evaluaciones)
+    
     # Generar PDF sin numeración compleja
     from datetime import datetime
     buffer = io.BytesIO()
@@ -1464,17 +1477,17 @@ def generar_informe_ejecutivo():
     # Encabezado simple
     story.append(Paragraph("<b>Transformacion Digital AA+</b>", 
                           ParagraphStyle('Header', parent=styles['Heading1'], fontSize=18, textColor=colors.darkblue, alignment=1)))
-    story.append(Paragraph("Diagnóstico de Madurez Digital", 
+    story.append(Paragraph("Ruta de Estrategia Digital", 
                           ParagraphStyle('Subheader', parent=styles['Normal'], fontSize=14, textColor=colors.darkblue, alignment=1, spaceAfter=30)))
     
     # Título principal
-    story.append(Paragraph("RESUMEN EJECUTIVO", 
+    story.append(Paragraph("PLAN DE IMPLEMENTACIÓN", 
                           ParagraphStyle('Title', parent=styles['Heading1'], fontSize=24, textColor=colors.darkblue, alignment=1, spaceAfter=20)))
     
-    # Información de la empresa
-    story.append(Paragraph(f"<b>Empresa:</b> {session['nombre_empresa']}", styles['Normal']))
-    story.append(Paragraph(f"<b>Tipo de empresa:</b> {session['tipo_empresa']}", styles['Normal']))
-    story.append(Paragraph(f"<b>Tamaño:</b> {session.get('tamano_empresa', 'No especificado')}", styles['Normal']))
+    # Información del emprendimiento
+    story.append(Paragraph(f"<b>Emprendimiento:</b> {session['nombre_empresa']}", styles['Normal']))
+    story.append(Paragraph(f"<b>Tipo/Industria:</b> {session['tipo_empresa']}", styles['Normal']))
+    story.append(Paragraph(f"<b>Etapa:</b> {session.get('tamano_empresa', 'No especificado')}", styles['Normal']))
     story.append(Paragraph(f"<b>Fecha:</b> {datetime.now().strftime('%d/%m/%Y')}", styles['Normal']))
     story.append(Spacer(1, 20))
     
@@ -1496,8 +1509,53 @@ def generar_informe_ejecutivo():
             story.append(Paragraph(linea.strip(), styles['Normal']))
             story.append(Spacer(1, 6))
     
-    # Salto de página después del resumen ejecutivo
+    # Salto de página antes del IA-Readiness Canvas
     from reportlab.platypus import PageBreak
+    story.append(PageBreak())
+    
+    # === IA-READINESS CANVAS ===
+    story.append(Paragraph("<b>Transformacion Digital AA+</b>", 
+                          ParagraphStyle('Header', parent=styles['Heading1'], fontSize=18, textColor=colors.darkblue, alignment=1)))
+    story.append(Paragraph("Ruta de Estrategia Digital", 
+                          ParagraphStyle('Subheader', parent=styles['Normal'], fontSize=14, textColor=colors.darkblue, alignment=1, spaceAfter=30)))
+    
+    story.append(Paragraph("IA-READINESS CANVAS", 
+                          ParagraphStyle('CanvasTitle', parent=styles['Heading1'], fontSize=22, textColor=colors.darkblue, alignment=1, spaceAfter=10)))
+    
+    story.append(Paragraph("Para Emprendimientos que Quieren Integrar IA desde el Inicio", 
+                          ParagraphStyle('CanvasSubtitle', parent=styles['Normal'], fontSize=12, textColor=colors.grey, alignment=1, spaceAfter=20)))
+    
+    # Línea divisoria
+    story.append(HRFlowable(width="100%", thickness=2, color=colors.darkblue, spaceAfter=20))
+    
+    # Información de la empresa
+    story.append(Paragraph(f"<b>Emprendimiento:</b> {session['nombre_empresa']}", styles['Normal']))
+    story.append(Paragraph(f"<b>Tipo/Industria:</b> {session['tipo_empresa']}", styles['Normal']))
+    story.append(Paragraph(f"<b>Etapa:</b> {session.get('tamano_empresa', 'No especificado')}", styles['Normal']))
+    story.append(Spacer(1, 20))
+    
+    # Canvas content con formato especial
+    canvas_style = ParagraphStyle('CanvasStyle', parent=styles['Normal'], fontSize=11, spaceAfter=10, 
+                                 leftIndent=10, rightIndent=10, alignment=0)
+    
+    header_style = ParagraphStyle('CanvasHeaderStyle', parent=styles['Heading3'], fontSize=13, 
+                                 textColor=colors.darkblue, spaceAfter=8, spaceBefore=12)
+    
+    for linea in ia_canvas.split('\n'):
+        if linea.strip():
+            # Detectar headers (líneas que empiezan con ===)
+            if linea.strip().startswith('===') and linea.strip().endswith('==='):
+                # Remover los === y agregar como header
+                header_text = linea.strip().replace('===', '').strip()
+                story.append(HRFlowable(width="80%", thickness=1, color=colors.lightgrey, spaceAfter=5))
+                story.append(Paragraph(f"<b>{header_text}</b>", header_style))
+            else:
+                story.append(Paragraph(linea.strip(), canvas_style))
+    
+    story.append(Spacer(1, 20))
+    story.append(HRFlowable(width="100%", thickness=2, color=colors.darkblue, spaceAfter=10))
+    
+    # Salto de página después del canvas
     story.append(PageBreak())
     
     # Reportes individuales de cada eje en páginas separadas
@@ -1570,6 +1628,139 @@ def generar_informe_ejecutivo():
         download_name=f'informe_ejecutivo_{session["nombre_empresa"]}.pdf'
     )
 
+def generar_ia_readiness_canvas(tipo_empresa, tamano_empresa, evaluaciones):
+    """
+    Genera el IA-Readiness Canvas para emprendimientos que quieren integrar IA desde el inicio.
+    
+    Dimensiones:
+    1. Problemas que pueden resolverse con IA
+    2. Disponibilidad o generación futura de datos
+    3. Riesgos éticos o regulatorios
+    4. Capacidades del equipo
+    5. Indicadores clave
+    """
+    
+    # Preparar contexto de evaluaciones
+    contexto_evaluaciones = []
+    for eje_id, _, puntaje in evaluaciones:
+        contexto_evaluaciones.append(f"{EJES_EVALUACION[eje_id]['nombre']}: {puntaje}/4")
+    
+    prompt = f"""
+    Eres un experto en inteligencia artificial aplicada a emprendimientos y estrategia digital.
+    
+    EMPRENDIMIENTO ANALIZADO:
+    Tipo/Industria: {tipo_empresa}
+    Etapa: {tamano_empresa}
+    
+    EVALUACIONES COMPLETADAS:
+    {chr(10).join(contexto_evaluaciones)}
+    
+    INSTRUCCIONES:
+    Genera un IA-Readiness Canvas específico para este emprendimiento {tipo_empresa} en etapa {tamano_empresa}.
+    
+    El canvas debe contener las siguientes 5 dimensiones con recomendaciones concretas y accionables:
+    
+    1. PROBLEMAS QUE PUEDEN RESOLVERSE CON IA:
+       - Identifica 3-4 problemas específicos de este tipo de emprendimiento que la IA puede resolver
+       - Prioriza por impacto y viabilidad para un emprendimiento en esta etapa
+       - Sé específico con ejemplos aplicables (ej: "Automatizar clasificación de leads entrantes")
+    
+    2. DISPONIBILIDAD O GENERACIÓN FUTURA DE DATOS:
+       - Qué datos necesita recolectar desde el MVP
+       - Qué fuentes de datos son críticas
+       - Cómo estructurar la captura de datos para futuros modelos de IA
+       - Volúmenes mínimos necesarios para entrenar modelos básicos
+    
+    3. RIESGOS ÉTICOS O REGULATORIOS:
+       - Riesgos éticos específicos del sector
+       - Regulaciones de privacidad aplicables (GDPR, CCPA, leyes locales)
+       - Sesgos algorítmicos a considerar
+       - Mejores prácticas de IA responsable para esta industria
+    
+    4. CAPACIDADES DEL EQUIPO:
+       - Habilidades técnicas necesarias en el equipo fundador
+       - Gaps críticos que deben cerrarse (contratar vs capacitar vs outsourcing)
+       - Herramientas no-code/low-code de IA recomendadas para comenzar
+       - Roadmap de desarrollo de capacidades a 12 meses
+    
+    5. INDICADORES CLAVE (KPIs):
+       - 4-5 métricas específicas para medir preparación de IA
+       - KPIs de adopción y uso de IA
+       - Métricas de calidad de datos
+       - Indicadores de ROI de inversiones en IA
+    
+    FORMATO REQUERIDO:
+    Usa este formato exacto con headers claros:
+    
+    === 1. PROBLEMAS QUE PUEDEN RESOLVERSE CON IA ===
+    [Contenido...]
+    
+    === 2. DISPONIBILIDAD O GENERACIÓN FUTURA DE DATOS ===
+    [Contenido...]
+    
+    === 3. RIESGOS ÉTICOS O REGULATORIOS ===
+    [Contenido...]
+    
+    === 4. CAPACIDADES DEL EQUIPO ===
+    [Contenido...]
+    
+    === 5. INDICADORES CLAVE (KPIs) ===
+    [Contenido...]
+    
+    Cada sección debe tener 80-120 palabras. Total máximo: 500 palabras.
+    """
+    
+    # Intentar usar Gemini
+    if model is not None:
+        try:
+            response = model.generate_content(prompt)
+            if response.text and len(response.text.strip()) > 200:
+                logger.info("IA-Readiness Canvas generado exitosamente con Gemini")
+                return response.text
+        except Exception as e:
+            logger.error(f"Error generando IA-Readiness Canvas con Gemini: {str(e)}")
+    
+    # Canvas por defecto si Gemini falla
+    logger.info("Usando IA-Readiness Canvas por defecto")
+    return f"""=== 1. PROBLEMAS QUE PUEDEN RESOLVERSE CON IA ===
+Para su {tipo_empresa}, la IA puede resolver:
+- Automatización de atención al cliente con chatbots inteligentes
+- Análisis predictivo de comportamiento de usuarios/clientes
+- Personalización de experiencias y recomendaciones
+- Automatización de procesos repetitivos de clasificación y categorización
+
+=== 2. DISPONIBILIDAD O GENERACIÓN FUTURA DE DATOS ===
+Datos críticos a recolectar desde el MVP:
+- Interacciones de usuarios (clicks, tiempo, flujos)
+- Datos transaccionales y de conversión
+- Feedback explícito e implícito de clientes
+- Datos de rendimiento de producto/servicio
+Estructure la captura con timestamps, IDs únicos y metadata contextual. Necesitará al menos 1000-5000 registros para modelos básicos.
+
+=== 3. RIESGOS ÉTICOS O REGULATORIOS ===
+Consideraciones para {tipo_empresa}:
+- Cumplimiento con leyes de protección de datos (GDPR si opera en EU, CCPA en California)
+- Transparencia en uso de IA con clientes
+- Prevención de sesgos en algoritmos de recomendación/clasificación
+- Consentimiento informado para uso de datos personales
+- Políticas claras de privacidad y uso de IA
+
+=== 4. CAPACIDADES DEL EQUIPO ===
+Habilidades necesarias:
+- Al menos un miembro con conocimientos básicos de IA/ML
+- Capacidad de trabajar con APIs de IA (OpenAI, Google Cloud AI, AWS)
+- Análisis de datos básico (Python/Excel avanzado)
+Herramientas recomendadas: Zapier AI, Make.com, Bubble, ChatGPT API, Hugging Face
+Roadmap: Capacitación en IA básica (3 meses), implementación de primera solución (6 meses), optimización (12 meses)
+
+=== 5. INDICADORES CLAVE (KPIs) ===
+Métricas para medir preparación de IA:
+- Volumen de datos históricos recolectados (objetivo: 5000+ registros en 6 meses)
+- Número de procesos candidatos para automatización con IA identificados (objetivo: 5+ procesos)
+- % del equipo capacitado en herramientas básicas de IA (objetivo: 60%+ del equipo técnico)
+- Tiempo de implementación de primera solución IA (objetivo: <3 meses desde decisión)
+- ROI de inversiones en IA (objetivo: positivo en 12 meses)"""
+
 def generar_resumen_ejecutivo(evaluaciones, tipo_empresa, tamano_empresa=None):
     # Preparar datos para el prompt
     ejes_evaluados = []
@@ -1585,43 +1776,69 @@ def generar_resumen_ejecutivo(evaluaciones, tipo_empresa, tamano_empresa=None):
     
     promedio_general = round(sum(puntajes) / len(puntajes), 1)
     
-    # Ordenar ejes por prioridad (menor puntaje = mayor prioridad)
+    # Ordenar ejes por prioridad (menor puntaje = mayor prioridad de establecimiento)
     ejes_por_prioridad = sorted(ejes_evaluados, key=lambda x: x['puntaje'])
     
     prompt = f"""
-    Eres un consultor senior especializado en transformación digital para PYMEs en Costa Rica y Centroamérica.
+    Eres un consultor senior especializado en estrategia digital para emprendimientos en gestación en Latinoamérica.
     
-    EMPRESA ANALIZADA:
-    Tipo: {tipo_empresa}
-    Tamaño: {tamano_empresa if tamano_empresa else 'No especificado'}
-    Promedio general de madurez digital: {promedio_general}/5
+    EMPRENDIMIENTO ANALIZADO:
+    Tipo/Industria: {tipo_empresa}
+    Etapa: {tamano_empresa if tamano_empresa else 'No especificado'}
+    Promedio de preparación digital: {promedio_general}/4
     
-    CONTEXTO DEL TAMAÑO:
-    - Microempresa: Recursos muy limitados, enfoque en lo esencial
-    - Pequeña: Presupuesto moderado, crecimiento gradual
-    - Mediana: Mayor capacidad de inversión, sistemas integrados
-    - Grande: Recursos amplios, transformación integral
+    CONTEXTO DE ETAPAS:
+    - Ideación: Solo idea, necesita establecer todo desde cero
+    - MVP en desarrollo: Construyendo prototipo, estructurar vectores digitales
+    - MVP lanzado: Primeros usuarios, consolidar y optimizar
+    - Tracción temprana: Validación inicial, listo para escalar
     
-    EJES EVALUADOS Y PUNTUACIONES:
-    {chr(10).join([f"- {eje['nombre']}: {eje['puntaje']}/5" for eje in ejes_evaluados])}
+    VECTORES EVALUADOS Y PUNTUACIONES:
+    {chr(10).join([f"- {eje['nombre']}: {eje['puntaje']}/4" for eje in ejes_evaluados])}
+    
+    VECTORES ORDENADOS POR PRIORIDAD DE IMPLEMENTACIÓN (menor puntaje = mayor prioridad):
+    {chr(10).join([f"{i+1}. {eje['nombre']}: {eje['puntaje']}/4" for i, eje in enumerate(ejes_por_prioridad)])}
     
     INSTRUCCIONES:
-    Genera un resumen ejecutivo (máximo 400 palabras) contextualizado para una {tipo_empresa} de tamaño {tamano_empresa if tamano_empresa else 'No especificado'}:
+    Genera un PLAN DE IMPLEMENTACIÓN ORDENADO POR PRIORIDADES (máximo 450 palabras) para este {tipo_empresa} en etapa {tamano_empresa if tamano_empresa else 'No especificado'}:
     
-    1. SITUACIÓN ACTUAL: Estado de madurez considerando el tamaño empresarial
-    2. FORTALEZAS: Ejes fuertes y cómo aprovecharlos según la escala
-    3. ÁREAS DE MEJORA: Prioridades adaptadas a recursos disponibles
-    4. ESTRATEGIA DE IMPLEMENTACIÓN: Plan realista según:
-       - Presupuesto típico del tamaño empresarial
-       - Capacidad de implementación
-       - ROI esperado para este tamaño
-       - Recursos humanos disponibles
+    1. ESTADO ACTUAL DE PREPARACIÓN:
+       - Nivel de preparación digital general
+       - Vectores que ya tienen bases vs vectores que necesitan establecerse desde cero
     
-    El resumen debe ser:
-    - Específico para {tipo_empresa} tamaño {tamano_empresa if tamano_empresa else 'No especificado'}
-    - Incluir rangos de inversión apropiados
-    - Mencionar herramientas adecuadas para la escala
-    - Realista para Centroamérica
+    2. PLAN DE IMPLEMENTACIÓN POR FASES:
+       FASE 1 (Primeros 3 meses) - Fundamentos críticos:
+       - Los 2-3 vectores más urgentes a establecer (menor puntaje)
+       - Acciones específicas para cada uno
+       - Recursos necesarios (tiempo, presupuesto estimado, equipo)
+       
+       FASE 2 (Meses 4-6) - Consolidación:
+       - Vectores de prioridad media a establecer
+       - Cómo se integran con Fase 1
+       - Recursos necesarios
+       
+       FASE 3 (Meses 7-12) - Optimización y Escalamiento:
+       - Vectores con mejor puntaje a optimizar
+       - Preparación para escalar
+       - Recursos necesarios
+    
+    3. ORDEN ADECUADO Y DEPENDENCIAS:
+       - Por qué este orden específico
+       - Qué vectores deben establecerse antes que otros
+       - Sinergias entre vectores
+    
+    4. CONSIDERACIONES PARA {tamano_empresa if tamano_empresa else 'ESTE'} EMPRENDIMIENTO:
+       - Restricciones presupuestarias típicas
+       - Capacidad de implementación del equipo
+       - Quick wins vs inversiones a largo plazo
+       - Herramientas gratuitas/accesibles recomendadas
+    
+    El plan debe ser:
+    - Específico y accionable para {tipo_empresa}
+    - Realista para un emprendimiento en etapa {tamano_empresa if tamano_empresa else 'temprana'}
+    - Ordenado por prioridades basadas en los puntajes
+    - Incluir rangos de inversión apropiados para startups
+    - Enfocarse en ESTABLECER vectores (no mejorar lo existente)
     """
     
     # Intentar usar Gemini
@@ -1629,29 +1846,50 @@ def generar_resumen_ejecutivo(evaluaciones, tipo_empresa, tamano_empresa=None):
         try:
             response = model.generate_content(prompt)
             if response.text and len(response.text.strip()) > 100:
+                logger.info("Plan de implementación generado exitosamente con Gemini")
                 return response.text
         except Exception as e:
-            logger.error(f"Error generando resumen ejecutivo con Gemini: {str(e)}")
+            logger.error(f"Error generando plan de implementación con Gemini: {str(e)}")
     
-    # Resumen por defecto
-    nivel_madurez = "básico" if promedio_general <= 2 else "intermedio" if promedio_general <= 3.5 else "avanzado"
+    # Plan por defecto
+    nivel_preparacion = "inicial" if promedio_general <= 1.5 else "intermedio" if promedio_general <= 2.5 else "avanzado"
     
-    return f"""SITUACIÓN ACTUAL:
-Su {tipo_empresa} presenta un nivel de madurez digital {nivel_madurez} con un promedio de {promedio_general}/5. Esta evaluación refleja el estado actual de adopción tecnológica y capacidades digitales de la organización.
+    return f"""ESTADO ACTUAL DE PREPARACIÓN:
+Su {tipo_empresa} presenta un nivel de preparación digital {nivel_preparacion} con un promedio de {promedio_general}/4. Los vectores con menor puntaje representan las mayores oportunidades para establecer bases digitales sólidas desde el inicio.
 
-FORTALEZAS IDENTIFICADAS:
-Los ejes con mejor desempeño son: {', '.join([eje['nombre'] for eje in ejes_evaluados[-2:]])}. Estas fortalezas representan una base sólida sobre la cual construir la estrategia de transformación digital.
+PLAN DE IMPLEMENTACIÓN POR FASES:
 
-ÁREAS DE MEJORA PRIORITARIAS:
-Los ejes que requieren atención inmediata son: {', '.join([eje['nombre'] for eje in ejes_evaluados[:2]])}. Estas áreas representan las mayores oportunidades de mejora para su {tipo_empresa}.
+FASE 1 (Primeros 3 meses) - Fundamentos Críticos:
+Prioridad 1: {ejes_por_prioridad[0]['nombre']} ({ejes_por_prioridad[0]['puntaje']}/4)
+- Establecer este vector es fundamental pues impacta directamente en la viabilidad del MVP
+- Inversión estimada: $500-2000 en herramientas básicas
+- Tiempo del equipo: 20-30 horas/semana durante el primer mes
 
-PRIORIDADES DE IMPLEMENTACIÓN:
-1. {ejes_por_prioridad[0]['nombre']} - Prioridad alta por su impacto fundamental
-2. {ejes_por_prioridad[1]['nombre']} - Prioridad media, complementa el primer eje
-3. Continuar fortaleciendo los ejes con mejor puntuación para mantener ventaja competitiva
+Prioridad 2: {ejes_por_prioridad[1]['nombre']} ({ejes_por_prioridad[1]['puntaje']}/4)
+- Complementa el primer vector y permite avanzar en construcción del MVP
+- Inversión estimada: $300-1500
+- Tiempo del equipo: 15-20 horas/semana
 
-RECOMENDACIÓN ESTRATÉGICA:
-Para su {tipo_empresa}, se recomienda un enfoque gradual comenzando por los ejes de menor puntuación, ya que generalmente ofrecen mayor retorno de inversión y impacto inmediato en la operación del negocio."""
+FASE 2 (Meses 4-6) - Consolidación:
+Enfocarse en los vectores de prioridad media ({ejes_por_prioridad[2]['nombre']}, {ejes_por_prioridad[3]['nombre'] if len(ejes_por_prioridad) > 3 else 'otros vectores'})
+- Estos vectores permiten estructurar mejor el emprendimiento
+- Inversión estimada: $1000-3000 en esta fase
+- Integrar con infraestructura de Fase 1
+
+FASE 3 (Meses 7-12) - Optimización:
+Optimizar vectores con mejor puntaje ({ejes_evaluados[-1]['nombre']}, {ejes_evaluados[-2]['nombre']})
+- Preparar para escalamiento
+- Automatizar procesos establecidos en fases anteriores
+- Inversión estimada: $2000-5000 para escalar
+
+ORDEN ADECUADO Y DEPENDENCIAS:
+Este orden prioriza: 1) Viabilidad del MVP, 2) Fundamentos operacionales, 3) Escalabilidad. Los vectores de menor puntaje requieren atención inmediata pues son prerequisitos para los siguientes.
+
+CONSIDERACIONES CLAVE:
+- Use herramientas gratuitas o freemium en Fase 1 (Google Workspace, Trello, Canva)
+- Invierta más en Fases 2-3 cuando tenga validación inicial
+- Priorice quick wins que generen valor inmediato
+- Revise este plan cada 2 meses según progreso y validación de mercado"""
 
 @app.route('/generar_pdf/<int:eje_id>')
 def generar_pdf_eje(eje_id):

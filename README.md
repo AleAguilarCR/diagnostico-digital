@@ -1,34 +1,48 @@
-# Diagnóstico de Madurez Digital para PYMEs
+# Ruta de Estrategia Digital para Emprendimientos v1.0
 
-Una herramienta robusta de auto-diagnóstico de madurez digital diseñada específicamente para pequeñas y medianas empresas (PYMEs) en Costa Rica y Centroamérica.
+Una herramienta especializada de estrategia digital diseñada específicamente para **emprendimientos en gestación** que desean construir bases digitales sólidas desde el inicio.
+
+> **Versión 1.0** - Noviembre 2025  
+> Lista para pruebas beta con usuarios reales
 
 ## 🚀 Características Principales
 
-### Módulo del Cliente
-- **Acceso seguro**: Registro con email, nombre de empresa y tipo de negocio
+### Enfoque para Emprendimientos
+- **Evaluación de preparación digital**: Para emprendimientos en etapa de ideación, MVP o tracción temprana
+- **Acceso seguro**: Registro con email, nombre del emprendimiento, tipo/industria y etapa
 - **Sesiones persistentes**: Continuación automática de evaluaciones previas
-- **10 Ejes de Evaluación**: Basados en definiciones de Gartner y McKinsey
-- **Interfaz elegante**: Diseño responsive con botones interactivos
-- **Evaluaciones personalizadas**: Preguntas tipo Likert (1-5) y Sí/No
+- **10 Vectores de Estrategia Digital**: Enfocados en ESTABLECER capacidades desde cero
+- **Interfaz elegante**: Diseño responsive con información contextualizada para startups
+- **Evaluaciones específicas**: Preguntas adaptadas a emprendimientos en gestación
 
-### 10 Ejes de Evaluación
-1. **Cultura Digital Empresarial** 🏢
-2. **Presencia en Internet y Redes Sociales** 🌐
-3. **Adopción de Tecnologías Emergentes** 🚀
-4. **Digitalización de Procesos Empresariales** ⚙️
-5. **Competencia Digital de Colaboradores** 👥
-6. **Gestión de Información y Toma de Decisiones** 📊
-7. **Canales de Venta Online y Experiencia del Usuario** 🛒
-8. **Gestión de Calidad y Ciberseguridad** 🔒
-9. **Inversión en Tecnología** 💰
-10. **Protección de Datos y Propiedad Intelectual** 🛡️
+### 10 Vectores de Estrategia Digital
+1. **Estrategia Digital** ⚙️ - Modelo de negocio y propuesta de valor digital
+2. **Cultura Digital** 💡 - Mentalidad digital-first del equipo fundador
+3. **Procesos Digital-First** 🔄 - Automatización desde el diseño inicial
+4. **Tecnología (Arquitectura Inicial)** 🖥️ - Selección de tecnologías y MVP
+5. **Datos** 📊 - Modelo de datos inicial y KPIs
+6. **Cliente** 👥 - Customer journey digital y validación de mercado
+7. **Talento** 🎓 - Competencias digitales del equipo fundador
+8. **Innovación** 💡 - Capacidad de iteración y prototipado
+9. **Ciberseguridad Inicial** 🔒 - Medidas básicas de seguridad para MVP
+10. **Gobierno Digital** ⚖️ - Roles digitales y toma de decisiones
 
 ### Funcionalidades Avanzadas
-- **Generación de PDFs**: Informes individuales por eje con recomendaciones
+- **Generación de PDFs**: Informes individuales por vector con acciones de establecimiento
 - **IA Integrada**: Recomendaciones personalizadas usando Google Gemini
-- **Sistema de puntuación**: Indicadores visuales de nivel de madurez
-- **Informe ejecutivo**: Resumen completo al completar 3+ ejes
-- **Descarga y envío**: PDFs descargables y envío por correo
+- **Plan de Implementación**: Ordenado por prioridades basado en evaluaciones
+- **IA-Readiness Canvas**: Canvas especializado para integrar IA desde el inicio
+- **Sistema de puntuación**: Indicadores de nivel de preparación (0-4)
+- **Informe completo**: Plan de implementación + IA Canvas al completar 3+ vectores
+- **Descarga de PDFs**: Informes descargables para revisión offline
+
+### Diferencias con Diagnóstico de Madurez Digital
+- **Enfoque**: ESTABLECER vectores vs MEJORAR madurez existente
+- **Público objetivo**: Emprendimientos en gestación vs PYMEs operando
+- **Recomendaciones**: Acciones para crear desde cero vs optimización
+- **Escala de evaluación**: 0-4 puntos (preparación) vs 1-5 (madurez)
+- **Recursos**: Herramientas gratuitas/accesibles vs soluciones empresariales
+- **Extras**: IA-Readiness Canvas incluido
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -44,7 +58,7 @@ Una herramienta robusta de auto-diagnóstico de madurez digital diseñada espec�
 - Python 3.8+
 - Navegador web moderno
 - Conexión a internet (para IA)
-- API Key de Google Gemini
+- API Key de Google Gemini (opcional - funciona con recomendaciones por defecto)
 
 ## 🚀 Instalación y Configuración
 

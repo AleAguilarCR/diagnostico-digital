@@ -103,7 +103,7 @@
                     <div id="nivelIndicador" class="mt-3"></div>
                 </div>
                 
-                <h5>Recomendaciones Personalizadas:</h5>
+                <h5 id="recomendacionesHeader">Recomendaciones Personalizadas</h5>
                 <div id="recomendacionesTexto" class="bg-light p-3 rounded"></div>
                 
                 <div class="mt-4 text-center">
@@ -189,6 +189,11 @@ document.getElementById('ejeForm').addEventListener('submit', async function(e) 
             // Mostrar resultados en modal
             document.getElementById('puntajeResultado').textContent = result.puntaje;
             document.getElementById('ejeNombreResultado').textContent = result.eje_nombre;
+            
+            // Actualizar encabezado con nombre de la empresa
+            const nombreEmpresa = result.nombre_empresa || 'su empresa';
+            document.getElementById('recomendacionesHeader').innerHTML = `Recomendaciones personalizadas para <strong>${nombreEmpresa}</strong>`;
+            
             document.getElementById('recomendacionesTexto').innerHTML = result.recomendaciones.replace(/\n/g, '<br>');
             
             // Mostrar indicador de nivel

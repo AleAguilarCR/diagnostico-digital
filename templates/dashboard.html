@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="text-center mb-4">
-    <h1 class="display-4 text-primary">Diagnóstico de Madurez Digital</h1>
+    <h1 class="display-4 text-primary">Ruta de Estrategia Digital</h1>
     <h3 class="text-muted">{{ nombre_empresa }}</h3>
 </div>
 
@@ -18,16 +18,16 @@
                     <div class="col-md-8">
                         <ul class="list-unstyled">
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>
-                                Esta herramienta gratuita de autodiagnóstico de madurez digital ayudará a las pequeñas y medianas empresas (pymes) a evaluar, a través de una serie de preguntas, su nivel de adaptación a las tecnologías digitales de forma indicativa.
+                                Esta herramienta gratuita de estrategia digital ayudará a emprendimientos en gestación a evaluar su preparación digital y recibir recomendaciones para <strong>establecer</strong> cada vector estratégico desde cero.
                             </li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>
-                                Si bien esta herramienta no proporciona una solución definitiva a los potenciales desafíos tecnológicos que pueda enfrentar la empresa, ni reemplaza el análisis de un profesional especializado, puede brindar recomendaciones útiles para facilitar la implementación efectiva de una estrategia digital.
+                                Recibirás un plan de implementación ordenado por prioridades, adaptado a tu tipo de negocio, tamaño e industria, con acciones concretas para construir bases digitales sólidas.
                             </li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i>
-                                El cuestionario, estructurado en 10 ejes o bloques de preguntas, se centra en la madurez digital y se puede completar en el orden que se prefiera. Se estima que responder a todos los ejes llevará entre 15 y 20 minutos.
+                                El cuestionario, estructurado en 10 vectores de estrategia digital, se puede completar en el orden que prefieras. Se estima que responder todos los vectores llevará entre 15 y 20 minutos.
                             </li>
                             <li><i class="fas fa-check text-success me-2"></i>
-                                Al final obtendrás un diagnóstico de dónde se encuentra tu empresa en su camino digital y qué pasos puede tomar para acelerar su progreso.
+                                Al final obtendrás una ruta clara de dónde iniciar tu camino digital y qué pasos seguir para construir un emprendimiento digitalmente sólido desde el inicio.
                             </li>
                         </ul>
                     </div>
@@ -37,7 +37,7 @@
                                  alt="Logo" class="img-fluid mb-3" 
                                  style="max-height: 100px; max-width: 200px;">
                             <h5>Transformacion Digital AA+</h5>
-                            <p class="small text-muted">Diagnóstico de Madurez Digital</p>
+                            <p class="small text-muted">Ruta de Estrategia Digital</p>
                         </div>
                     </div>
                 </div>
@@ -50,9 +50,9 @@
 <div class="row mb-5">
     <div class="col-12">
         <div class="alert alert-info">
-            <h5><i class="fas fa-lightbulb me-2"></i>Sobre la Madurez Digital</h5>
-            <p class="mb-2">La Madurez Digital es el pasaporte al futuro de las pequeñas y medianas empresas (PYMES). Refleja cómo se utiliza la tecnología para impulsar las operaciones, aumentar la eficiencia y mejorar el servicio al cliente.</p>
-            <p class="mb-0">En un mundo digital en constante evolución, la capacidad de adoptar, dominar y adaptarse a las tecnologías digitales es la clave para superar cualquier desafío y alcanzar nuevas metas.</p>
+            <h5><i class="fas fa-lightbulb me-2"></i>Sobre la Estrategia Digital para Emprendimientos</h5>
+            <p class="mb-2">La Estrategia Digital es el cimiento sobre el cual se construyen emprendimientos exitosos en el mundo digital. Define cómo la tecnología, los datos y los procesos digitales se integran desde el día uno para crear ventajas competitivas sostenibles.</p>
+            <p class="mb-0">Para emprendimientos en gestación, establecer vectores digitales sólidos desde el inicio es crucial para escalar rápidamente, adaptarse al mercado y maximizar la eficiencia operativa desde el MVP.</p>
         </div>
     </div>
 </div>
@@ -62,10 +62,10 @@
     <div class="col-12 text-center">
         <div class="card border-success">
             <div class="card-header bg-success text-white">
-                <h4 class="mb-0"><i class="fas fa-bullseye me-2"></i>Principales Objetivos de Negocio</h4>
+                <h4 class="mb-0"><i class="fas fa-bullseye me-2"></i>Objetivos del Emprendimiento</h4>
             </div>
             <div class="card-body">
-                <p class="text-muted mb-3">Defina los objetivos estratégicos de su empresa para personalizar las recomendaciones del diagnóstico</p>
+                <p class="text-muted mb-3">Define los objetivos estratégicos de tu emprendimiento para personalizar las recomendaciones de tu ruta digital</p>
                 {% if tiene_objetivos %}
                     <p class="text-success mb-3"><i class="fas fa-check-circle me-2"></i>Objetivos configurados</p>
                     <a href="/objetivos_negocio" class="btn btn-outline-success">
@@ -85,7 +85,7 @@
 <!-- Ejes de Evaluación -->
 <div class="row mb-4">
     <div class="col-12">
-        <h3 class="text-center mb-4">Selecciona un Eje para Evaluar</h3>
+        <h3 class="text-center mb-4">Selecciona un Vector para Evaluar</h3>
     </div>
 </div>
 
@@ -160,9 +160,9 @@
     <div class="col-12 text-center">
         <div class="alert alert-success">
             <h5><i class="fas fa-trophy me-2"></i>¡Felicitaciones!</h5>
-            <p>Has completado {{ evaluaciones|length }} ejes de evaluación. Ya puedes generar tu informe ejecutivo.</p>
+            <p>Has completado {{ evaluaciones|length }} vectores de evaluación. Ya puedes generar tu plan de implementación y tu IA-Readiness Canvas.</p>
             <button class="btn btn-success btn-lg" id="generarInformeEjecutivo">
-                <i class="fas fa-file-alt me-2"></i>Generar Informe Ejecutivo
+                <i class="fas fa-file-alt me-2"></i>Generar Plan de Implementación
             </button>
         </div>
     </div>

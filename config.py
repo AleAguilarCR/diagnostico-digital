@@ -6,7 +6,11 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'tu-clave-secreta-super-segura-aqui'
     
     # Configuración de base de datos
-    DATABASE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'diagnostico.db')
+    # En producción, usar volumen montado si existe, sino usar directorio actual
+    if os.path.exists('/app/data'):
+        DATABASE_PATH = '/app/data/diagnostico.db'
+    else:
+        DATABASE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'diagnostico.db')
     
     # Configuración de Gemini AI
     GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY') or 'TU_API_KEY_DE_GEMINI_AQUI'
@@ -29,9 +33,9 @@ class Config:
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     
     # Configuración de la aplicación
-    APP_NAME = 'Diagnóstico de Madurez Digital'
+    APP_NAME = 'Ruta de Estrategia Digital'
     APP_VERSION = '1.0.0'
-    APP_DESCRIPTION = 'Herramienta de autodiagnóstico para PYMEs en Centroamérica'
+    APP_DESCRIPTION = 'Herramienta de estrategia digital para emprendimientos en gestación'
     
     @staticmethod
     def init_app(app):

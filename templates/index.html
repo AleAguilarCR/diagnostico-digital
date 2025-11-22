@@ -1,11 +1,88 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- Sección de bienvenida y explicación -->
+<div class="row justify-content-center mb-4">
+    <div class="col-md-10">
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-5">
+                <h1 class="text-center mb-4">
+                    <i class="fas fa-route text-primary me-2"></i>
+                    Ruta de Estrategia Digital para Emprendimientos
+                </h1>
+                
+                <div class="alert alert-primary" role="alert">
+                    <h4 class="alert-heading"><i class="fas fa-lightbulb me-2"></i>¿Qué es la Ruta de Estrategia Digital?</h4>
+                    <p class="mb-0">
+                        Una herramienta diseñada específicamente para <strong>emprendimientos en gestación</strong> que desean 
+                        construir bases digitales sólidas desde el inicio. A diferencia de un diagnóstico de madurez para empresas 
+                        ya operando, la Ruta Digital te guía para <strong>establecer</strong> cada vector estratégico desde cero.
+                    </p>
+                </div>
+
+                <h4 class="mt-4 mb-3"><i class="fas fa-compass me-2"></i>10 Vectores de Estrategia Digital</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i><strong>Estrategia Digital:</strong> Modelo de negocio y propuesta de valor</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i><strong>Cultura Digital:</strong> Mentalidad digital-first del equipo</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i><strong>Procesos Digital-First:</strong> Automatización desde el inicio</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i><strong>Tecnología:</strong> Arquitectura inicial y MVP</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i><strong>Datos:</strong> Modelo de datos y KPIs iniciales</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i><strong>Cliente:</strong> Customer journey y validación digital</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i><strong>Talento:</strong> Competencias del equipo fundador</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i><strong>Innovación:</strong> Capacidad de iteración y prototipado</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i><strong>Ciberseguridad Inicial:</strong> Medidas básicas de seguridad</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i><strong>Gobierno Digital:</strong> Roles y toma de decisiones</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4 class="mt-4 mb-3"><i class="fas fa-bullseye me-2"></i>Propósito de la Herramienta</h4>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="card h-100 border-primary">
+                            <div class="card-body text-center">
+                                <i class="fas fa-map-marked-alt fa-3x text-primary mb-3"></i>
+                                <h5>Establecer Estrategia</h5>
+                                <p class="small">Recibe recomendaciones sobre <strong>acciones para establecer</strong> cada vector desde cero</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-success">
+                            <div class="card-body text-center">
+                                <i class="fas fa-list-ol fa-3x text-success mb-3"></i>
+                                <h5>Priorizar Implementación</h5>
+                                <p class="small">Obtén un plan ordenado de implementación adaptado a tu tipo de negocio</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-info">
+                            <div class="card-body text-center">
+                                <i class="fas fa-robot fa-3x text-info mb-3"></i>
+                                <h5>IA-Readiness Canvas</h5>
+                                <p class="small">Canvas especializado si quieres integrar IA desde el inicio</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Formulario de acceso -->
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card shadow">
             <div class="card-header bg-primary text-white text-center">
-                <h3><i class="fas fa-user-circle me-2"></i>Acceso al Diagnóstico</h3>
+                <h3><i class="fas fa-rocket me-2"></i>Comienza tu Ruta Digital</h3>
             </div>
             <div class="card-body">
                 <form id="loginForm">
@@ -19,30 +96,30 @@
                     </div>
                     
                     <div class="mb-3">
-                        <label for="nombre_empresa" class="form-label">Nombre de la Empresa *</label>
+                        <label for="nombre_empresa" class="form-label">Nombre del Emprendimiento *</label>
                         <input type="text" class="form-control" id="nombre_empresa" required>
                     </div>
                     
                     <div class="mb-3">
-                        <label for="tipo_empresa" class="form-label">Tipo de Empresa *</label>
+                        <label for="tipo_empresa" class="form-label">Tipo de Emprendimiento / Industria *</label>
                         <textarea class="form-control" id="tipo_empresa" rows="3" 
-                                placeholder="Ej: Comercio minorista, Servicios profesionales, Manufactura, etc." required></textarea>
+                                placeholder="Ej: Fintech, E-commerce, Edtech, SaaS, Marketplace, Healthtech, etc." required></textarea>
                     </div>
                     
                     <div class="mb-3">
-                        <label for="tamano_empresa" class="form-label">Tamaño de la Empresa *</label>
+                        <label for="tamano_empresa" class="form-label">Etapa del Emprendimiento *</label>
                         <select class="form-select" id="tamano_empresa" required>
-                            <option value="">Seleccione el tamaño de su empresa</option>
-                            <option value="Microempresa: Hasta 5 empleados">Microempresa: Hasta 5 empleados</option>
-                            <option value="Pequeña empresa: De 6 a 30 empleados">Pequeña empresa: De 6 a 30 empleados</option>
-                            <option value="Mediana empresa: De 31 a 100 empleados">Mediana empresa: De 31 a 100 empleados</option>
-                            <option value="Empresa grande: Más de 100 empleados">Empresa grande: Más de 100 empleados</option>
+                            <option value="">Seleccione la etapa de su emprendimiento</option>
+                            <option value="Ideación: Solo idea, sin MVP">Ideación: Solo idea, sin MVP</option>
+                            <option value="MVP en desarrollo: Construyendo prototipo">MVP en desarrollo: Construyendo prototipo</option>
+                            <option value="MVP lanzado: Primeros usuarios/clientes">MVP lanzado: Primeros usuarios/clientes</option>
+                            <option value="Tracción temprana: Validación inicial del mercado">Tracción temprana: Validación inicial del mercado</option>
                         </select>
                     </div>
                     
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="fas fa-arrow-right me-2"></i>Continuar
+                            <i class="fas fa-arrow-right me-2"></i>Iniciar Evaluación
                         </button>
                     </div>
                 </form>
@@ -50,9 +127,8 @@
         </div>
         
         <div class="alert alert-info mt-4">
-            <h5><i class="fas fa-info-circle me-2"></i>Información Importante</h5>
-            <p class="mb-0">Si ya ha utilizado esta herramienta anteriormente con el mismo correo, 
-            se cargarán automáticamente sus datos y el progreso de evaluaciones previas.</p>
+            <h5><i class="fas fa-info-circle me-2"></i>Sesión Continua</h5>
+            <p class="mb-0">Si ya iniciaste tu evaluación anteriormente, se cargará automáticamente tu progreso.</p>
         </div>
     </div>
 </div>
