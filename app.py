@@ -675,6 +675,26 @@ def eliminar_usuario(usuario_id):
     
     return jsonify({'success': True})
 
+@app.route('/emergency_backup_db_download')
+def emergency_backup_db_download():
+    """Endpoint de emergencia para descargar backup de la base de datos"""
+    if not (session.get('email') == 'alejandroaguilar1000@gmail.com' and 
+            session.get('nombre_empresa') == 'consultor1'):
+        return jsonify({'success': False, 'error': 'No autorizado'})
+    
+    try:
+        # Verificar que existe la base de datos
+        if not os.path.exists('diagnostico.db'):
+            return jsonify({'error': 'Base de datos no encontrada'}), 404
+        
+        # Enviar el archivo directamente
+        return send_file('diagnostico.db', 
+                        as_attachment=True,
+                        download_name=f'diagnostico_backup_{datetime.now().strftime("%Y%m%d_%H%M%S")}.db',
+                        mimetype='application/x-sqlite3')
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 def generar_pdf_cliente(usuario, evaluaciones):
     from datetime import datetime
     from reportlab.platypus import PageBreak
