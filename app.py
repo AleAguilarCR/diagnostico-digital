@@ -46,7 +46,7 @@ try:
     
     if gemini_api_key != 'TU_API_KEY_DE_GEMINI' and gemini_api_key != 'tu-api-key-real-aqui':
         genai.configure(api_key=gemini_api_key)
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-1.5-flash')
         logger.info("Gemini AI configurado correctamente")
     else:
         model = None
