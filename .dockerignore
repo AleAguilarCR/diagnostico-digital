@@ -1,0 +1,3 @@
+# Este archivo existe para que Render NO use Docker
+# Render debe usar el render.yaml que especifica Python nativo
+Dockerfile
