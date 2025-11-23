@@ -55,9 +55,9 @@ try:
         except Exception as list_error:
             logger.error(f"Error listando modelos: {list_error}")
         
-        # Usar gemini-pro (v1beta)
-        model = genai.GenerativeModel('gemini-pro')
-        logger.info("Gemini AI configurado correctamente con gemini-pro")
+        # Usar modelo disponible según la API key
+        model = genai.GenerativeModel('models/gemini-2.5-flash')
+        logger.info("Gemini AI configurado correctamente con gemini-2.5-flash")
     else:
         model = None
         logger.warning("Gemini AI no configurado - API key no válida")
