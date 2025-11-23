@@ -43,10 +43,19 @@ logger.info(f"Ruta de base de datos: {DB_PATH}")
 try:
     gemini_api_key = os.environ.get('GEMINI_API_KEY') or 'tu-api-key-real-aqui'
     logger.info(f"API Key detectada: {'Sí' if gemini_api_key != 'tu-api-key-real-aqui' else 'No'}")
+    logger.info(f"API Key (primeros 10 chars): {gemini_api_key[:10] if gemini_api_key != 'tu-api-key-real-aqui' else 'No disponible'}")
     
     if gemini_api_key != 'TU_API_KEY_DE_GEMINI' and gemini_api_key != 'tu-api-key-real-aqui':
         genai.configure(api_key=gemini_api_key)
-        # Usar gemini-pro (v1beta) - es el único modelo disponible con esta API key
+        
+        # Intentar listar modelos disponibles
+        try:
+            available_models = [m.name for m in genai.list_models()]
+            logger.info(f"Modelos disponibles: {available_models[:5]}")  # Solo los primeros 5
+        except Exception as list_error:
+            logger.error(f"Error listando modelos: {list_error}")
+        
+        # Usar gemini-pro (v1beta)
         model = genai.GenerativeModel('gemini-pro')
         logger.info("Gemini AI configurado correctamente con gemini-pro")
     else:
