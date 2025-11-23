@@ -382,7 +382,7 @@ def generar_recomendaciones(eje_id, respuestas, tipo_empresa, puntaje=None, tama
                 logger.info("✅ USANDO GEMINI AI PARA RECOMENDACIONES")
                 logger.info(f"Eje: {eje_id}, Empresa: {tipo_empresa}, Nivel: {nivel}")
                 logger.info("="*50)
-                return response.text
+                return f"*G\n\n{response.text}"
             else:
                 logger.warning(f"Respuesta de Gemini muy corta ({len(response.text) if response.text else 0} chars), usando recomendaciones por defecto")
                 if response.text:
@@ -399,9 +399,9 @@ def generar_recomendaciones(eje_id, respuestas, tipo_empresa, puntaje=None, tama
     logger.info("="*50)
     
     if eje_id in recomendaciones_por_eje:
-        return recomendaciones_por_eje[eje_id][nivel_dict]
+        return f"*P\n\n{recomendaciones_por_eje[eje_id][nivel_dict]}"
     else:
-        return recomendaciones_genericas.get(eje_id, f"Recomendaciones para {eje_nombre} en {tipo_empresa} con enfoque de {enfoque}.")
+        return f"*P\n\n{recomendaciones_genericas.get(eje_id, f'Recomendaciones para {eje_nombre} en {tipo_empresa} con enfoque de {enfoque}.')}"
 
 @app.route('/')
 def index():
@@ -1737,7 +1737,7 @@ def generar_ia_readiness_canvas(tipo_empresa, tamano_empresa, evaluaciones):
                 logger.info("✅ USANDO GEMINI AI PARA IA-READINESS CANVAS")
                 logger.info(f"Empresa: {tipo_empresa}, Etapa: {tamano_empresa}")
                 logger.info("="*50)
-                return response.text
+                return f"*G\n\n{response.text}"
         except Exception as e:
             logger.error(f"Error generando IA-Readiness Canvas con Gemini: {str(e)}")
     
@@ -1746,7 +1746,9 @@ def generar_ia_readiness_canvas(tipo_empresa, tamano_empresa, evaluaciones):
     logger.info("📋 USANDO IA-READINESS CANVAS PREDEFINIDO")
     logger.info(f"Empresa: {tipo_empresa}, Etapa: {tamano_empresa}")
     logger.info("="*50)
-    return f"""=== 1. PROBLEMAS QUE PUEDEN RESOLVERSE CON IA ===
+    return f"""*P
+
+=== 1. PROBLEMAS QUE PUEDEN RESOLVERSE CON IA ===
 Para su {tipo_empresa}, la IA puede resolver:
 - Automatización de atención al cliente con chatbots inteligentes
 - Análisis predictivo de comportamiento de usuarios/clientes
@@ -1874,7 +1876,7 @@ def generar_resumen_ejecutivo(evaluaciones, tipo_empresa, tamano_empresa=None):
                 logger.info("✅ USANDO GEMINI AI PARA PLAN DE IMPLEMENTACIÓN")
                 logger.info(f"Empresa: {tipo_empresa}, Promedio: {promedio_general:.1f}/4")
                 logger.info("="*50)
-                return response.text
+                return f"*G\n\n{response.text}"
         except Exception as e:
             logger.error(f"Error generando plan de implementación con Gemini: {str(e)}")
     
@@ -1885,7 +1887,9 @@ def generar_resumen_ejecutivo(evaluaciones, tipo_empresa, tamano_empresa=None):
     logger.info("="*50)
     nivel_preparacion = "inicial" if promedio_general <= 1.5 else "intermedio" if promedio_general <= 2.5 else "avanzado"
     
-    return f"""ESTADO ACTUAL DE PREPARACIÓN:
+    return f"""*P
+
+ESTADO ACTUAL DE PREPARACIÓN:
 Su {tipo_empresa} presenta un nivel de preparación digital {nivel_preparacion} con un promedio de {promedio_general}/4. Los vectores con menor puntaje representan las mayores oportunidades para establecer bases digitales sólidas desde el inicio.
 
 PLAN DE IMPLEMENTACIÓN POR FASES:
