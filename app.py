@@ -353,7 +353,7 @@ def generar_recomendaciones(eje_id, respuestas, tipo_empresa, puntaje=None, tama
             
             if response.text and len(response.text.strip()) > 200:
                 logger.info(f"Recomendaciones generadas exitosamente con Gemini")
-                return response.text
+                return f"*G\n\n{response.text}"
             else:
                 logger.warning(f"Respuesta de Gemini muy corta ({len(response.text) if response.text else 0} chars), usando recomendaciones por defecto")
                 if response.text:
@@ -367,7 +367,7 @@ def generar_recomendaciones(eje_id, respuestas, tipo_empresa, puntaje=None, tama
     logger.info(f"Usando recomendaciones específicas - Eje: {eje_id}, Nivel: {nivel}")
     
     if eje_id in recomendaciones_por_eje:
-        return recomendaciones_por_eje[eje_id][nivel]
+        return f"*P\n\n{recomendaciones_por_eje[eje_id][nivel]}"
     else:
         return recomendaciones_genericas.get(eje_id, f"Recomendaciones para {eje_nombre} en {tipo_empresa} con enfoque de {enfoque}.")
 
