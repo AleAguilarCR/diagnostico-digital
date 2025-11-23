@@ -46,9 +46,10 @@ try:
     
     if gemini_api_key != 'TU_API_KEY_DE_GEMINI' and gemini_api_key != 'tu-api-key-real-aqui':
         genai.configure(api_key=gemini_api_key)
-        # Usar gemini-1.5-pro que está disponible en la API actual
-        model = genai.GenerativeModel('gemini-1.5-pro')
-        logger.info("Gemini AI configurado correctamente con gemini-1.5-pro")
+        # Usar models/ prefix para especificar el modelo completo
+        # Esto fuerza el uso de la API correcta
+        model = genai.GenerativeModel('models/gemini-1.5-pro-latest')
+        logger.info("Gemini AI configurado correctamente con models/gemini-1.5-pro-latest")
     else:
         model = None
         logger.warning("Gemini AI no configurado - API key no válida")
