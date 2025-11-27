@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Crear directorios necesarios
-RUN mkdir -p pdfs uploads
+RUN mkdir -p pdfs uploads /data
 
 # Exponer el puerto que usa la aplicación
 EXPOSE 8080

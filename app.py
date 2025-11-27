@@ -16,22 +16,29 @@ import base64
 import logging
 
 app = Flask(__name__)
-app.secret_key = 'tu-clave-secreta-super-segura-aqui'
+app.secret_key = os.environ.get('SECRET_KEY', 'tu-clave-secreta-super-segura-aqui')
 
 # Configuración de la ruta de la base de datos
-# En producción (Render), usa el disco persistente
-# En desarrollo, usa la ruta local
-DB_PATH = os.path.join(
-    os.environ.get('DB_MOUNT_PATH', '/opt/render/project/src/data') 
-    if os.environ.get('RENDER') 
-    else os.path.dirname(os.path.abspath(__file__)),
-    'diagnostico.db'
-)
+# Detecta automáticamente el entorno: Fly.io, Render, o local
+if os.path.exists('/data'):
+    # Fly.io - volumen persistente en /data
+    DB_PATH = '/data/ruta_digital.db'
+elif os.environ.get('RENDER'):
+    # Render - disco persistente en /opt/render/project/src/data
+    DB_PATH = os.path.join(
+        os.environ.get('DB_MOUNT_PATH', '/opt/render/project/src/data'),
+        'ruta_digital.db'
+    )
+else:
+    # Local - mismo directorio del proyecto
+    DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'diagnostico.db')
 
 def get_db_connection():
     """Obtener conexión a la base de datos con la ruta correcta"""
-    # Crear directorio si no existe (para Render Disk)
-    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+    # Crear directorio si no existe
+    db_dir = os.path.dirname(DB_PATH)
+    if db_dir and not os.path.exists(db_dir):
+        os.makedirs(db_dir, exist_ok=True)
     return sqlite3.connect(DB_PATH)
 
 # Configurar logging

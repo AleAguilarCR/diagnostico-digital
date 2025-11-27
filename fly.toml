@@ -4,9 +4,10 @@
 #
 
 app = 'ruta-digital'
-primary_region = 'dfw'  # Dallas - cercano a Latinoamérica
+primary_region = 'iad'  # Ashburn, VA - Cerca de Latinoamérica
 
 [build]
+  dockerfile = "Dockerfile"
 
 [env]
   FLASK_ENV = "production"
@@ -20,6 +21,11 @@ primary_region = 'dfw'  # Dallas - cercano a Latinoamérica
   processes = ['app']
 
 [[vm]]
-  memory = '1gb'
+  memory = '512mb'
   cpu_kind = 'shared'
   cpus = 1
+
+# Volumen persistente para la base de datos
+[[mounts]]
+  source = "ruta_digital_data"
+  destination = "/data"
