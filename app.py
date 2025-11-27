@@ -908,13 +908,34 @@ def generar_pdf_cliente(usuario, evaluaciones):
     story.append(Spacer(1, 20))
     
     # Resumen ejecutivo
-    story.append(Paragraph("Análisis y Recomendaciones Estratégicas", 
+    story.append(Paragraph("<b>Análisis y Recomendaciones Estratégicas</b>", 
                           ParagraphStyle('AnalysisTitle', parent=styles['Heading2'], fontSize=16, textColor=colors.darkblue, spaceAfter=15)))
     
+    # Estilos para el resumen ejecutivo
+    resumen_normal = ParagraphStyle('ResumenNormal', parent=styles['Normal'], 
+                                   fontSize=11, leftIndent=20, rightIndent=20, 
+                                   spaceBefore=6, spaceAfter=6, alignment=4)
+    
+    resumen_seccion = ParagraphStyle('ResumenSeccion', parent=styles['Normal'],
+                                    fontSize=12, textColor=colors.darkblue,
+                                    leftIndent=10, spaceBefore=12, spaceAfter=8)
+    
     for linea in resumen_ejecutivo.split('\n'):
-        if linea.strip():
-            story.append(Paragraph(linea.strip(), styles['Normal']))
-            story.append(Spacer(1, 6))
+        linea_limpia = linea.strip()
+        if linea_limpia:
+            # Detectar secciones (líneas que terminan en :)
+            if linea_limpia.endswith(':'):
+                # Remover ** del texto si existe
+                texto_seccion = linea_limpia.replace('**', '')
+                story.append(Paragraph(f"<b>{texto_seccion}</b>", resumen_seccion))
+            # Detectar elementos de lista numerados
+            elif linea_limpia[0:2] in ['1.', '2.', '3.', '4.'] or linea_limpia[0:3] in ['10.']:
+                texto_limpio = linea_limpia.replace('**', '')
+                story.append(Paragraph(f"• {texto_limpio}", resumen_normal))
+            else:
+                # Texto normal, remover **
+                texto_limpio = linea_limpia.replace('**', '')
+                story.append(Paragraph(texto_limpio, resumen_normal))
     
     # Salto de página después del resumen ejecutivo
     story.append(PageBreak())
@@ -951,19 +972,42 @@ def generar_pdf_cliente(usuario, evaluaciones):
         story.append(Spacer(1, 20))
         
         # Recomendaciones estratégicas
-        story.append(Paragraph("Recomendaciones Estratégicas", 
+        story.append(Paragraph("<b>Recomendaciones Estratégicas</b>", 
                               ParagraphStyle('RecomTitle', parent=styles['Heading2'], fontSize=16, textColor=colors.darkblue, spaceAfter=15)))
         
         # Línea divisoria antes de recomendaciones
         story.append(HRFlowable(width="100%", thickness=1, color=colors.lightblue, spaceAfter=15))
         
-        # Formatear recomendaciones
-        recom_style = ParagraphStyle('RecomStyle', parent=styles['Normal'], fontSize=11, spaceAfter=12, 
-                                    leftIndent=15, rightIndent=15, alignment=0)
+        # Estilos para las recomendaciones
+        recom_titulo = ParagraphStyle('RecomTitulo', parent=styles['Normal'], 
+                                     fontSize=12, textColor=colors.darkblue,
+                                     leftIndent=20, spaceBefore=14, spaceAfter=8)
         
+        recom_contenido = ParagraphStyle('RecomContenido', parent=styles['Normal'], 
+                                        fontSize=11, leftIndent=35, rightIndent=20,
+                                        spaceBefore=4, spaceAfter=4, alignment=4)
+        
+        recom_parrafo = ParagraphStyle('RecomParrafo', parent=styles['Normal'],
+                                      fontSize=11, leftIndent=20, rightIndent=20,
+                                      spaceBefore=6, spaceAfter=6, alignment=4)
+        
+        # Formatear recomendaciones
         for linea in recomendaciones.split('\n'):
-            if linea.strip():
-                story.append(Paragraph(linea.strip(), recom_style))
+            linea_limpia = linea.strip()
+            if linea_limpia:
+                # Remover ** de todo el texto
+                texto_sin_formato = linea_limpia.replace('**', '')
+                
+                # Detectar títulos numerados (1., 2., 3., 4.)
+                if len(texto_sin_formato) > 2 and texto_sin_formato[0:2] in ['1.', '2.', '3.', '4.'] and len(texto_sin_formato) < 200:
+                    story.append(Paragraph(f"<b>{texto_sin_formato}</b>", recom_titulo))
+                # Detectar sub-elementos o fases
+                elif texto_sin_formato.startswith('Fase ') or texto_sin_formato.startswith('- '):
+                    texto_formateado = texto_sin_formato.replace('- ', '• ')
+                    story.append(Paragraph(texto_formateado, recom_contenido))
+                # Texto normal (párrafos descriptivos)
+                else:
+                    story.append(Paragraph(texto_sin_formato, recom_parrafo))
         
         # Línea divisoria final
         story.append(Spacer(1, 20))
