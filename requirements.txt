@@ -1,4 +1,5 @@
 Flask==2.3.3
+gunicorn==21.2.0
 google-generativeai==0.3.2
 reportlab==4.0.4
 Pillow>=10.0.0

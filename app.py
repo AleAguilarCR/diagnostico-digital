@@ -53,8 +53,8 @@ try:
     
     if gemini_api_key != 'TU_API_KEY_DE_GEMINI' and gemini_api_key != 'tu-api-key-real-aqui':
         genai.configure(api_key=gemini_api_key)
-        model = genai.GenerativeModel('gemini-pro')
-        logger.info("Gemini AI configurado correctamente")
+        model = genai.GenerativeModel('models/gemini-2.5-flash')
+        logger.info("Gemini AI configurado correctamente con gemini-2.5-flash")
     else:
         model = None
         logger.warning("Gemini AI no configurado - API key no válida")
@@ -385,7 +385,7 @@ def generar_recomendaciones(eje_id, respuestas, tipo_empresa, puntaje=None, tama
             
             if response.text and len(response.text.strip()) > 200:
                 logger.info(f"Recomendaciones generadas exitosamente con Gemini")
-                return response.text
+                return f"*G\n\n{response.text}"
             else:
                 logger.warning(f"Respuesta de Gemini muy corta ({len(response.text) if response.text else 0} chars), usando recomendaciones por defecto")
                 if response.text:
@@ -399,7 +399,7 @@ def generar_recomendaciones(eje_id, respuestas, tipo_empresa, puntaje=None, tama
     logger.info(f"Usando recomendaciones específicas - Eje: {eje_id}, Nivel: {nivel}")
     
     if eje_id in recomendaciones_por_eje:
-        return recomendaciones_por_eje[eje_id][nivel]
+        return f"*P\n\n{recomendaciones_por_eje[eje_id][nivel]}"
     else:
         return recomendaciones_genericas.get(eje_id, f"Recomendaciones para {eje_nombre} en {tipo_empresa} con enfoque de {enfoque}.")
 
@@ -1060,12 +1060,12 @@ def generar_plan_consultoria_gemini(nombre_empresa, tipo_empresa, tamano_empresa
                     texto_limpio = texto_limpio.replace("12 meses", "2 meses")
                     texto_limpio = texto_limpio.replace("18 meses", "3 meses")
                     texto_limpio = texto_limpio.replace("año", "meses")
-                return texto_limpio, prompt
+                return f"*G\n\n{texto_limpio}", prompt
         except Exception as e:
             logger.error(f"Error generando plan de consultoría con Gemini: {str(e)}")
     
     # Plan por defecto si Gemini no está disponible
-    plan_default = f"""
+    plan_default = f"""*P\n\n
     PLAN DE CONSULTORÍA PARA {nombre_empresa.upper()}
     
     **Fase I: Análisis y Diagnóstico**
@@ -1644,14 +1644,14 @@ def generar_resumen_ejecutivo(evaluaciones, tipo_empresa, tamano_empresa=None):
         try:
             response = model.generate_content(prompt)
             if response.text and len(response.text.strip()) > 100:
-                return response.text
+                return f"*G\n\n{response.text}"
         except Exception as e:
             logger.error(f"Error generando resumen ejecutivo con Gemini: {str(e)}")
     
     # Resumen por defecto
     nivel_madurez = "básico" if promedio_general <= 2 else "intermedio" if promedio_general <= 3.5 else "avanzado"
     
-    return f"""SITUACIÓN ACTUAL:
+    return f"""*P\n\nSITUACIÓN ACTUAL:
 Su {tipo_empresa} presenta un nivel de madurez digital {nivel_madurez} con un promedio de {promedio_general}/5. Esta evaluación refleja el estado actual de adopción tecnológica y capacidades digitales de la organización.
 
 FORTALEZAS IDENTIFICADAS:
