@@ -911,6 +911,13 @@ def generar_pdf_cliente(usuario, evaluaciones):
     story.append(Paragraph("<b>Análisis y Recomendaciones Estratégicas</b>", 
                           ParagraphStyle('AnalysisTitle', parent=styles['Heading2'], fontSize=16, textColor=colors.darkblue, spaceAfter=15)))
     
+    # Limpiar formato Markdown del texto de Gemini
+    resumen_limpio = resumen_ejecutivo
+    # Remover encabezados Markdown (##, ###, #)
+    resumen_limpio = resumen_limpio.replace('###', '').replace('##', '').replace('# ', '')
+    # Remover ** y otros formatos
+    resumen_limpio = resumen_limpio.replace('**', '').replace('*', '')
+    
     # Estilos para el resumen ejecutivo
     # Estilo para secciones principales (SITUACIÓN ACTUAL, FORTALEZAS, etc.)
     resumen_seccion_principal = ParagraphStyle('ResumenSeccionPrincipal', parent=styles['Normal'],
@@ -918,10 +925,11 @@ def generar_pdf_cliente(usuario, evaluaciones):
                                               leftIndent=10, spaceBefore=14, spaceAfter=10,
                                               fontName='Helvetica-Bold')
     
-    # Estilo para subsecciones (Vectores:, Acciones:, Recursos:, etc.)
+    # Estilo para subsecciones (Vectores:, Acciones:, Recursos:, FASE 1, etc.)
     resumen_subseccion = ParagraphStyle('ResumenSubseccion', parent=styles['Normal'],
                                        fontSize=11, textColor=colors.darkblue,
-                                       leftIndent=25, spaceBefore=8, spaceAfter=6)
+                                       leftIndent=25, spaceBefore=10, spaceAfter=6,
+                                       fontName='Helvetica-Bold')
     
     # Estilo para contenido normal
     resumen_contenido = ParagraphStyle('ResumenContenido', parent=styles['Normal'], 
@@ -933,39 +941,44 @@ def generar_pdf_cliente(usuario, evaluaciones):
                                       fontSize=11, leftIndent=30, rightIndent=20,
                                       spaceBefore=6, spaceAfter=6, alignment=4)
     
-    for linea in resumen_ejecutivo.split('\n'):
+    for linea in resumen_limpio.split('\n'):
         linea_limpia = linea.strip()
         if linea_limpia:
-            # Remover ** de todo el texto
-            texto_limpio = linea_limpia.replace('**', '').strip()
             
-            # Detectar secciones principales (TODO MAYÚSCULAS terminando en :)
-            if texto_limpio.isupper() and texto_limpio.endswith(':'):
-                story.append(Paragraph(f"<b>{texto_limpio}</b>", resumen_seccion_principal))
+            # Detectar títulos de secciones principales (números seguidos de punto y mayúsculas)
+            # Ejemplo: "1. ESTADO ACTUAL", "2. PLAN DE IMPLEMENTACIÓN"
+            if len(linea_limpia) > 3 and linea_limpia[0].isdigit() and linea_limpia[1:3] == '. ' and linea_limpia[3:].split(':')[0].isupper():
+                story.append(Paragraph(f"<b>{linea_limpia}</b>", resumen_seccion_principal))
             
-            # Detectar subsecciones (Vectores:, Acciones:, Recursos:, etc.)
-            elif ':' in texto_limpio and texto_limpio.endswith(':') and len(texto_limpio.split()[0]) < 25:
-                story.append(Paragraph(f"<b>{texto_limpio}</b>", resumen_subseccion))
+            # Detectar FASES (FASE 1, FASE 2, etc.)
+            elif linea_limpia.upper().startswith('FASE ') or linea_limpia.startswith('Fase '):
+                story.append(Paragraph(f"<b>{linea_limpia}</b>", resumen_subseccion))
             
-            # Detectar prioridades numeradas (1., 2., 3., etc.)
-            elif len(texto_limpio) > 2 and texto_limpio[0:2] in ['1.', '2.', '3.', '4.', '5.']:
-                # Separar número del texto
-                partes = texto_limpio.split('.', 1)
-                if len(partes) == 2:
-                    numero = partes[0]
-                    contenido = partes[1].strip()
-                    story.append(Paragraph(f"<b>{numero}.</b> {contenido}", resumen_prioridad))
+            # Detectar subsecciones que terminan en : (Vectores:, Acciones:, Recursos:, etc.)
+            elif ':' in linea_limpia and linea_limpia.endswith(':'):
+                # Solo si no es muy largo (menos de 50 caracteres para ser subsección)
+                if len(linea_limpia) < 50:
+                    story.append(Paragraph(f"<b>{linea_limpia}</b>", resumen_subseccion))
                 else:
-                    story.append(Paragraph(texto_limpio, resumen_prioridad))
+                    story.append(Paragraph(linea_limpia, resumen_contenido))
+            
+            # Detectar prioridades numeradas (1., 2., 3., etc.) pero que NO sean secciones principales
+            elif len(linea_limpia) > 2 and linea_limpia[0].isdigit() and linea_limpia[1] == '.':
+                # Verificar que no sea una sección principal (no todo en mayúsculas después del número)
+                resto = linea_limpia[2:].strip()
+                if not resto.split(':')[0].isupper():
+                    story.append(Paragraph(linea_limpia, resumen_prioridad))
+                else:
+                    story.append(Paragraph(f"<b>{linea_limpia}</b>", resumen_seccion_principal))
             
             # Detectar elementos con viñeta o guiones
-            elif texto_limpio.startswith('- ') or texto_limpio.startswith('• '):
-                contenido = texto_limpio[2:].strip()
+            elif linea_limpia.startswith('- ') or linea_limpia.startswith('• '):
+                contenido = linea_limpia[2:].strip()
                 story.append(Paragraph(f"• {contenido}", resumen_contenido))
             
             # Texto normal (párrafos descriptivos)
             else:
-                story.append(Paragraph(texto_limpio, resumen_contenido))
+                story.append(Paragraph(linea_limpia, resumen_contenido))
     
     # Salto de página después del resumen ejecutivo
     story.append(PageBreak())
@@ -1008,10 +1021,18 @@ def generar_pdf_cliente(usuario, evaluaciones):
         # Línea divisoria antes de recomendaciones
         story.append(HRFlowable(width="100%", thickness=1, color=colors.lightblue, spaceAfter=15))
         
+        # Limpiar formato Markdown del texto de recomendaciones
+        recomendaciones_limpio = recomendaciones
+        # Remover encabezados Markdown (##, ###, #)
+        recomendaciones_limpio = recomendaciones_limpio.replace('###', '').replace('##', '').replace('# ', '')
+        # Remover ** y otros formatos
+        recomendaciones_limpio = recomendaciones_limpio.replace('**', '').replace('*', '')
+        
         # Estilos para las recomendaciones
         recom_titulo = ParagraphStyle('RecomTitulo', parent=styles['Normal'], 
                                      fontSize=12, textColor=colors.darkblue,
-                                     leftIndent=20, spaceBefore=14, spaceAfter=8)
+                                     leftIndent=20, spaceBefore=14, spaceAfter=8,
+                                     fontName='Helvetica-Bold')
         
         recom_contenido = ParagraphStyle('RecomContenido', parent=styles['Normal'], 
                                         fontSize=11, leftIndent=35, rightIndent=20,
@@ -1022,22 +1043,22 @@ def generar_pdf_cliente(usuario, evaluaciones):
                                       spaceBefore=6, spaceAfter=6, alignment=4)
         
         # Formatear recomendaciones
-        for linea in recomendaciones.split('\n'):
+        for linea in recomendaciones_limpio.split('\n'):
             linea_limpia = linea.strip()
             if linea_limpia:
-                # Remover ** de todo el texto
-                texto_sin_formato = linea_limpia.replace('**', '')
-                
                 # Detectar títulos numerados (1., 2., 3., 4.)
-                if len(texto_sin_formato) > 2 and texto_sin_formato[0:2] in ['1.', '2.', '3.', '4.'] and len(texto_sin_formato) < 200:
-                    story.append(Paragraph(f"<b>{texto_sin_formato}</b>", recom_titulo))
-                # Detectar sub-elementos o fases
-                elif texto_sin_formato.startswith('Fase ') or texto_sin_formato.startswith('- '):
-                    texto_formateado = texto_sin_formato.replace('- ', '• ')
+                if len(linea_limpia) > 2 and linea_limpia[0].isdigit() and linea_limpia[1] == '.' and len(linea_limpia) < 200:
+                    story.append(Paragraph(f"<b>{linea_limpia}</b>", recom_titulo))
+                # Detectar FASES
+                elif linea_limpia.upper().startswith('FASE ') or linea_limpia.startswith('Fase '):
+                    story.append(Paragraph(f"<b>{linea_limpia}</b>", recom_titulo))
+                # Detectar sub-elementos con viñetas o guiones
+                elif linea_limpia.startswith('- '):
+                    texto_formateado = linea_limpia.replace('- ', '• ')
                     story.append(Paragraph(texto_formateado, recom_contenido))
                 # Texto normal (párrafos descriptivos)
                 else:
-                    story.append(Paragraph(texto_sin_formato, recom_parrafo))
+                    story.append(Paragraph(linea_limpia, recom_parrafo))
         
         # Línea divisoria final
         story.append(Spacer(1, 20))
