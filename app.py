@@ -1658,12 +1658,32 @@ FORTALEZAS IDENTIFICADAS:
 Los ejes con mejor desempeño son: {', '.join([eje['nombre'] for eje in ejes_evaluados[-2:]])}. Estas fortalezas representan una base sólida sobre la cual construir la estrategia de transformación digital.
 
 ÁREAS DE MEJORA PRIORITARIAS:
-Los ejes que requieren atención inmediata son: {', '.join([eje['nombre'] for eje in ejes_evaluados[:2]])}. Estas áreas representan las mayores oportunidades de mejora para su {tipo_empresa}.
+Los ejes que requieren atención inmediata son: {', '.join([eje['nombre'] for eje in ejes_evaluados[:min(2, len(ejes_evaluados))]])}. Estas áreas representan las mayores oportunidades de mejora para su {tipo_empresa}.
+
+PRIORIDADES DE IMPLEMENTACIÓN:"""
+    
+    # Agregar prioridades según la cantidad de ejes evaluados
+    prioridades = []
+    if len(ejes_por_prioridad) >= 1:
+        prioridades.append(f"1. {ejes_por_prioridad[0]['nombre']} - Prioridad alta por su impacto fundamental")
+    if len(ejes_por_prioridad) >= 2:
+        prioridades.append(f"2. {ejes_por_prioridad[1]['nombre']} - Prioridad media, complementa el primer eje")
+    if len(ejes_por_prioridad) >= 3:
+        prioridades.append(f"3. Continuar fortaleciendo los ejes con mejor puntuación para mantener ventaja competitiva")
+    else:
+        prioridades.append(f"{'2' if len(ejes_por_prioridad) >= 2 else '2'}. Complete las evaluaciones de los demás ejes para obtener un diagnóstico más completo")
+    
+    return f"""*P\n\nSITUACIÓN ACTUAL:
+Su {tipo_empresa} presenta un nivel de madurez digital {nivel_madurez} con un promedio de {promedio_general}/5. Esta evaluación refleja el estado actual de adopción tecnológica y capacidades digitales de la organización.
+
+FORTALEZAS IDENTIFICADAS:
+Los ejes con mejor desempeño son: {', '.join([eje['nombre'] for eje in ejes_evaluados[-min(2, len(ejes_evaluados)):]]) if len(ejes_evaluados) > 0 else 'Complete más evaluaciones para identificar fortalezas'}. {'Estas fortalezas representan una base sólida sobre la cual construir la estrategia de transformación digital.' if len(ejes_evaluados) > 1 else 'Complete más evaluaciones para identificar patrones de fortalezas.'}
+
+ÁREAS DE MEJORA PRIORITARIAS:
+Los ejes que requieren atención inmediata son: {', '.join([eje['nombre'] for eje in ejes_evaluados[:min(2, len(ejes_evaluados))]])}. Estas áreas representan las mayores oportunidades de mejora para su {tipo_empresa}.
 
 PRIORIDADES DE IMPLEMENTACIÓN:
-1. {ejes_por_prioridad[0]['nombre']} - Prioridad alta por su impacto fundamental
-2. {ejes_por_prioridad[1]['nombre']} - Prioridad media, complementa el primer eje
-3. Continuar fortaleciendo los ejes con mejor puntuación para mantener ventaja competitiva
+{chr(10).join(prioridades)}
 
 RECOMENDACIÓN ESTRATÉGICA:
 Para su {tipo_empresa}, se recomienda un enfoque gradual comenzando por los ejes de menor puntuación, ya que generalmente ofrecen mayor retorno de inversión y impacto inmediato en la operación del negocio."""
