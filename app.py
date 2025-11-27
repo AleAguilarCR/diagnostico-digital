@@ -912,30 +912,60 @@ def generar_pdf_cliente(usuario, evaluaciones):
                           ParagraphStyle('AnalysisTitle', parent=styles['Heading2'], fontSize=16, textColor=colors.darkblue, spaceAfter=15)))
     
     # Estilos para el resumen ejecutivo
-    resumen_normal = ParagraphStyle('ResumenNormal', parent=styles['Normal'], 
-                                   fontSize=11, leftIndent=20, rightIndent=20, 
-                                   spaceBefore=6, spaceAfter=6, alignment=4)
+    # Estilo para secciones principales (SITUACIÓN ACTUAL, FORTALEZAS, etc.)
+    resumen_seccion_principal = ParagraphStyle('ResumenSeccionPrincipal', parent=styles['Normal'],
+                                              fontSize=13, textColor=colors.darkblue,
+                                              leftIndent=10, spaceBefore=14, spaceAfter=10,
+                                              fontName='Helvetica-Bold')
     
-    resumen_seccion = ParagraphStyle('ResumenSeccion', parent=styles['Normal'],
-                                    fontSize=12, textColor=colors.darkblue,
-                                    leftIndent=10, spaceBefore=12, spaceAfter=8)
+    # Estilo para subsecciones (Vectores:, Acciones:, Recursos:, etc.)
+    resumen_subseccion = ParagraphStyle('ResumenSubseccion', parent=styles['Normal'],
+                                       fontSize=11, textColor=colors.darkblue,
+                                       leftIndent=25, spaceBefore=8, spaceAfter=6)
+    
+    # Estilo para contenido normal
+    resumen_contenido = ParagraphStyle('ResumenContenido', parent=styles['Normal'], 
+                                      fontSize=10, leftIndent=40, rightIndent=20, 
+                                      spaceBefore=4, spaceAfter=4, alignment=4)
+    
+    # Estilo para prioridades numeradas
+    resumen_prioridad = ParagraphStyle('ResumenPrioridad', parent=styles['Normal'],
+                                      fontSize=11, leftIndent=30, rightIndent=20,
+                                      spaceBefore=6, spaceAfter=6, alignment=4)
     
     for linea in resumen_ejecutivo.split('\n'):
         linea_limpia = linea.strip()
         if linea_limpia:
-            # Detectar secciones (líneas que terminan en :)
-            if linea_limpia.endswith(':'):
-                # Remover ** del texto si existe
-                texto_seccion = linea_limpia.replace('**', '')
-                story.append(Paragraph(f"<b>{texto_seccion}</b>", resumen_seccion))
-            # Detectar elementos de lista numerados
-            elif linea_limpia[0:2] in ['1.', '2.', '3.', '4.'] or linea_limpia[0:3] in ['10.']:
-                texto_limpio = linea_limpia.replace('**', '')
-                story.append(Paragraph(f"• {texto_limpio}", resumen_normal))
+            # Remover ** de todo el texto
+            texto_limpio = linea_limpia.replace('**', '').strip()
+            
+            # Detectar secciones principales (TODO MAYÚSCULAS terminando en :)
+            if texto_limpio.isupper() and texto_limpio.endswith(':'):
+                story.append(Paragraph(f"<b>{texto_limpio}</b>", resumen_seccion_principal))
+            
+            # Detectar subsecciones (Vectores:, Acciones:, Recursos:, etc.)
+            elif ':' in texto_limpio and texto_limpio.endswith(':') and len(texto_limpio.split()[0]) < 25:
+                story.append(Paragraph(f"<b>{texto_limpio}</b>", resumen_subseccion))
+            
+            # Detectar prioridades numeradas (1., 2., 3., etc.)
+            elif len(texto_limpio) > 2 and texto_limpio[0:2] in ['1.', '2.', '3.', '4.', '5.']:
+                # Separar número del texto
+                partes = texto_limpio.split('.', 1)
+                if len(partes) == 2:
+                    numero = partes[0]
+                    contenido = partes[1].strip()
+                    story.append(Paragraph(f"<b>{numero}.</b> {contenido}", resumen_prioridad))
+                else:
+                    story.append(Paragraph(texto_limpio, resumen_prioridad))
+            
+            # Detectar elementos con viñeta o guiones
+            elif texto_limpio.startswith('- ') or texto_limpio.startswith('• '):
+                contenido = texto_limpio[2:].strip()
+                story.append(Paragraph(f"• {contenido}", resumen_contenido))
+            
+            # Texto normal (párrafos descriptivos)
             else:
-                # Texto normal, remover **
-                texto_limpio = linea_limpia.replace('**', '')
-                story.append(Paragraph(texto_limpio, resumen_normal))
+                story.append(Paragraph(texto_limpio, resumen_contenido))
     
     # Salto de página después del resumen ejecutivo
     story.append(PageBreak())
