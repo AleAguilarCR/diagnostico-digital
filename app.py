@@ -236,6 +236,14 @@ def init_db():
     conn.commit()
     conn.close()
 
+# Inicializar la base de datos automáticamente al importar el módulo
+# Esto asegura que las tablas existan incluso cuando Gunicorn inicia la app
+try:
+    init_db()
+    logger.info("✅ Base de datos inicializada correctamente")
+except Exception as e:
+    logger.error(f"❌ Error inicializando base de datos: {e}")
+
 def calcular_puntaje(respuestas):
     total = 0
     count = 0
